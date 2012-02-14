@@ -2,23 +2,21 @@ package kr.co.WhenWhereWho3;
 
 import java.util.Arrays;
 
-import kr.co.WhenWhereWho3.RecommendMovieActivity.UserGalleryAdapter;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class SearchMovieDetailActivity extends Activity {	
 
