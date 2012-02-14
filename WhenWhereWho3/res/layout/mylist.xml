@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    
+    <ImageView
+        android:id="@+id/imageVw"
+	    android:layout_width="60dp"
+	    android:layout_height="60dp"
+        android:contentDescription="영화 포스터"
+        />
+	
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="60dp"
+	    android:orientation="vertical" >
+	    
+        <RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="30dp"
+		    android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/titleTxtVw"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:textSize="25dp"
+			    android:text="영화제목"
+                />
+
+            <TextView
+                android:id="@+id/withTxtVw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="누구랑 함께?" />
+
+        </RelativeLayout>
+        
+        <RelativeLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="30dp"
+		    android:orientation="horizontal"
+            >
+            
+            <TextView
+                android:id="@+id/whenTxtVw"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:textSize="15dp"
+			    android:text="언제 봤지?"
+                />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:stepSize="0.5"
+                android:numStars="5" />
+            
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

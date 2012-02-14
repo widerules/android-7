@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kr.co.WhenWhereWho3"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="10" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:label="@string/app_name"
+            android:name=".WhenWhereWho3Activity" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MyMovieListActivity" android:label="MyMovieList" />
+        <activity android:name=".MyListActivity" android:label="MyList" />
+        <activity android:name=".MyMovieListDetailActivity" android:label="MyMovieListDetail" />
+        <activity android:name=".MyWishListActivity" android:label="MyWishList" />
+        <activity android:name=".SearchMovieListActivity" android:label="SearchMovieList" />
+        <activity android:name=".SearchMovieGridActivity" android:label="SearchMovieGrid" />
+        <activity android:name=".SearchMovieDetailActivity" android:label="SearchMovieDetail" />
+        <activity android:name=".RegistMovieActivity" android:label="RegistMovie" />
+        <activity android:name=".RecommendMovieActivity" android:label="RecommendMovie" />
+        <activity android:name=".SetupActivity" android:label="SetUp" />
+        
+        <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
+    </application>
+
+</manifest>

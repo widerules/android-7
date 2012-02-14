@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="40dp"
+        android:paddingTop="10dp"
+        android:text="설정"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/searchSetupTxt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff696969"
+        android:text="영화 검색" />
+
+    <Spinner 
+        android:id="@+id/spinVw"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        >
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/searchSetupTxt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff696969"
+        android:text="추천 영화" />
+
+    <Button
+        android:id="@+id/searchSetupBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="추천 영화 설정 변경"
+        android:textSize="16dp" />
+
+</LinearLayout>
