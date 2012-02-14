@@ -3,6 +3,8 @@ package kr.co.WhenWhereWho3;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,14 +34,16 @@ public class MovieGalleryAdapter extends ArrayAdapter<Movie> {
 		Log.d( "MovieAdapter", "getView호출" );
 		View v = convertView;
 		if (v == null) { 
-			v = li.inflate(R.layout.searchlist, null);
+			v = li.inflate(R.layout.recommendgallery, null);
 		}
+		
 		Movie m = movies.get(position);
+		
 		try {
-			ImageView imageVw = (ImageView)v.findViewById(R.id.movieImg);
-			TextView title = (TextView)v.findViewById(R.id.movieTitle);
-			TextView nation = (TextView)v.findViewById(R.id.movieNation);
-			TextView rating = (TextView)v.findViewById(R.id.movieRating);
+			//	영화 포스터
+			ImageView oriImgVw = (ImageView)v.findViewById(R.id.oriImgVw);
+			//	영화 제목
+			TextView title = (TextView)v.findViewById(R.id.imgTxt);
 			
 			/********************************************************/
 			//	영화 title 가져오기
@@ -48,23 +52,17 @@ public class MovieGalleryAdapter extends ArrayAdapter<Movie> {
 			/********************************************************/
 			
 			/********************************************************/
-			//	영화 제작 국가 가져오기
-			nation.setText(m.getNation());
-			Log.d( "MovieAdapter", "국가 : " + m.getNation());
-			/********************************************************/
-			
-			/********************************************************/
-			// 평점
-			rating.setText(m.getGrade());
-			Log.d( "MovieAdapter", "평점 : " + m.getGrade());
-			/********************************************************/
-			
-			/********************************************************/
 			//	썸네일 이미지 처리
 			//	썸네일 주소를 받아옴
 			String thumbnailUrl = m.getThumbnail();
-			Log.d( "MovieAdapter", "썸네일 주소 : " + thumbnailUrl );
-			imageDownloader.download(thumbnailUrl, imageVw);
+			if( !thumbnailUrl.equals("") ) {
+				Log.d( "MovieAdapter", "썸네일 주소 : " + thumbnailUrl );
+				imageDownloader.download(thumbnailUrl, oriImgVw);
+			} else {
+				//	이미지 주소가 없을경우는 어떻게 처리할 것인가??
+				//	이미지는 다른걸 담아서 리턴해주자
+				oriImgVw.setImageResource(R.drawable.kara_1);
+			}
 			/********************************************************/
 			return v;
 		} catch (Exception e) {

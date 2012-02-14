@@ -27,6 +27,7 @@ import android.widget.TextView;
 public class RecommendMovieActivity extends Activity {	
 	private TextView imgTxt;
 	private ImageView oriImgVw;
+	private Gallery gallery;
 	
 	private InputStreamReader isr;
 	private BufferedReader br;
@@ -34,10 +35,12 @@ public class RecommendMovieActivity extends Activity {
 	
 	private Parse parse;
 	
-	ArrayList<Movie> movieList;
-	ArrayList<String> titleList;
+	private ArrayList<Movie> movieList;
+	private ArrayList<String> titleList;
 	
-	MovieGalleryAdapter galleryAdapter;
+	private MovieGalleryAdapter galleryAdapter;
+	
+	private boolean isLoaded = false;
 	
 	private Handler handler = new Handler(){
 		@SuppressWarnings("unchecked")
@@ -49,23 +52,25 @@ public class RecommendMovieActivity extends Activity {
 				titleList = parse.htmlParse( (BufferedReader)msg.obj );
 				Thread parseThread = new Thread(){
 					public void run() {
-						for( String title : titleList ) {
+						Message msg = new Message();
+						for( String t : titleList ) {
 							try {
+								String title = URLEncoder.encode( t, "UTF-8" );
 								url = new URL(
 										"http://apis.daum.net/contents/movie?apikey=c98d00bfc11535f42405eb2605a60586e974c279&output=json&q="
 												+ title );
 								isr = new InputStreamReader( url.openConnection().getInputStream(), "UTF-8" );
 								br = new BufferedReader( isr );
-								movieList.addAll(parse.jsonParse(br));
 								
-								Message msg = new Message();
-								msg.what = 1;
-								msg.obj = movieList;
-								handler.sendMessageDelayed(msg, 200);
+								movieList.addAll( parse.jsonParse( br ) );
+								
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}
+						msg.what = 1;
+						msg.obj = movieList;
+						handler.sendMessageDelayed(msg, 200);
 					};
 				};
 				parseThread.start();
@@ -73,6 +78,9 @@ public class RecommendMovieActivity extends Activity {
 			case 1:
 				movieList = (ArrayList<Movie>)msg.obj; 
 				galleryAdapter = new MovieGalleryAdapter(RecommendMovieActivity.this, R.layout.mylist, movieList);
+				gallery.setAdapter( galleryAdapter );
+				isLoaded = true;
+				break;
 			}
 		}
 	};
@@ -82,7 +90,11 @@ public class RecommendMovieActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recommendmovie);
 
-		Gallery gallery = (Gallery)findViewById(R.id.gallery);
+		gallery = (Gallery)findViewById(R.id.gallery);
+		
+		parse = new Parse();
+		
+		//	쓰레드로 일단 네이버에서 데이터를 읽어옴
 		Thread t = new Thread(){
 			@Override
 			public void run() {
@@ -90,21 +102,18 @@ public class RecommendMovieActivity extends Activity {
 			}
 		};
 		
-		gallery.setAdapter(adapter);
+		t.start();
 		
-		parse = new Parse();
-		
-		
-		//	갤러리의 사진을 클릭할 경우 이벤트
-		gallery.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView parent, View v, int position, long id) {
-				imgTxt = (TextView)findViewById(R.id.imgTxt);
-				imgTxt.setText(name[position]);
-
-				oriImgVw = (ImageView)findViewById(R.id.oriImgVw);
-				oriImgVw.setImageResource(images[position]);
-			}
-		});
+//		//	갤러리의 사진을 클릭할 경우 이벤트
+//		gallery.setOnItemClickListener(new OnItemClickListener() {
+//			public void onItemClick(AdapterView parent, View v, int position, long id) {
+//				imgTxt = (TextView)findViewById(R.id.imgTxt);
+//				imgTxt.setText(name[position]);
+//
+//				oriImgVw = (ImageView)findViewById(R.id.oriImgVw);
+//				oriImgVw.setImageResource(images[position]);
+//			}
+//		});
 	}
 	
 	private void loadTitle( String genre, String nation ) {
@@ -113,9 +122,8 @@ public class RecommendMovieActivity extends Activity {
 	    Message msg = new Message();
 		try {
 			//	뒤에 유니코드는 "영화"라는 글자임
-			String preUrl = URLEncoder.encode( "http://search.naver.com/search.naver?ie=utf8&sm=tab_txc&where=nexearch&query="
-							+ nation + genre + "%EC%98%81%ED%99%94", "UTF-8" ); 
-			url = new URL( preUrl );
+			String preUrl = URLEncoder.encode( nation + genre + "영화", "UTF-8" ); 
+			url = new URL( "http://search.naver.com/search.naver?ie=utf8&sm=tab_txc&where=nexearch&query=" + preUrl );
 			InputStreamReader isr = new InputStreamReader( url.openConnection().getInputStream(), "UTF-8" );
 			BufferedReader br = new BufferedReader( isr );
 			
