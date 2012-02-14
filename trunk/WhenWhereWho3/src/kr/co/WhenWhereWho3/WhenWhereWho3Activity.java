@@ -31,7 +31,7 @@ public class WhenWhereWho3Activity extends Activity {
 				}
 				break;
 			case R.id.btnRecommend:
-				intent = new Intent(this,RecommendMovieActivity.class);
+				//intent = new Intent(this,RecommendMovieActivity.class);
 				break;
 			case R.id.btnSetting:
 				intent = new Intent(this,SetupActivity.class);

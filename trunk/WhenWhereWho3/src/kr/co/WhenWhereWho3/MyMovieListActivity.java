@@ -14,33 +14,24 @@ import android.widget.TextView;
 
 public class MyMovieListActivity extends TabActivity {
 	
-	private Parse parse;
-	
-	TextView wishTxtVw;
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mymovielistmain);
         
-        parse = new Parse();
         
         TabHost tabHost = getTabHost();
         TabSpec myList = tabHost.newTabSpec("myList");
-        myList.setIndicator("내가 본 영화 목록");
-        Intent intent = new Intent(getApplicationContext(), MyListActivity.class);
-        myList.setContent(intent);
-        tabHost.addTab(myList);
-        
         TabSpec wishList = tabHost.newTabSpec("wishList");
-        wishList.setIndicator("찜한목록");
-        wishList.setContent(R.id.wishTxtVw);
+
+        myList.setIndicator("내가 본 영화 목록").setContent(new Intent(this, MyListActivity.class));
+        wishList.setIndicator("찜한목록").setContent(new Intent(this, MyWishListActivity.class));
+        
+        tabHost.addTab(myList);        
         tabHost.addTab(wishList);
         
-        wishTxtVw = (TextView)findViewById(R.id.wishTxtVw);
         
-
     }//	onCreate( ) 끝
 }
 
