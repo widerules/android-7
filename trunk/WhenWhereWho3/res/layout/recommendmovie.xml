@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+  <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="추천 영화"
+        android:textSize="25sp" /> 
+  
+    <ImageView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/moivebar"
+        />
+    <Gallery 
+        android:id="@+id/gallery"
+	    android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+        />
+    <ImageView		
+	    android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:src="@drawable/moivebar"
+	     />    
+    <ImageView 
+        android:id="@+id/oriImgVw"
+        android:layout_width="fill_parent"
+        android:layout_height="280dp"
+        android:padding="10dp"
+        />
+    <TextView 
+        android:id="@+id/imgTxt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:gravity="center"
+        />
+</LinearLayout>

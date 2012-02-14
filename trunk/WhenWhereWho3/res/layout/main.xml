@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:layout_gravity="center|bottom"
+    android:paddingBottom="20dp">
+
+    <LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" 
+	    >
+    	<Button 
+    	    android:id="@+id/btnList"
+    	    android:layout_width="140dp"
+    	    android:layout_height="wrap_content"
+    	    android:padding="20dp"
+    	    android:text="영화List"
+    	    android:onClick="execute"/>
+    	<Button 
+    	    android:id="@+id/btnSearch"
+    	    android:layout_width="140dp"
+    	    android:layout_height="wrap_content"
+    	    android:padding="20dp"
+    	    android:text="영화검색"
+    	    android:onClick="execute"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+    	<Button 
+    	    android:id="@+id/btnRecommend"
+    	    android:layout_width="140dp"
+    	    android:layout_height="wrap_content"
+    	    android:padding="20dp"
+    	    android:text="추천영화"
+    	    android:onClick="execute"/>
+    	<Button 
+    	    android:id="@+id/btnSetting"
+    	    android:layout_width="140dp"
+    	    android:layout_height="wrap_content"
+    	    android:padding="20dp"
+    	    android:text="설정"
+    	    android:onClick="execute"/>
+    </LinearLayout>
+    
+   	<Button 
+   	    android:id="@+id/btnCinema"
+    	android:layout_width="280dp"
+    	android:layout_height="wrap_content"
+    	android:padding="20dp"
+    	android:text="가까운 영화관 찾기"
+    	android:onClick="execute"/>
+</LinearLayout>
