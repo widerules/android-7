@@ -3,6 +3,8 @@ package kr.co.WhenWhereWho3;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +20,8 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+
 
 public class RecommendMovieActivity extends Activity {	
 	private TextView imgTxt;
@@ -35,11 +39,18 @@ public class RecommendMovieActivity extends Activity {
 		public void handleMessage(Message msg) {
 			switch( msg.what ) {
 			case 0:
-				
+				ArrayList<String> titleList = parse.htmlParse( (BufferedReader)msg.obj );
+				Thread parseThread = new Thread(){
+					public void run() {
+						
+					};
+				};
+				parseThread.start();
+				break;
 			}
 		}
 	};
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,15 +60,10 @@ public class RecommendMovieActivity extends Activity {
 		Thread t = new Thread(){
 			@Override
 			public void run() {
-				
-				
+				loadTitle("액션", "영국");
 			}
 		};
 		
-		
-		
-		
-		UserGalleryAdapter adapter = new UserGalleryAdapter(this);
 		gallery.setAdapter(adapter);
 		
 		parse = new Parse();
@@ -74,52 +80,28 @@ public class RecommendMovieActivity extends Activity {
 			}
 		});
 	}
-
-	public class UserGalleryAdapter extends BaseAdapter {
-		private Context context;
-		private int galleryItemBackground;
-
-		public UserGalleryAdapter(Context context) {
-			this.context = context;
-
-			TypedArray a = obtainStyledAttributes(R.styleable.BasicGallery);
-			// 
-			galleryItemBackground = a.getResourceId(
-					R.styleable.BasicGallery_android_galleryItemBackground, 0);
-
-			// 백그라운드 배경을 얻기위해 얻어온 자원을 해제
-			a.recycle();
-		}
-		public int getCount() {
-			return images.length;
-		}
-
-		public Object getItem(int position) {
-			return images[position];
-		}
-
-		public long getItemId(int position) {
-			return position;
-		}
-
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ImageView view = null;
-			// 재사용의 의미	
-			if(convertView != null) {
-				view = (ImageView)convertView;
-			}
-			else {
-				view = new ImageView(context);
-			}
-			view.setLayoutParams(new Gallery.LayoutParams(120, 100));
-
-			// 이미지뷰에 백그라운드 배경을 설정한다.
-			view.setBackgroundResource(galleryItemBackground);
-			view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-			//	이미지 세팅 이미지 다운로더를 쓰자
-			view.setImageResource(images[position]);
-
-			return view;
+	
+	private void loadTitle( String genre, String nation ) {
+	    URL url;
+	    ArrayList<String> titleList = new ArrayList<String>();
+	    Message msg = new Message();
+		try {
+			//	뒤에 유니코드는 "영화"라는 글자임
+			String preUrl = URLEncoder.encode( "http://search.naver.com/search.naver?ie=utf8&sm=tab_txc&where=nexearch&query="
+							+ nation + genre + "%EC%98%81%ED%99%94", "UTF-8" ); 
+			url = new URL( preUrl );
+			InputStreamReader isr = new InputStreamReader( url.openConnection().getInputStream(), "UTF-8" );
+			BufferedReader br = new BufferedReader( isr );
+			
+			msg.what = 0;
+			msg.obj = br;
+			handler.sendMessageDelayed(msg, 200);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
 }
