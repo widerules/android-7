@@ -40,10 +40,12 @@ public class MyWishListActivity extends Activity {
     
     public void getMyWishListInfo(Cursor outCursor) {
     	int recordCnt = outCursor.getCount();
+    	int i = 0;
     	
-    	String[] photo_Col = {"m_photo_1", "m_photo_2", "m_photo_3", "m_photo_4", "m_photo_5"};
+    	String[] photo = {"m_photo_1", "m_photo_2", "m_photo_3", "m_photo_4", "m_photo_5"};
+    	int[] photo_Col = null;
     	String[] actors = null;
-    	String[] photos = null;
+    	
     	
     	int m_titleCol = outCursor.getColumnIndex("m_title");
     	int m_thumbnailCol = outCursor.getColumnIndex("m_thumbnail");
@@ -53,14 +55,14 @@ public class MyWishListActivity extends Activity {
     	int m_genreCol = outCursor.getColumnIndex("m_genre");
     	int m_open_infoCol = outCursor.getColumnIndex("m_open_info");
     	int m_gradeCol = outCursor.getColumnIndex("m_grade");
-    	int m_photo_1Col = outCursor.getColumnIndex("m_photo_1");
-    	int m_photo_2Col = outCursor.getColumnIndex("m_photo_2");
-    	int m_photo_3Col = outCursor.getColumnIndex("m_photo_3");
-    	int m_photo_4Col = outCursor.getColumnIndex("m_photo_4");
-    	int m_photo_5Col = outCursor.getColumnIndex("m_photo_5");
+    	
+    	for(i=0; i<5; i++) {
+    		photo_Col[i] = outCursor.getColumnIndex(photo[i]);
+    	}
+    	
     	int m_storyCol = outCursor.getColumnIndex("m_story");
     	
-    	for(int i=0; i<recordCnt; i++) {
+    	for(i=0; i<recordCnt; i++) {
     		outCursor.moveToNext();
     		
     		movie = new Movie();
@@ -73,6 +75,7 @@ public class MyWishListActivity extends Activity {
     		movie.setGenre(outCursor.getString(m_genreCol));
     		movie.setOpenInfo(outCursor.getString(m_open_infoCol));
     		movie.setGrade(outCursor.getString(m_gradeCol));
+    	
     		//movie.setPhoto();
     		
     		for(int j=0; j>5; j++) {
