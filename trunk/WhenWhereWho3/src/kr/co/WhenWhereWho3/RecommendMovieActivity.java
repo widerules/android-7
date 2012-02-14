@@ -2,6 +2,7 @@ package kr.co.WhenWhereWho3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -32,21 +33,46 @@ public class RecommendMovieActivity extends Activity {
 	private URL url;
 	
 	private Parse parse;
-	private ImageDownloader imageDownloader = new ImageDownloader();
+	
+	ArrayList<Movie> movieList;
+	ArrayList<String> titleList;
+	
+	MovieGalleryAdapter galleryAdapter;
 	
 	private Handler handler = new Handler(){
+		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
 			switch( msg.what ) {
 			case 0:
-				ArrayList<String> titleList = parse.htmlParse( (BufferedReader)msg.obj );
+				movieList = new ArrayList<Movie>();
+				titleList = parse.htmlParse( (BufferedReader)msg.obj );
 				Thread parseThread = new Thread(){
 					public void run() {
-						
+						for( String title : titleList ) {
+							try {
+								url = new URL(
+										"http://apis.daum.net/contents/movie?apikey=c98d00bfc11535f42405eb2605a60586e974c279&output=json&q="
+												+ title );
+								isr = new InputStreamReader( url.openConnection().getInputStream(), "UTF-8" );
+								br = new BufferedReader( isr );
+								movieList.addAll(parse.jsonParse(br));
+								
+								Message msg = new Message();
+								msg.what = 1;
+								msg.obj = movieList;
+								handler.sendMessageDelayed(msg, 200);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 					};
 				};
 				parseThread.start();
 				break;
+			case 1:
+				movieList = (ArrayList<Movie>)msg.obj; 
+				galleryAdapter = new MovieGalleryAdapter(RecommendMovieActivity.this, R.layout.mylist, movieList);
 			}
 		}
 	};

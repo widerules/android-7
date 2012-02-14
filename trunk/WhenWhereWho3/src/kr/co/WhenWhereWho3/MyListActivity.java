@@ -50,7 +50,7 @@ public class MyListActivity extends Activity {
 				if( movies == null ) {
 					Toast.makeText(getApplicationContext(), "검색 결과가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
 				} else {
-					adapter = new MyMovieListAdapter(MyListActivity.this, R.layout.mylist, movies );
+					adapter = new MyMovieListAdapter( MyListActivity.this, R.layout.mylist, movies );
 					listVw.setAdapter(adapter);
 				}
 				break;
