@@ -37,7 +37,7 @@ public class WhenWhereWho3Activity extends Activity {
 				intent = new Intent(this,SetupActivity.class);
 				break;
 			case R.id.btnCinema:
-				
+				intent = new Intent(this, FindCinemaActivity.class);
 				break;
 				
 				
