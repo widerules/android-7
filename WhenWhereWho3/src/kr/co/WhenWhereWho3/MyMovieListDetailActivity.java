@@ -59,6 +59,11 @@ public class MyMovieListDetailActivity extends Activity {
         	//	movie객체를 가져와서 데이터를 뿌려준다.
         	Movie movie = (Movie)intent.getSerializableExtra("movie");
         	
+        	myWhenTxtVw.setText(movie.getWhen());
+        	myWhereTxtVw.setText(movie.getWhere());
+        	myWhoTxtVw.setText(movie.getWith());
+        	myCommentTxtVw.setText(movie.getComment());
+        	
         	myTitleTxtVw.setText(movie.getTitle());
         	float rating = ( float )( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0;
         	myRatingBar.setRating( rating );

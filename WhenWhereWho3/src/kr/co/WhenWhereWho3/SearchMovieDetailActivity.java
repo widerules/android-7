@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class SearchMovieDetailActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				intent = new Intent(SearchMovieDetailActivity.this, RegistMovieActivity.class);
+				intent.putExtra("movie", movie);
 				startActivity(intent);
 			}
 		});
@@ -93,8 +95,11 @@ public class SearchMovieDetailActivity extends Activity {
 			imageDownloader.download(movie.getThumbnail(), movieImg);
 			photo = movie.getPhoto();
 			
+			Log.e("detail",photo[0].toString());
+			
 			UserGalleryAdapter adapter = new UserGalleryAdapter(this);
 			galleryPhoto.setAdapter(adapter);
+			
 		}
 		
 		galleryPhoto.setOnItemClickListener(new OnItemClickListener() {

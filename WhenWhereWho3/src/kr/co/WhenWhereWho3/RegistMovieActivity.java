@@ -1,5 +1,6 @@
 package kr.co.WhenWhereWho3;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -7,11 +8,14 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,19 +41,23 @@ public class RegistMovieActivity extends Activity {
 
 	static final int TIME_DIALOG_ID = 0;
 	static final int DATE_DIALOG_ID = 1;
-
-	String DBName = "WWW";
-	String TableName = "t_movie_list";
+	static final int PROGRESS_BAR = 2;
 
 	ProgressDialog pd;
 
 	TextView titleTxtVw, dateTxtVw, ratingBarTxt;
 	EditText whereTxt, whoTxt, commentEditTxt;
+	
+	String when;
+	String where;
+	String with;
+	String comment;
+	float grade;
 
+	Movie movie;
+	MovieDBHelper DBHelper;
 	SQLiteDatabase db;
-
-
-
+	
 	Handler handler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
@@ -59,6 +67,10 @@ public class RegistMovieActivity extends Activity {
 					pd.dismiss();
 				}
 				Toast.makeText(getApplicationContext(), "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+				
+				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
+				startActivity(intent);
+				
 				break;
 			}
 
@@ -70,11 +82,27 @@ public class RegistMovieActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.registmovie);
+		
+		
+		titleTxtVw = (TextView)findViewById(R.id.titleTxtVw);
+		dateTxtVw = (TextView)findViewById(R.id.dateTxtVw);
+		whereTxt = (EditText)findViewById(R.id.whereTxt);
+		whoTxt = (EditText)findViewById(R.id.whoTxt);
+		commentEditTxt = (EditText)findViewById(R.id.commentEditTxt);
+		
 
-		createDatabase(DBName);
-		createTable(TableName);
+		// 상세정보 페이지의 값들을 movie 객체로 넘겨받음
+		Intent intent = getIntent();
+		
+		if(intent != null) {
+		movie = (Movie)intent.getSerializableExtra("movie");
+		} else {
+			Log.d("에러",movie.toString());
+		}
+		
+		titleTxtVw.setText(movie.getTitle());
 
-
+		// 날짜와 시간 설정
 		dateTxtVw = (TextView)findViewById(R.id.dateTxtVw);
 		dateBtn = (Button)findViewById(R.id.dateBtn);
 		dateBtn.setOnClickListener(new OnClickListener() {
@@ -110,49 +138,41 @@ public class RegistMovieActivity extends Activity {
 				ratingBarTxt.setText((rating*2) + " / 10.0");
 			}
 		});
-
+		
+		
 		Button registBtn = (Button)findViewById(R.id.registBtn);
 		registBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {				
-
-				showDialog(1001);
-
-				titleTxtVw = (TextView)findViewById(R.id.titleTxtVw);
-				dateTxtVw = (TextView)findViewById(R.id.dateTxtVw);
-				whereTxt = (EditText)findViewById(R.id.whereTxt);
-				whoTxt = (EditText)findViewById(R.id.whoTxt);
-				commentEditTxt = (EditText)findViewById(R.id.commentEditTxt);
-
-
-				final String title = titleTxtVw.getText().toString();
-				final String date = dateTxtVw.getText().toString();
-				final String where = whereTxt.getText().toString();
-				final String who = whoTxt.getText().toString();
-				final String grade = ratingBar.getRating()*2 + "";
-				final String comment = commentEditTxt.getText().toString();
-
-
-				if (where.trim().equals("") || who.trim().equals("") || comment.trim().equals("")) {
+			public void onClick(View v) {	
+				
+				where = whereTxt.getText().toString();
+				with = whoTxt.getText().toString();
+				comment = commentEditTxt.getText().toString();
+				grade = (ratingBar.getRating())*2;
+				
+				if (where.trim().equals("") || with.trim().equals("") || comment.trim().equals("")) {
 					Toast.makeText(getApplicationContext(), "데이터를 먼저 입력하세요.", Toast.LENGTH_LONG).show();
 					return;
 				}
 
-				Thread t = new Thread(){
-					@Override
+				Thread t = new Thread() {
 					public void run() {
-						insertData(title, date, where, who, grade, comment);
+						Looper.prepare();				
+						
+//						showDialog(PROGRESS_BAR);		
+						
+						insertRecordParam();
 						handler.sendEmptyMessage(0);
-					}
-				};
-				t.start();
+					};
+				};			
+				t.start();				
 			}
 		});
-		
+
 		Button cancelBtn = (Button)findViewById(R.id.cancleBtn);
 		cancelBtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
@@ -189,10 +209,14 @@ public class RegistMovieActivity extends Activity {
 			return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute, false);
 		case DATE_DIALOG_ID:
 			return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+		case PROGRESS_BAR:
+			pd = new ProgressDialog(this);
+			pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pd.setMessage("등록 중입니다");
+			return pd;
 		}
 		return null;
 	}
-
 
 	private void updateDisplay() {
 		dateTxtVw.setText(new StringBuilder().append(mYear).append("-")
@@ -209,43 +233,34 @@ public class RegistMovieActivity extends Activity {
 		}
 	}
 
-	private void createDatabase(String inputDBName) {
-		db = openOrCreateDatabase(inputDBName, MODE_PRIVATE, null);
+	private void insertRecordParam() {
+		DBHelper = new MovieDBHelper(this);
+		db = DBHelper.getWritableDatabase();
+
+		ContentValues recordValues = new ContentValues();
+
+		String[] actors = movie.getActor();
+		String actor = "";
+		
+		for(int i=0; i<actors.length; i++) {
+			actor += actors[i] + ", ";
+		}
+		
+		recordValues.put("m_title", movie.getTitle());
+		recordValues.put("m_when", when);
+		recordValues.put("m_where", where);
+		recordValues.put("m_with", with);
+		recordValues.put("m_grade", grade + "");
+		recordValues.put("m_comment", comment);
+		recordValues.put("m_thumbnail", movie.getThumbnail());
+		recordValues.put("m_nation", movie.getNation());
+		recordValues.put("m_director", movie.getDirector());
+		recordValues.put("m_actor", actor);
+		recordValues.put("m_genre", movie.getGenre());
+		recordValues.put("m_open_info", movie.getOpenInfo());
+		recordValues.put("m_story", movie.getStory());
+		
+		db.insert("t_movielist", null, recordValues);
 	}
-
-
-	private void createTable(String inputTableName) {
-		String tableSql = "create table " + inputTableName + " ( "
-				+ " _id integer PRIMARY KEY autoincrement, "
-				+ " m_title text, "
-				+ " m_open_info text, "
-				+ " m_nation text, "
-				+ " m_actor text, "
-				+ " m_genre text, "
-				+ " m_grade text, "
-				+ " m_thumbnail blob, "
-				+ " m_who text, "
-				+ " m_where	text, "
-				+ " m_when	text, "
-				+ " m_comment text );";
-		db.execSQL(tableSql);
-	}
-
-	private void insertData(String title, String date, String where, String who, String grade, String comment) {
-		String sql = "insert into t_movie_list(m_title, m_when, m_where, m_who, m_grade, m_comment) values('" + title + "', '" + date + "', '" + where + "', '" + who + "', '" + grade + "', '"+ comment + "')";
-		db.execSQL(sql);
-	}
-
-
-	@Override
-	protected Dialog onCreateDialog(int id, Bundle args) {
-		pd = new ProgressDialog(this);
-		pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		pd.setMessage("등록 중입니다");
-
-		return pd;
-	}
-
-
 }
 
