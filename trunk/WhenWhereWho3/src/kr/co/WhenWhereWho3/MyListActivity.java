@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +26,10 @@ public class MyListActivity extends Activity {
 	private SQLiteDatabase db;
 	
 	ListView listview;					//	리스트 뷰
+	Button registBtn; 
+	Button deleteBtn;
+	
+	Intent intent;
 	
 	Movie movie;						//	쓰레드에서 사용할 객체
 	ArrayList<Movie> movies;
@@ -39,6 +45,9 @@ public class MyListActivity extends Activity {
         dbHelper = new MovieDBHelper(this);
         db = dbHelper.getWritableDatabase();
         movies = new ArrayList<Movie>();
+        
+        registBtn = (Button)findViewById(R.id.registBtn);
+        deleteBtn = (Button)findViewById(R.id.deleteBtn);
         
         Cursor cursor = db.rawQuery("SELECT * FROM t_movielist", null);
 
@@ -70,6 +79,25 @@ public class MyListActivity extends Activity {
 					deleteMoviePosition = position;
 					request();
 				return false;
+			}
+		});
+        
+        
+        registBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				intent = new Intent(getApplicationContext(), SearchMovieListActivity.class);
+				startActivity(intent);
+			}
+		});
+        
+        deleteBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				intent = new Intent(getApplicationContext(), MyListDeleteActivity.class);
+				startActivity(intent);
 			}
 		});
         
@@ -185,7 +213,7 @@ public class MyListActivity extends Activity {
 		if(keyCode == KeyEvent.KEYCODE_BACK) {
 			Log.e("Back", "bac");
 			Intent intent = new Intent(this, WhenWhereWho3Activity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP & Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			startActivity(intent);
 		}
 		
