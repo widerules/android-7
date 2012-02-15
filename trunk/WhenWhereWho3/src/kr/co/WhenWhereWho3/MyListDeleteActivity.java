@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -141,7 +142,6 @@ public class MyListDeleteActivity extends Activity {
 	public void deleteMovieWishList() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
-		
 
 		ArrayList<Integer> isCheckedConfrim = adapter.getChecked();
 
@@ -152,19 +152,20 @@ public class MyListDeleteActivity extends Activity {
 
 			String[] actors = deleteMovie.getActor();
 			String actor = "";
-			
+
 			for (int j = 0; j < actors.length; j++) {
 				actor += ((j < actor.length()) ? "," : "") + actors[j];
 			}
 			Log.e("actor", actor);
-			
+
 			String[] Args = { deleteMovie.getTitle(), actor };
 			Log.e("args", "眉农等 index : " + isCheckedConfrim.get(i));
-			int cnt = db.delete("t_movielist", "m_title = ? and m_actor = ?", Args);
+			int cnt = db.delete("t_movielist", "m_title = ? and m_actor = ?",
+					Args);
 			Log.e("dbCnt", "眉农等 index : " + cnt);
 		}
 		db.close();
-		
+
 		for (int i = 0; i < isCheckedConfrim.size(); i++) {
 			Log.e("movie按眉 昏力 何盒", "眉农等 index : " + isCheckedConfrim.get(i));
 			movies.remove(isCheckedConfrim.get(i));
@@ -199,13 +200,10 @@ public class MyListDeleteActivity extends Activity {
 						deleteMovieWishList();
 						adapter.notifyDataSetChanged();
 						listview.invalidate();
-						//if (movies.size() == 0) {
-							Intent intent = new Intent(getApplicationContext(),
-									MyMovieListActivity.class);
-							intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-							startActivity(intent);
-						//}
-						
+						Intent intent = new Intent(getApplicationContext(),
+								MyMovieListActivity.class);
+						startActivity(intent);
+
 					}
 				});
 		requestDialog.setNegativeButton(titleButtonNo,
@@ -216,7 +214,23 @@ public class MyListDeleteActivity extends Activity {
 					}
 				});
 
+		
 		return requestDialog.show();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		Log.e("Back", "bac");
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Log.e("Back", "bac");
+			Intent intent = new Intent(this, MyMovieListActivity.class);
+//			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//					| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivity(intent);
+			finish();
+		}
+
+		return super.onKeyDown(keyCode, event);
 	}
 
 }
