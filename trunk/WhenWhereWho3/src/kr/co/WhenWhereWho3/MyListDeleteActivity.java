@@ -1,34 +1,21 @@
 package kr.co.WhenWhereWho3;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import android.R.bool;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ListView;
 
 public class MyListDeleteActivity extends Activity {
 
@@ -71,7 +58,9 @@ public class MyListDeleteActivity extends Activity {
 
 		if (cursor != null) {
 			listview = (ListView) findViewById(R.id.listview);
-			getMyListInfo(cursor);
+			//	Cursor에 대한 결과를 movie리스트 객체에 받는다.
+			//	리턴을 MovieList로 함( 수정자 - 이만재 2012-02-15 )
+			movies = getMyListInfo(cursor);
 			adapter = new MyMovieListDeleteAdapter(MyListDeleteActivity.this,
 					R.layout.mylistdelete, movies);
 			listview.setAdapter(adapter);
@@ -79,7 +68,6 @@ public class MyListDeleteActivity extends Activity {
 
 		selectAllBtn = (Button) findViewById(R.id.selectAllBtn);
 		selectAllBtn.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				isChecked = !isChecked;
@@ -92,7 +80,6 @@ public class MyListDeleteActivity extends Activity {
 
 		deleteBtn = (Button) findViewById(R.id.deleteBtn);
 		deleteBtn.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				request();
@@ -101,7 +88,8 @@ public class MyListDeleteActivity extends Activity {
 
 	}// onCreate( ) 끝
 
-	public void getMyListInfo(Cursor outCursor) {
+	public ArrayList<Movie> getMyListInfo(Cursor outCursor) {
+		ArrayList<Movie> movies = new ArrayList<Movie>();
 		int recordCnt = outCursor.getCount();
 		int i = 0;
 
@@ -142,6 +130,7 @@ public class MyListDeleteActivity extends Activity {
 
 		}
 		db.close();
+		return movies;
 	}
 
 	public void deleteMovieWishList() {
@@ -152,6 +141,7 @@ public class MyListDeleteActivity extends Activity {
 		
 		for (int j = 0; j < isCheckedConfrim.length; j++) {
 			Log.e("삭제", "들렸다"+ isCheckedConfrim[j]);
+			
 			if (isCheckedConfrim[j] == true) {
 				Log.e("삭제", "지운다" + isCheckedConfrim[j]);
 				Movie deleteMovie = movies.get(j);
@@ -165,17 +155,18 @@ public class MyListDeleteActivity extends Activity {
 
 				String[] Args = { deleteMovie.getTitle(), actor };
 				db.delete("t_movielist", "m_title = ? and m_actor = ?", Args);
-
 				db.close();
 			}
 		}
 		
 		for (int j = 0; j < isCheckedConfrim.length; j++) {
-			Log.e("삭제", "들렸다");
+			Log.e("movie객체 삭제 부분", "체크된 index : " + j);
 			if (isCheckedConfrim[j] == true) {
 				movies.remove(j);
 			}
 		}
+		adapter.notifyDataSetChanged();
+		listview.invalidate();
 		
 	}
 
@@ -185,7 +176,8 @@ public class MyListDeleteActivity extends Activity {
 		String titleButtonYes = "예";
 		String titleButtonNo = "아니오";
 
-		AlertDialog dialog = makeRequestDialog(title, adapter.getChecked().length + message, titleButtonYes,
+		//	나중에 메시지 수정
+		AlertDialog dialog = makeRequestDialog(title, message, titleButtonYes,
 				titleButtonNo);
 		dialog.show();
 	}
@@ -214,10 +206,9 @@ public class MyListDeleteActivity extends Activity {
 				});
 		requestDialog.setNegativeButton(titleButtonNo,
 				new DialogInterface.OnClickListener() {
-
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-
+						
 					}
 				});
 
