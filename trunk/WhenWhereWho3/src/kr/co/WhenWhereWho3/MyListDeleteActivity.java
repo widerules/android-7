@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MyListDeleteActivity extends Activity {
 
@@ -30,20 +31,21 @@ public class MyListDeleteActivity extends Activity {
 
 	Movie movie; // 쓰레드에서 사용할 객체
 	ArrayList<Movie> movies;
-	int deleteMoviePosition;
 	MyMovieListDeleteAdapter adapter; // MovieAdapter
 
-	AdapterView.OnItemClickListener mItemClickListener = new OnItemClickListener() {
+	AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 				long arg3) {
 			// TODO Auto-generated method stub
+			Toast.makeText(getApplicationContext(), "" + (position + 1),
+					Toast.LENGTH_SHORT).show();
 			adapter.setChecked(position);
 			adapter.notifyDataSetChanged();
 		}
 	};
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,12 +60,15 @@ public class MyListDeleteActivity extends Activity {
 
 		if (cursor != null) {
 			listview = (ListView) findViewById(R.id.listview);
-			//	Cursor에 대한 결과를 movie리스트 객체에 받는다.
-			//	리턴을 MovieList로 함( 수정자 - 이만재 2012-02-15 )
+			listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+			// Cursor에 대한 결과를 movie리스트 객체에 받는다.
+			// 리턴을 MovieList로 함( 수정자 - 이만재 2012-02-15 )
 			movies = getMyListInfo(cursor);
 			adapter = new MyMovieListDeleteAdapter(MyListDeleteActivity.this,
 					R.layout.mylistdelete, movies);
 			listview.setAdapter(adapter);
+			listview.setOnItemClickListener(mItemClickListener);
 		}
 
 		selectAllBtn = (Button) findViewById(R.id.selectAllBtn);
@@ -136,38 +141,35 @@ public class MyListDeleteActivity extends Activity {
 	public void deleteMovieWishList() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
-
-		boolean[] isCheckedConfrim = adapter.getChecked();
 		
-		for (int j = 0; j < isCheckedConfrim.length; j++) {
-			Log.e("삭제", "들렸다"+ isCheckedConfrim[j]);
+
+		ArrayList<Integer> isCheckedConfrim = adapter.getChecked();
+
+		Log.e("movie Size", "체크된 index : " + isCheckedConfrim.size());
+		for (int i = 0; i < isCheckedConfrim.size(); i++) {
+			Log.e("movie객체", "체크된 index : " + isCheckedConfrim.get(i));
+			Movie deleteMovie = movies.get(isCheckedConfrim.get(i));
+
+			String[] actors = deleteMovie.getActor();
+			String actor = "";
 			
-			if (isCheckedConfrim[j] == true) {
-				Log.e("삭제", "지운다" + isCheckedConfrim[j]);
-				Movie deleteMovie = movies.get(j);
-
-				String[] actors = deleteMovie.getActor();
-				String actor = "";
-
-				for (int i = 0; i < actors.length; i++) {
-					actor += ((i < actor.length()) ? "," : "") + actors[i];
-				}
-
-				String[] Args = { deleteMovie.getTitle(), actor };
-				db.delete("t_movielist", "m_title = ? and m_actor = ?", Args);
-				db.close();
+			for (int j = 0; j < actors.length; j++) {
+				actor += ((j < actor.length()) ? "," : "") + actors[j];
 			}
+			Log.e("actor", actor);
+			
+			String[] Args = { deleteMovie.getTitle(), actor };
+			Log.e("args", "체크된 index : " + isCheckedConfrim.get(i));
+			int cnt = db.delete("t_movielist", "m_title = ? and m_actor = ?", Args);
+			Log.e("dbCnt", "체크된 index : " + cnt);
 		}
+		db.close();
 		
-		for (int j = 0; j < isCheckedConfrim.length; j++) {
-			Log.e("movie객체 삭제 부분", "체크된 index : " + j);
-			if (isCheckedConfrim[j] == true) {
-				movies.remove(j);
-			}
+		for (int i = 0; i < isCheckedConfrim.size(); i++) {
+			Log.e("movie객체 삭제 부분", "체크된 index : " + isCheckedConfrim.get(i));
+			movies.remove(isCheckedConfrim.get(i));
 		}
-		adapter.notifyDataSetChanged();
-		listview.invalidate();
-		
+
 	}
 
 	public void request() {
@@ -176,7 +178,7 @@ public class MyListDeleteActivity extends Activity {
 		String titleButtonYes = "예";
 		String titleButtonNo = "아니오";
 
-		//	나중에 메시지 수정
+		// 나중에 메시지 수정
 		AlertDialog dialog = makeRequestDialog(title, message, titleButtonYes,
 				titleButtonNo);
 		dialog.show();
@@ -195,20 +197,22 @@ public class MyListDeleteActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						deleteMovieWishList();
-						if(movies.size() == 0) {
-							Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
-							intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-							startActivity(intent);
-						}
 						adapter.notifyDataSetChanged();
 						listview.invalidate();
+						//if (movies.size() == 0) {
+							Intent intent = new Intent(getApplicationContext(),
+									MyMovieListActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+							startActivity(intent);
+						//}
+						
 					}
 				});
 		requestDialog.setNegativeButton(titleButtonNo,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
+
 					}
 				});
 
