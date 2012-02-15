@@ -6,6 +6,7 @@
 
     <uses-sdk android:minSdkVersion="10" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -28,9 +29,10 @@
         <activity android:name=".SearchMovieDetailActivity" android:label="SearchMovieDetail" />
         <activity android:name=".RegistMovieActivity" android:label="RegistMovie" />
         <activity android:name=".RecommendMovieActivity" android:label="RecommendMovie" />
-        <activity android:name=".SetupActivity" android:label="SetUp" />
-        
+        <activity android:name=".SetupActivity" android:label="SetUp" />        
         <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
+        
+        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>
