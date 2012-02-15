@@ -1,6 +1,8 @@
 package kr.co.WhenWhereWho3;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +12,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class SetupActivity extends Activity {	
-	String [] name = {"영화 검색 화면 설정", "포스터 크게 보기", "List로 보기", "포스터 여러개 보기"};
+	String [] name = {"List로 보기", "포스터 여러개 보기"};
+	private String viewType;
+	Spinner spinVw;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,12 +24,29 @@ public class SetupActivity extends Activity {
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, name);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinVw.setAdapter(adapter);
+        
+        SharedPreferences pref = getSharedPreferences(viewType, Activity.MODE_PRIVATE);
+        
         spinVw.setSelection(0);
         spinVw.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Toast.makeText(getApplicationContext(), "선택된 View : " + name[position], 2000).show();
+				SharedPreferences pref = getSharedPreferences(viewType, Activity.MODE_PRIVATE);
+		    	Editor editor = (Editor)pref.edit();
+		    	
+		    	switch (position) {
+		    	// case 0 : List로 보기
+				case 0:
+					editor.putInt(viewType, 0);
+					break;
+				// case 1 : GridView로 보기
+				case 1:
+					editor.putInt(viewType, 1);
+					break;
+				}
+		    			    	
+		    	editor.commit();
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
