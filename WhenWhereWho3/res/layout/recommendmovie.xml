@@ -18,16 +18,28 @@
         android:layout_height="wrap_content"
         android:src="@drawable/moivebar"
         />
-    <Gallery 
+    <kr.co.WhenWhereWho3.CoverFlow
         android:id="@+id/gallery"
 	    android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center"
+		android:layout_marginBottom="30dp"
+        />
+    <TextView 
+        android:id="@+id/imgTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginBottom="30dp"
+       	android:singleLine="true"
+       	android:text="영화 제목"
+        android:gravity="center"
         />
     <ImageView		
 	    android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
+		android:layout_marginTop="-25dp"
 		android:src="@drawable/moivebar"
 	     />
 </LinearLayout>
