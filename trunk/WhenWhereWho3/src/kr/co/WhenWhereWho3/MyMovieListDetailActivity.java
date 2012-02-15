@@ -54,6 +54,11 @@ public class MyMovieListDetailActivity extends Activity {
         //	전달받은 인텐트를 가져온다.
         Intent intent = getIntent();
 
+        
+        
+        
+        
+        
         //	인텐트가 존재하면
         if( intent != null ) {
         	//	movie객체를 가져와서 데이터를 뿌려준다.
