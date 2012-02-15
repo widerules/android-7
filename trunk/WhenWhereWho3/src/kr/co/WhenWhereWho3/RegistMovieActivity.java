@@ -168,7 +168,7 @@ public class RegistMovieActivity extends Activity {
 					public void run() {
 						Looper.prepare();				
 						
-//						showDialog(PROGRESS_BAR);		
+						showDialog(PROGRESS_BAR);		
 						
 						insertRecordParam();
 						handler.sendEmptyMessage(0);
