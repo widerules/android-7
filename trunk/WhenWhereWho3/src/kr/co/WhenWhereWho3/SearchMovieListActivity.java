@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -106,6 +107,7 @@ public class SearchMovieListActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getApplicationContext(), SearchMovieDetailActivity.class);
 				intent.putExtra("movie", movies.get(position));
+				//intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
 			}
 		});

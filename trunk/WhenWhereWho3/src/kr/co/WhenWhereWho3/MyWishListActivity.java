@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
@@ -125,6 +126,7 @@ public class MyWishListActivity extends Activity {
     		movies.add(movie);
     	
     	}
+    	db.close();
     }
     
     public void deleteMovieWishList() {
@@ -136,7 +138,7 @@ public class MyWishListActivity extends Activity {
 		String actor = "";
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
+			actor += actors[i] + ((i < actor.length()) ? "," : "");
 		}
 		
 		String[] Args = {deleteMovie.getTitle(), actor};
@@ -183,6 +185,20 @@ public class MyWishListActivity extends Activity {
 		});
 		
 		return requestDialog.show();
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		Log.e("Back", "bac");
+		if(keyCode == KeyEvent.KEYCODE_BACK) {
+			Log.e("Back", "bac");
+			Intent intent = new Intent(this, WhenWhereWho3Activity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP & Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivity(intent);
+		}
+		
+		return super.onKeyDown(keyCode, event);
 	}
 }
 

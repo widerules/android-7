@@ -7,7 +7,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,9 +18,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -34,6 +38,7 @@ public class MyListActivity extends Activity {
 	
 	Movie movie;						//	쓰레드에서 사용할 객체
 	ArrayList<Movie> movies;
+	int deleteMoviePosition;
 	MyMovieListAdapter adapter;				//	MovieAdapter
 	
 	/** Called when the activity is first created. */
@@ -51,7 +56,7 @@ public class MyListActivity extends Activity {
         if(cursor!=null) {
         	listview = (ListView)findViewById(R.id.listview);
         	getMyListInfo(cursor);
-        	MyMovieListAdapter adapter = new MyMovieListAdapter(MyListActivity.this, R.layout.mylist, movies);
+        	adapter = new MyMovieListAdapter(MyListActivity.this, R.layout.mylist, movies);
         	listview.setAdapter(adapter);
         }
         
@@ -68,8 +73,19 @@ public class MyListActivity extends Activity {
 			}
 		});
         
+        listview.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+					deleteMoviePosition = position;
+					request();
+				return false;
+			}
+		});
+        
     }//	onCreate( ) 끝   
-    
+
     public void getMyListInfo(Cursor outCursor) {
     	int recordCnt = outCursor.getCount();
     	int i = 0;
@@ -110,8 +126,82 @@ public class MyListActivity extends Activity {
     		movies.add(movie);
     	
     	}
+    	db.close();
     }
-
+    
+    public void deleteMovieWishList() {
+		dbHelper = new MovieDBHelper(this);
+		db = dbHelper.getWritableDatabase();
+		
+		Movie deleteMovie = movies.get(deleteMoviePosition);
+		
+		String[] actors = deleteMovie.getActor();
+		String actor = "";
+		
+		for(int i=0; i<actors.length; i++) {
+			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
+		}
+		
+		String[] Args = {deleteMovie.getTitle(), actor};
+		int recordCnt = db.delete("t_movielist", "m_title = ? and m_actor = ?", Args);
+		
+		if(recordCnt == 1) {
+			Toast.makeText(getApplicationContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+		}
+		
+		db.close();
+	}
+    
+    public void request() {
+		String title = "삭제";
+		String message = "삭제 하시겠습니까?";
+		String titleButtonYes = "예";
+		String titleButtonNo = "아니오";
+		
+		AlertDialog dialog = makeRequestDialog(title, message, titleButtonYes, titleButtonNo);
+		dialog.show();
+	}
+	
+	private AlertDialog makeRequestDialog(CharSequence title, CharSequence message, 
+			CharSequence titleButtonYes, CharSequence titleButtonNo ) {
+		
+		AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
+		requestDialog.setTitle(title);
+		requestDialog.setMessage(message);
+		requestDialog.setPositiveButton(titleButtonYes, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				deleteMovieWishList();
+				movies.remove(deleteMoviePosition);
+				adapter.notifyDataSetChanged();
+				listview.invalidate();
+			}
+		});
+		requestDialog.setNegativeButton(titleButtonNo, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
+		
+		return requestDialog.show();
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		Log.e("Back", "bac");
+		if(keyCode == KeyEvent.KEYCODE_BACK) {
+			Log.e("Back", "bac");
+			Intent intent = new Intent(this, WhenWhereWho3Activity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP & Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivity(intent);
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
 }
 
 

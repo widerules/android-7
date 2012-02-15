@@ -28,6 +28,7 @@ public class WhenWhereWho3Activity extends Activity {
 				} else if(flag == 1) {
 					intent = new Intent(this,SearchMovieGridActivity.class);
 				}
+				//intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				break;
 			case R.id.btnRecommend:
 				intent = new Intent(this,RecommendMovieActivity.class);
