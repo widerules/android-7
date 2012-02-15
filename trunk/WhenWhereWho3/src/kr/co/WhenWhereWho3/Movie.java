@@ -14,6 +14,12 @@ public class Movie implements Serializable{
 	private String homepage;	//  공식사이트
 	private String story;		//	줄거리
 	private String [] photo;	//	사진( 5장 ) : tag명 - photo#( # : 1, 2, 3, 4, 5 )
+	
+	private String when;
+	private String where;
+	private String with;
+	private String comment;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -80,5 +86,30 @@ public class Movie implements Serializable{
 	public void setPhoto(String[] photo) {
 		this.photo = photo;
 	}
+	public String getWhen() {
+		return when;
+	}
+	public void setWhen(String when) {
+		this.when = when;
+	}
+	public String getWhere() {
+		return where;
+	}
+	public void setWhere(String where) {
+		this.where = where;
+	}
+	public String getWith() {
+		return with;
+	}
+	public void setWith(String with) {
+		this.with = with;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
 	
 }

@@ -40,6 +40,8 @@ public class WhenWhereWho3Activity extends Activity {
 				
 				break;
 				
+				
+				
 		}
     	startActivity(intent);
     }
