@@ -1,5 +1,7 @@
 package kr.co.WhenWhereWho3;
 
+import java.util.List;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,16 +14,21 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 public class FindCinemaActivity extends MapActivity {
 	MapView mapView;
+	List<Overlay> mapOverlays;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.findcinema); 
         
-//        mapView.setBuiltInZoomControls(true);
+        mapView = (MapView)findViewById(R.id.mapView);
+        mapView.setBuiltInZoomControls(true);
+        
         
         startLocationService();
     }
