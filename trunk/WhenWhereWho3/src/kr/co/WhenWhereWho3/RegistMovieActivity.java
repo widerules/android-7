@@ -272,15 +272,6 @@ public class RegistMovieActivity extends Activity {
 		db.insert("t_movielist", null, recordValues);
 	}
 
-
-	@Override
-	protected Dialog onCreateDialog(int id, Bundle args) {
-		pd = new ProgressDialog(this);
-		pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		pd.setMessage("등록 중입니다");
-		return pd;
-	}
-	
     public void loadImage(){
     	try {
     		//이미지 주소
