@@ -138,7 +138,7 @@ public class MyWishListActivity extends Activity {
 		String actor = "";
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i < actor.length()) ? "," : "");
+			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
 		
 		String[] Args = {deleteMovie.getTitle(), actor};

@@ -139,7 +139,7 @@ public class MyListActivity extends Activity {
 		String actor = "";
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
+			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
 		
 		String[] Args = {deleteMovie.getTitle(), actor};
