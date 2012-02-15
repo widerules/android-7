@@ -23,9 +23,7 @@ public class Parse {
 		String title = "";
 		ArrayList<String> titleList = new ArrayList<String>();
 		Log.d("HTML", "htmlParse 진입");
-		
-		
-		
+
 		try {
 			//	BufferedReader가 존재할 경우만 동작
 			if( br != null ) {
