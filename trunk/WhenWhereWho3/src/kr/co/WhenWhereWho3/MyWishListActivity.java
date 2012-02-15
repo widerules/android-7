@@ -1,8 +1,10 @@
 package kr.co.WhenWhereWho3;
 
 import java.util.ArrayList;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,7 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 public class MyWishListActivity extends Activity {
@@ -20,9 +24,11 @@ public class MyWishListActivity extends Activity {
 	private SQLiteDatabase db;
 	
 	Movie movie;
+	int deleteMoviePosition;
 	ArrayList<Movie> movies;
 	
 	ListView listview;
+	MovieListAdapter adapter;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -39,7 +45,7 @@ public class MyWishListActivity extends Activity {
         if(cursor!=null) {
         	listview = (ListView)findViewById(R.id.listview);
         	getMyWishListInfo(cursor);
-        	MovieListAdapter adapter = new MovieListAdapter(MyWishListActivity.this, R.layout.searchlist, movies);
+        	adapter = new MovieListAdapter(MyWishListActivity.this, R.layout.searchlist, movies);
         	listview.setAdapter(adapter);
         }
         
@@ -54,6 +60,18 @@ public class MyWishListActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+        
+        listview.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+					deleteMoviePosition = position;
+					request();
+				return false;
+			}
+		
+        });
     }
     
     public void getMyWishListInfo(Cursor outCursor) {
@@ -108,6 +126,64 @@ public class MyWishListActivity extends Activity {
     	
     	}
     }
+    
+    public void deleteMovieWishList() {
+		dbHelper = new MovieDBHelper(this);
+		db = dbHelper.getWritableDatabase();
+		
+		Movie deleteMovie = movies.get(deleteMoviePosition);
+		String[] actors = deleteMovie.getActor();
+		String actor = "";
+		
+		for(int i=0; i<actors.length; i++) {
+			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
+		}
+		
+		String[] Args = {deleteMovie.getTitle(), actor};
+		int recordCnt = db.delete("t_wishlist", "m_title = ? and m_actor = ?", Args);
+		
+		if(recordCnt == 1) {
+			Toast.makeText(getApplicationContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+		}
+		
+		db.close();
+	}
+    
+    public void request() {
+		String title = "삭제";
+		String message = "삭제 하시겠습니까?";
+		String titleButtonYes = "예";
+		String titleButtonNo = "아니오";
+		
+		AlertDialog dialog = makeRequestDialog(title, message, titleButtonYes, titleButtonNo);
+		dialog.show();
+	}
+	
+	private AlertDialog makeRequestDialog(CharSequence title, CharSequence message, 
+			CharSequence titleButtonYes, CharSequence titleButtonNo ) {
+		
+		AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
+		requestDialog.setTitle(title);
+		requestDialog.setMessage(message);
+		requestDialog.setPositiveButton(titleButtonYes, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				deleteMovieWishList();
+				movies.remove(deleteMoviePosition);
+				adapter.notifyDataSetChanged();
+			}
+		});
+		requestDialog.setNegativeButton(titleButtonNo, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		});
+		
+		return requestDialog.show();
+	}
 }
 
 

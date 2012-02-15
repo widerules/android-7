@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchMovieDetailActivity extends Activity {	
 
@@ -73,9 +75,14 @@ public class SearchMovieDetailActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				intent = new Intent(SearchMovieDetailActivity.this, RegistMovieActivity.class);
-				intent.putExtra("movie", movie);
-				startActivity(intent);
+				
+				if(insertMovieList() == 0) {
+					intent = new Intent(SearchMovieDetailActivity.this, RegistMovieActivity.class);
+					intent.putExtra("movie", movie);
+					startActivity(intent);
+				} else {
+					Toast.makeText(getApplicationContext(), "나의 영화목록에 이미 등록되어 있습니다", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
@@ -112,7 +119,7 @@ public class SearchMovieDetailActivity extends Activity {
 		});
 	}
 	
-	public void insertMovieInfo() {
+	public void insertMovieWishList() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
 		
@@ -122,26 +129,64 @@ public class SearchMovieDetailActivity extends Activity {
 		String[] actors = movie.getActor();
 		String actor = "";
 		
+		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ", ";
+			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
 		}
 		
-		recordValues.put("m_title", movie.getTitle());
-		recordValues.put("m_thumbnail", movie.getThumbnail());
-		recordValues.put("m_nation", movie.getNation());
-		recordValues.put("m_director", movie.getDirector());
-		recordValues.put("m_actor", actor);
-		recordValues.put("m_genre", movie.getGenre());
-		recordValues.put("m_open_info", movie.getOpenInfo());
-		recordValues.put("m_grade", movie.getGrade());
-		recordValues.put("m_photo_1", photo[0]);
-		recordValues.put("m_photo_2", photo[1]);
-		recordValues.put("m_photo_3", photo[2]);
-		recordValues.put("m_photo_4", photo[3]);
-		recordValues.put("m_photo_5", photo[4]);
-		recordValues.put("m_story", movie.getStory());
+		//DB정보 중복 Check
+		String SQL = "select * from t_wishlist " +
+						"where m_title = ? and m_actor = ?";
+		String[] args = {movie.getTitle(), actor};
+		Cursor c1 = db.rawQuery(SQL, args);
+		int recordCnt = c1.getCount();
 		
-		db.insert("t_wishlist", null, recordValues) ;
+		if(recordCnt == 0) {
+			
+			recordValues.put("m_title", movie.getTitle());
+			recordValues.put("m_thumbnail", movie.getThumbnail());
+			recordValues.put("m_nation", movie.getNation());
+			recordValues.put("m_director", movie.getDirector());
+			recordValues.put("m_actor", actor);
+			recordValues.put("m_genre", movie.getGenre());
+			recordValues.put("m_open_info", movie.getOpenInfo());
+			recordValues.put("m_grade", movie.getGrade());
+			recordValues.put("m_photo_1", photo[0]);
+			recordValues.put("m_photo_2", photo[1]);
+			recordValues.put("m_photo_3", photo[2]);
+			recordValues.put("m_photo_4", photo[3]);
+			recordValues.put("m_photo_5", photo[4]);
+			recordValues.put("m_story", movie.getStory());
+			
+			db.insert("t_wishlist", null, recordValues) ;
+		} else {
+			Toast.makeText(getApplicationContext(), "찜목록에 이미 등록되어 있습니다", Toast.LENGTH_SHORT).show();
+		}
+		
+		db.close();
+	}
+	
+	public int insertMovieList() {
+		dbHelper = new MovieDBHelper(this);
+		db = dbHelper.getWritableDatabase();
+				
+		String[] actors = movie.getActor();
+		String actor = "";
+		
+		for(int i=0; i<actors.length; i++) {
+			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
+		}
+		
+		//DB정보 중복 Check
+		String SQL = "select * from t_movielist " +
+						"where m_title = ? and m_actor = ?";
+		String[] args = {movie.getTitle(), actor};
+		Cursor c1 = db.rawQuery(SQL, args);
+		int recordCnt = c1.getCount();
+		
+		db.close();
+		
+		return recordCnt;
 	}
 	
 	public void request() {
@@ -164,7 +209,7 @@ public class SearchMovieDetailActivity extends Activity {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				insertMovieInfo();
+				insertMovieWishList();
 			}
 		});
 		requestDialog.setNegativeButton(titleButtonNo, new DialogInterface.OnClickListener() {
