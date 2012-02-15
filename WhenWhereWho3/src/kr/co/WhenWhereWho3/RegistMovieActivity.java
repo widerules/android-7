@@ -270,6 +270,11 @@ public class RegistMovieActivity extends Activity {
 		recordValues.put("m_story", movie.getStory());
 		
 		db.insert("t_movielist", null, recordValues);
+		
+		db.close();
+		
+		Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
+		startActivity(intent);
 	}
 
     public void loadImage(){

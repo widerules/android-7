@@ -1,6 +1,8 @@
 package kr.co.WhenWhereWho3;
 
 import java.util.ArrayList;
+
+import android.R.integer;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,9 +44,16 @@ public class MyMovieListDeleteAdapter extends ArrayAdapter<Movie> {
 	public void setChecked(int position) {
 		isCheckedConfrim[position] = !isCheckedConfrim[position];
 	}
-	
-	public boolean[] getChecked() {
-		return isCheckedConfrim;
+
+	public ArrayList<Integer> getChecked() {
+		int tempSize = isCheckedConfrim.length;
+		ArrayList<Integer> mArrayList = new ArrayList<Integer>();
+		for (int b = 0; b < tempSize; b++) {
+			if (isCheckedConfrim[b]) {
+				mArrayList.add(b);
+			}
+		}
+		return mArrayList;
 	}
 
 	@Override
@@ -63,6 +72,9 @@ public class MyMovieListDeleteAdapter extends ArrayAdapter<Movie> {
 			TextView with = (TextView) v.findViewById(R.id.withTxtVw);
 			RatingBar ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
 
+			
+			checkDelete.setClickable(false);
+			checkDelete.setFocusable(false);
 			checkDelete.setChecked(isCheckedConfrim[position]);
 
 			/********************************************************/
