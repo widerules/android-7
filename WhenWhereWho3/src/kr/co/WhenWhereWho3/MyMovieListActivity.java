@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
@@ -20,7 +22,6 @@ public class MyMovieListActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mymovielistmain);
         
-        
         TabHost tabHost = getTabHost();
         TabSpec myList = tabHost.newTabSpec("myList");
         TabSpec wishList = tabHost.newTabSpec("wishList");
@@ -30,9 +31,11 @@ public class MyMovieListActivity extends TabActivity {
         
         tabHost.addTab(myList);        
         tabHost.addTab(wishList);
-        
-        
     }//	onCreate( ) ³¡
+
+
+    
+    
 }
 
 

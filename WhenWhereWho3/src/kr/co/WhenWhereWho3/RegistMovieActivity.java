@@ -69,6 +69,7 @@ public class RegistMovieActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 				
 				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
 				
 				break;
@@ -175,8 +176,9 @@ public class RegistMovieActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
-				startActivity(intent);
+//				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
+//				startActivity(intent);
+				finish();
 			}
 		});
 	}
@@ -243,7 +245,7 @@ public class RegistMovieActivity extends Activity {
 		String actor = "";
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ", ";
+			actor += actors[i] + ((i < actor.length()) ? "," : "");
 		}
 		
 		recordValues.put("m_title", movie.getTitle());
@@ -261,11 +263,6 @@ public class RegistMovieActivity extends Activity {
 		recordValues.put("m_story", movie.getStory());
 		
 		db.insert("t_movielist", null, recordValues);
-	}
-
-	private void insertData(String title, String date, String where, String who, String grade, String comment) {
-		String sql = "insert into t_movie_list(m_title, m_when, m_where, m_who, m_grade, m_comment) values('" + title + "', '" + date + "', '" + where + "', '" + who + "', '" + grade + "', '"+ comment + "')";
-		db.execSQL(sql);
 	}
 
 

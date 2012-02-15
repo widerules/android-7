@@ -79,6 +79,7 @@ public class SearchMovieDetailActivity extends Activity {
 				if(insertMovieList() == 0) {
 					intent = new Intent(SearchMovieDetailActivity.this, RegistMovieActivity.class);
 					intent.putExtra("movie", movie);
+					//intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 					startActivity(intent);
 				} else {
 					Toast.makeText(getApplicationContext(), "나의 영화목록에 이미 등록되어 있습니다", Toast.LENGTH_SHORT).show();
@@ -101,8 +102,6 @@ public class SearchMovieDetailActivity extends Activity {
 			
 			imageDownloader.download(movie.getThumbnail(), movieImg);
 			photo = movie.getPhoto();
-			
-			Log.e("detail",photo[0].toString());
 			
 			UserGalleryAdapter adapter = new UserGalleryAdapter(this);
 			galleryPhoto.setAdapter(adapter);
@@ -131,7 +130,7 @@ public class SearchMovieDetailActivity extends Activity {
 		
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
+			actor += actors[i] + ((i < actor.length()) ? "," : "");
 		}
 		
 		//DB정보 중복 Check
@@ -174,7 +173,7 @@ public class SearchMovieDetailActivity extends Activity {
 		String actor = "";
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i == actor.length()-1) ? " " : ",");
+			actor += actors[i] + ((i < actor.length()) ? "," : "");
 		}
 		
 		//DB정보 중복 Check
