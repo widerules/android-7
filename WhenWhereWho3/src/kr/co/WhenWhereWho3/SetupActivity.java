@@ -25,24 +25,25 @@ public class SetupActivity extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinVw.setAdapter(adapter);
         
-        SharedPreferences pref = getSharedPreferences(viewType, Activity.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("viewType", Activity.MODE_PRIVATE);
+        int value = pref.getInt("viewType", 0);        
+        spinVw.setSelection(value);
         
-        spinVw.setSelection(0);
         spinVw.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				SharedPreferences pref = getSharedPreferences(viewType, Activity.MODE_PRIVATE);
+				SharedPreferences pref = getSharedPreferences("viewType", Activity.MODE_PRIVATE);
 		    	Editor editor = (Editor)pref.edit();
 		    	
 		    	switch (position) {
 		    	// case 0 : List로 보기
 				case 0:
-					editor.putInt(viewType, 0);
+					editor.putInt("viewType", 0);
 					break;
 				// case 1 : GridView로 보기
 				case 1:
-					editor.putInt(viewType, 1);
+					editor.putInt("viewType", 1);
 					break;
 				}
 		    			    	
