@@ -46,7 +46,7 @@ public class MyListActivity extends Activity {
 
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
-
+		
 		movies = new ArrayList<Movie>();
 
 
@@ -137,19 +137,26 @@ public class MyListActivity extends Activity {
 	}
 
 	public void deleteMovieWishList() {
+		dbHelper = new MovieDBHelper(this);
+		db = dbHelper.getWritableDatabase();
+		
 		Movie deleteMovie = movies.get(deleteMoviePosition);
 
 		String[] actors = deleteMovie.getActor();
 		String actor = "";
 
+		Log.e("db1","yes");
 		for (int i = 0; i < actors.length; i++) {
 			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
+		Log.e("db2",actor);
 
+		Log.e("db2","yes");
 		String[] Args = { deleteMovie.getTitle(), actor };
 		int recordCnt = db.delete("t_movielist", "m_title = ? and m_actor = ?",
 				Args);
 
+		Log.e("db3","yes");
 		if (recordCnt == 1) {
 			Toast.makeText(getApplicationContext(), "삭제되었습니다.",
 					Toast.LENGTH_SHORT).show();
@@ -181,6 +188,8 @@ public class MyListActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						
+						Log.e("삭제","yes");
 						deleteMovieWishList();
 						movies.remove(deleteMoviePosition);
 						adapter.notifyDataSetChanged();
