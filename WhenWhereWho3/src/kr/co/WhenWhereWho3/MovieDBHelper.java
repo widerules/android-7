@@ -16,6 +16,7 @@ public class MovieDBHelper extends SQLiteOpenHelper {
 			+ " m_where TEXT, "
 			+ " m_with TEXT, "
 			+ " m_thumbnail TEXT, "
+			//+ " m_thumbnail_binary BINARY, "
 			+ " m_nation TEXT, "
 			+ " m_director TEXT, "
 			+ " m_actor TEXT, "
