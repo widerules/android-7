@@ -48,17 +48,17 @@ public class MovieGalleryAdapter extends ArrayAdapter<Movie> {
 				imageDownloader.download(thumbnailUrl, imgVw);
 				imgVw.setLayoutParams( 
 						new CoverFlow.LayoutParams( 
-								LayoutParams.FILL_PARENT, 
-								LayoutParams.WRAP_CONTENT ) );
-				imgVw.setScaleType(ImageView.ScaleType.FIT_CENTER);
-				
+								300, 
+								500 ) );
+				imgVw.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			} else {
 				//	이미지 주소가 없을경우는 어떻게 처리할 것인가??
 				//	이미지는 다른걸 담아서 리턴해주자
 				imgVw.setLayoutParams( 
-						new CoverFlow.LayoutParams( 
-								LayoutParams.FILL_PARENT, 
-								LayoutParams.WRAP_CONTENT ) );
+							new CoverFlow.LayoutParams( 
+									300, 
+									500 ) );
+				imgVw.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 				imgVw.setImageResource(R.drawable.kara_1);
 			}
 			/********************************************************/
