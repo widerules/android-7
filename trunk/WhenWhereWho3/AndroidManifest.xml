@@ -19,12 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyMovieListActivity" android:label="MyMovieList" />
+        <activity android:name=".MyMovieListActivity" android:label="MyMovieList" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MyListActivity" android:label="MyList" />
         <activity android:name=".MyMovieListDetailActivity" android:label="MyMovieListDetail" />
         <activity android:name=".MyWishListActivity" android:label="MyWishList" />
-        <activity android:name=".SearchMovieListActivity" android:label="SearchMovieList" />
-        <activity android:name=".SearchMovieGridActivity" android:label="SearchMovieGrid" />
+        <activity android:name=".SearchMovieListActivity" android:label="SearchMovieList" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".SearchMovieGridActivity" android:label="SearchMovieGrid" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".SearchMovieDetailActivity" android:label="SearchMovieDetail" />
         <activity android:name=".RegistMovieActivity" android:label="RegistMovie" />
         <activity android:name=".RecommendMovieActivity" android:label="RecommendMovie" />

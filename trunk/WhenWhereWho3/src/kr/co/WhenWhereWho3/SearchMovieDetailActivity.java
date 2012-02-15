@@ -130,7 +130,7 @@ public class SearchMovieDetailActivity extends Activity {
 		
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i < actor.length()) ? "," : "");
+			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
 		
 		//DB정보 중복 Check
@@ -173,7 +173,7 @@ public class SearchMovieDetailActivity extends Activity {
 		String actor = "";
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i < actor.length()) ? "," : "");
+			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
 		
 		//DB정보 중복 Check

@@ -1,5 +1,9 @@
 package kr.co.WhenWhereWho3;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -29,6 +33,9 @@ import android.widget.Toast;
 
 public class RegistMovieActivity extends Activity {	
 
+	InputStreamReader isr;				//	url로부터 읽어온 정보를 담을 InputStreamReader객체
+	BufferedReader br;		
+	
 	private Button dateBtn;
 	private Button timeBtn;
 	private int mYear;
@@ -245,7 +252,7 @@ public class RegistMovieActivity extends Activity {
 		String actor = "";
 		
 		for(int i=0; i<actors.length; i++) {
-			actor += actors[i] + ((i < actor.length()) ? "," : "");
+			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
 		
 		recordValues.put("m_title", movie.getTitle());
@@ -273,5 +280,18 @@ public class RegistMovieActivity extends Activity {
 		pd.setMessage("등록 중입니다");
 		return pd;
 	}
+	
+    public void loadImage(){
+    	try {
+    		//이미지 주소
+    		URL url = new URL(movie.getThumbnail());
+    		
+    		isr = new InputStreamReader( url.openConnection().getInputStream(), "UTF-8" );
+    		br = new BufferedReader( isr );
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 }
 
