@@ -30,6 +30,7 @@
         <activity android:name=".RegistMovieActivity" android:label="RegistMovie" />
         <activity android:name=".RecommendMovieActivity" android:label="RecommendMovie" />
         <activity android:name=".SetupActivity" android:label="SetUp" />        
+        <activity android:name=".FindCinemaActivity" android:label="FindCinema" />        
         <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
         
         <uses-library android:name="com.google.android.maps" />
