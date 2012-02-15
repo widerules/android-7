@@ -262,5 +262,19 @@ public class RegistMovieActivity extends Activity {
 		
 		db.insert("t_movielist", null, recordValues);
 	}
+
+	private void insertData(String title, String date, String where, String who, String grade, String comment) {
+		String sql = "insert into t_movie_list(m_title, m_when, m_where, m_who, m_grade, m_comment) values('" + title + "', '" + date + "', '" + where + "', '" + who + "', '" + grade + "', '"+ comment + "')";
+		db.execSQL(sql);
+	}
+
+
+	@Override
+	protected Dialog onCreateDialog(int id, Bundle args) {
+		pd = new ProgressDialog(this);
+		pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		pd.setMessage("등록 중입니다");
+		return pd;
+	}
 }
 
