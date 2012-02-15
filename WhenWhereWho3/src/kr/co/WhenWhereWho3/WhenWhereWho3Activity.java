@@ -15,8 +15,7 @@ public class WhenWhereWho3Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
-    
-    
+
     public void execute(View view) {
     	Intent intent = null;
     	switch (view.getId()) {
