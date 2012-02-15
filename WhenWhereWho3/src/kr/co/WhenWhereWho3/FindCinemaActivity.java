@@ -3,6 +3,7 @@ package kr.co.WhenWhereWho3;
 import java.util.List;
 
 import android.content.Context;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,11 +15,15 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 
 public class FindCinemaActivity extends MapActivity {
 	MapView mapView;
 	List<Overlay> mapOverlays;
+	MyLocationOverlay myOverlay;
+	boolean mCompassEnabled; 
+	SensorManager mSensorManager;
 	
     /** Called when the activity is first created. */
     @Override
@@ -29,6 +34,11 @@ public class FindCinemaActivity extends MapActivity {
         mapView = (MapView)findViewById(R.id.mapView);
         mapView.setBuiltInZoomControls(true);
         
+        mapOverlays = mapView.getOverlays(); // MapView 객체에 정의된 오버레이 리스트 객체 참조
+        myOverlay = new MyLocationOverlay(this, mapView); // 내 위치를 표시할 MyLocationOverlay 객체 생성
+        mapOverlays.add(myOverlay); // MyLocationOverlay 객체를 오버레이 리스트에 추가
+        
+
         
         startLocationService();
     }
@@ -37,6 +47,23 @@ public class FindCinemaActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		myOverlay.enableMyLocation(); // 액티비티가 화면에 보일 때 enableMyLocation() 메소드 호출
+//		}
+	}
+	
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		myOverlay.disableMyLocation(); // 액티비티가 중지 될 때 disableMyLocation() 메소드 호출
+	}
+
 
 	private void startLocationService() {
 
@@ -102,4 +129,5 @@ public class FindCinemaActivity extends MapActivity {
 		mapView.setTraffic(false);
 
 	}
+	
 }
