@@ -117,21 +117,23 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 		mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
 		if(!mFacebookAccessToken.equals("")) {		
 			mFacebook.setAccessToken(mFacebookAccessToken);
-			mBtnFeed.setVisibility(View.VISIBLE);
+
 		} else {
-			mBtnFeed.setVisibility(View.GONE);
 			login();		
 			mBtnFeed.setVisibility(View.VISIBLE);
+
 		}	
 	}
 
 	private void login() {
-		if (!"".equals(mFacebookAccessToken) && mFacebookAccessToken != null)
+		if (!"".equals(mFacebookAccessToken) && mFacebookAccessToken != null){
 			mFacebook.setAccessToken(mFacebookAccessToken);
-		else
+		}
+		else {
 			mFacebook.authorize2(this,
 					new String[] { "publish_stream, user_photos, email" },
 					new AuthorizeListener());
+		}
 	}
 
 	// 버튼의 OnClick 이벤트 처리
@@ -142,19 +144,22 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 				Toast.makeText(getApplicationContext(), "내용을 입력하세요",
 						Toast.LENGTH_SHORT).show();
 			} else {
-				showDialog(FACEBOOK_PROGRESS_DIALOG);
-				Thread t = new Thread() {
-					public void run() {
-						Looper.prepare();
-						feed();
-						Looper.loop();
+				if(!mFacebookAccessToken.equals("")) {		
+					showDialog(FACEBOOK_PROGRESS_DIALOG);
+					Thread t = new Thread() {
+						public void run() {
+							Looper.prepare();
+							feed();
+							Looper.loop();
+						};
 					};
-				};
-				t.start();
-			} 
+					t.start();				
+				} else {
+					login();			
+				} 
+			}
 			break;
 		case R.id.faceBook_btnLogout:
-			mBtnFeed.setVisibility(View.GONE);
 			logout();
 			break;
 		}
@@ -213,6 +218,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 			setAppPreferences(FaceBookActivity.this, "ACCESS_TOKEN", "");
 			Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",
 					Toast.LENGTH_SHORT).show();
+			finish();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
