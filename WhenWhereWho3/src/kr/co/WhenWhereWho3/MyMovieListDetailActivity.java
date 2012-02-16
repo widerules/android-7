@@ -1,6 +1,7 @@
 package kr.co.WhenWhereWho3;
 
 import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +33,13 @@ public class MyMovieListDetailActivity extends Activity {
 	Button facebookBtn;
 	RatingBar myRatingBar;
 	
+<<<<<<< .mine
 	Movie movie;
+	
+	private final ImageDownloader imageDownloader = new ImageDownloader();
+=======
+	Movie movie;
+>>>>>>> .r89
 	
     /** Called when the activity is first created. */
     @Override
@@ -62,6 +69,7 @@ public class MyMovieListDetailActivity extends Activity {
         if( intent != null ) {
         	//	movie객체를 가져와서 데이터를 뿌려준다.
         	movie = (Movie)intent.getSerializableExtra("movie");
+        	this.movie = movie;
         	
         	myWhenTxtVw.setText(movie.getWhen());
         	myWhereTxtVw.setText(movie.getWhere());
