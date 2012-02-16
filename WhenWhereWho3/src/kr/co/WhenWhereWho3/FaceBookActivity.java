@@ -185,7 +185,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 			Bundle params = new Bundle();
 
-			String message = "WhenWhereWith APP으로 부터 자동 등록 \n\n"
+			String message = "< WhenWhereWith APP으로 부터 자동 등록 > \n\n"
 					+ "- 어디서 : " + myWhereTxtVw.getText().toString().trim() + "\n"
 					+ "- 나의 평점 : " + rating + "/10.0 \n"
 					+ myGenreTxtVw.getText().toString().trim() + "\n"
