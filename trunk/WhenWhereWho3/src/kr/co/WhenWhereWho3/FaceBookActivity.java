@@ -1,5 +1,7 @@
 package kr.co.WhenWhereWho3;
 
+import java.util.Arrays;
+
 import kr.co.facebook.android.DialogError;
 import kr.co.facebook.android.Facebook;
 import kr.co.facebook.android.Facebook.DialogListener;
@@ -12,6 +14,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class FaceBookActivity extends Activity implements View.OnClickListener
@@ -22,6 +27,20 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 	private String mFacebookAccessToken;
 	private SharedPreferences pref = null;
 	private String returnValue = null;
+	
+	Movie movie;
+
+	private final ImageDownloader imageDownloader = new ImageDownloader();
+
+	TextView myTitleTxtVw;
+	TextView myWhereTxtVw;
+	TextView myGenreTxtVw;
+	TextView myOpenInfoTxtVw;
+	TextView myActorTxtVw;
+
+	ImageView myThumbnail;
+	Button myModifyBtn;
+	RatingBar myRatingBar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -29,21 +48,54 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.facebook);
 
-		mEtContent = (EditText) findViewById(R.id.etContent);
+		/***********************************************************************/
+		//	필요한 위젯들 전부 로딩
+		myTitleTxtVw 		= (TextView)findViewById(R.id.myTitleTxtVw);
+		myWhereTxtVw		= (TextView)findViewById(R.id.myWhereTxtVw);
+		myGenreTxtVw 		= (TextView)findViewById(R.id.myGenreTxtVw);
+		myOpenInfoTxtVw 	= (TextView)findViewById(R.id.myOpenInfoTxtVw);
+		myActorTxtVw		= (TextView)findViewById(R.id.myActorTxtVw);
+
+		myThumbnail 		= (ImageView)findViewById(R.id.myThumbnail);
+		myModifyBtn			= (Button)findViewById(R.id.myModifyBtn);
+		myRatingBar			= (RatingBar)findViewById(R.id.myRatingBar);
+		/***********************************************************************/
+
+		//	전달받은 인텐트를 가져온다.
+		Intent intent = getIntent();       
+
+		//	인텐트가 존재하면
+		if( intent != null ) {
+			//	movie객체를 가져와서 데이터를 뿌려준다.
+			Movie movie = (Movie)intent.getSerializableExtra("movie");
+
+			myTitleTxtVw.setText(movie.getTitle());
+			myWhereTxtVw.setText(movie.getWhere());
+
+			float rating = ( float )( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0;
+			myRatingBar.setRating( rating );
+			myGenreTxtVw.setText( "		- 장르 : " + movie.getGenre( ) );
+			myActorTxtVw.setText( "		- 배우 : " + Arrays.toString( movie.getActor() ) );
+			myOpenInfoTxtVw.setText( "		- 개봉일 : " + movie.getOpenInfo() );
+
+			imageDownloader.download( movie.getThumbnail(), myThumbnail );
+
+			mEtContent = (EditText) findViewById(R.id.etContent);
 
 
-		mBtnFeed = (Button) findViewById(R.id.btnFeed);
-		mBtnLogout = (Button) findViewById(R.id.btnLogout);
+			mBtnFeed = (Button) findViewById(R.id.btnFeed);
+			mBtnLogout = (Button) findViewById(R.id.btnLogout);
 
-		mBtnFeed.setOnClickListener(this);
-		mBtnLogout.setOnClickListener(this);
+			mBtnFeed.setOnClickListener(this);
+			mBtnLogout.setOnClickListener(this);
 
-		mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
-		if(mFacebookAccessToken != "") {		
-		mFacebook.setAccessToken(mFacebookAccessToken);
-		} else {
-			login();			
-		}		
+			mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
+			if(mFacebookAccessToken != "") {		
+				mFacebook.setAccessToken(mFacebookAccessToken);
+			} else {
+				login();			
+			}	
+		}
 	}
 
 	private void login()
@@ -64,8 +116,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 			break;
 		case R.id.btnLogout: // Facebook logout
 			logout();
-			break;
-		default:
 			break;
 		}
 	}

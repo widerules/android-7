@@ -1,5 +1,6 @@
 package kr.co.WhenWhereWho3;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import android.app.Activity;
 import android.content.Intent;
@@ -22,6 +23,8 @@ public class MyMovieListDetailActivity extends Activity {
 	TextView myActorTxtVw;
 	TextView myStoryTxtVw;
 	TextView myCommentTxtVw;
+	
+	Movie movie;
 	
 	ImageView myThumbnail;
 	Button myModifyBtn;
@@ -85,12 +88,14 @@ public class MyMovieListDetailActivity extends Activity {
         	Toast.makeText(getApplicationContext(), movie.getTitle(), Toast.LENGTH_SHORT).show();
         }
         
+        
         Button facebookBtn = (Button)findViewById(R.id.facebookBtn);
 		facebookBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(getApplicationContext(), FaceBookActivity.class);
+				intent.putExtra("movie", movie);
 				startActivity(intent);
 			}
 		});
