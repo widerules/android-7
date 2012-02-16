@@ -11,7 +11,6 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,9 +23,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+ * 검색된 영화 목록 Item에 대한 상세 정보 
+ */
 public class SearchMovieDetailActivity extends Activity {	
 
 	private final ImageDownloader imageDownloader = new ImageDownloader();
+
+	//DB사용 - 찜목록에 등록하기 위해
 	private MovieDBHelper dbHelper;
 	private SQLiteDatabase db;
 	
@@ -43,7 +47,6 @@ public class SearchMovieDetailActivity extends Activity {
 	TextView movieStory;
 	String [] photo;
 	
-	Intent intent;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class SearchMovieDetailActivity extends Activity {
 		galleryPhoto = (Gallery)findViewById(R.id.galleryPhoto);
 		movieStory = (TextView)findViewById(R.id.movieStory);
 		
+		
+		//찜 버튼 onClick 리스너
 		Button btnWishList = (Button)findViewById(R.id.btnWishList);
 		btnWishList.setOnClickListener(new OnClickListener() {
 			@Override
@@ -69,7 +74,7 @@ public class SearchMovieDetailActivity extends Activity {
 				request();
 			}
 		});
-		
+		//등록 버튼 onClick 리스너
 		Button btnRegistMovie = (Button)findViewById(R.id.btnRegistMovie);
 		btnRegistMovie.setOnClickListener(new OnClickListener() {
 			@Override
@@ -77,9 +82,8 @@ public class SearchMovieDetailActivity extends Activity {
 				// TODO Auto-generated method stub
 				
 				if(insertMovieList() == 0) {
-					intent = new Intent(SearchMovieDetailActivity.this, RegistMovieActivity.class);
+					Intent intent = new Intent(SearchMovieDetailActivity.this, RegistMovieActivity.class);
 					intent.putExtra("movie", movie);
-					//intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 					startActivity(intent);
 				} else {
 					Toast.makeText(getApplicationContext(), "나의 영화목록에 이미 등록되어 있습니다", Toast.LENGTH_SHORT).show();
@@ -87,13 +91,13 @@ public class SearchMovieDetailActivity extends Activity {
 			}
 		});
 		
-		Intent intent = getIntent();
-		
-		if(intent != null) {
-			movie = (Movie)intent.getSerializableExtra("movie");
+		//넘겨받은 intent에서 Movie정보 set
+		Intent getintent = getIntent();
+		if(getintent != null) {
+			movie = (Movie)getintent.getSerializableExtra("movie");
 			
 			movieTitle.setText(movie.getTitle());
-			movieNation.setText("(" + movie.getNation() + ")");
+			movieNation.setText("국가 : " + movie.getNation() + ")");
 			movieDirector.setText("감독 : " + movie.getDirector());
 			movieActors.setText("배우 : " + Arrays.toString(movie.getActor()));
 			movieGenre.setText("장르 : " + movie.getGenre());
@@ -102,15 +106,15 @@ public class SearchMovieDetailActivity extends Activity {
 			
 			imageDownloader.download(movie.getThumbnail(), movieImg);
 			photo = movie.getPhoto();
-			
 			UserGalleryAdapter adapter = new UserGalleryAdapter(this);
 			galleryPhoto.setAdapter(adapter);
-			
 		}
 		
+		//갤러리의 item onClick 리스너
 		galleryPhoto.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView parent, View v, int position, long id) {
 				
+				//다이얼로그 창으로 갤러리 사진 띄워줌
 				Intent dialog = new Intent(SearchMovieDetailActivity.this, ShowMoviePhotoDialogActivity.class);
 				dialog.putExtra("photo", photo[position]);
 				startActivity(dialog);
@@ -118,6 +122,7 @@ public class SearchMovieDetailActivity extends Activity {
 		});
 	}
 	
+	//찜DB에 Movie정보 중복 Check 후 삽입
 	public void insertMovieWishList() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
@@ -127,8 +132,6 @@ public class SearchMovieDetailActivity extends Activity {
 		String[] photo = movie.getPhoto();
 		String[] actors = movie.getActor();
 		String actor = "";
-		
-		
 		for(int i=0; i<actors.length; i++) {
 			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
@@ -138,10 +141,9 @@ public class SearchMovieDetailActivity extends Activity {
 						"where m_title = ? and m_actor = ?";
 		String[] args = {movie.getTitle(), actor};
 		Cursor c1 = db.rawQuery(SQL, args);
-		int recordCnt = c1.getCount();
 		
-		if(recordCnt == 0) {
-			
+		int recordCnt = c1.getCount();
+		if(recordCnt == 0) {//찜DB에 없다면 insert
 			recordValues.put("m_title", movie.getTitle());
 			recordValues.put("m_thumbnail", movie.getThumbnail());
 			recordValues.put("m_nation", movie.getNation());
@@ -161,17 +163,16 @@ public class SearchMovieDetailActivity extends Activity {
 		} else {
 			Toast.makeText(getApplicationContext(), "찜목록에 이미 등록되어 있습니다", Toast.LENGTH_SHORT).show();
 		}
-		
 		db.close();
 	}
 	
+	//MY영화 List DB에 Movie정보 중복 Check
 	public int insertMovieList() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
 				
 		String[] actors = movie.getActor();
 		String actor = "";
-		
 		for(int i=0; i<actors.length; i++) {
 			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
@@ -182,12 +183,12 @@ public class SearchMovieDetailActivity extends Activity {
 		String[] args = {movie.getTitle(), actor};
 		Cursor c1 = db.rawQuery(SQL, args);
 		int recordCnt = c1.getCount();
-		
 		db.close();
 		
 		return recordCnt;
 	}
 	
+	//찜등록 Dialog창
 	public void request() {
 		String title = "찜하기";
 		String message = "찜 하시겠습니까?";
@@ -204,24 +205,24 @@ public class SearchMovieDetailActivity extends Activity {
 		AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
 		requestDialog.setTitle(title);
 		requestDialog.setMessage(message);
+		
+		//버튼 OnClick 리스너
 		requestDialog.setPositiveButton(titleButtonYes, new DialogInterface.OnClickListener() {
-			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				insertMovieWishList();
 			}
 		});
 		requestDialog.setNegativeButton(titleButtonNo, new DialogInterface.OnClickListener() {
-			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
 			}
 		});
 		
 		return requestDialog.show();
 	}
 	
+	//photo GalleryAdapter
 	public class UserGalleryAdapter extends BaseAdapter {
 		private Context context;
 		private int galleryItemBackground;
@@ -230,13 +231,13 @@ public class SearchMovieDetailActivity extends Activity {
 			this.context = context;
 
 			TypedArray a = obtainStyledAttributes(R.styleable.BasicGallery);
-			// 
 			galleryItemBackground = a.getResourceId(
 					R.styleable.BasicGallery_android_galleryItemBackground, 0);
 
 			// 백그라운드 배경을 얻기위해 얻어온 자원을 해제
 			a.recycle();
 		}
+
 		public int getCount() {
 			return photo.length;
 		}
@@ -249,13 +250,12 @@ public class SearchMovieDetailActivity extends Activity {
 			return position;
 		}
 
+		// Gallery item마다 호출
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ImageView view = null;
-			// 재사용의 의미	
 			if(convertView != null) {
 				view = (ImageView)convertView;
-			}
-			else {
+			} else {
 				view = new ImageView(context);
 			}
 			view.setLayoutParams(new Gallery.LayoutParams(120, 100));
@@ -270,4 +270,3 @@ public class SearchMovieDetailActivity extends Activity {
 		}
 	}
 }
-

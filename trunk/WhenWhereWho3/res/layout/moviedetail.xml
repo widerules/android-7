@@ -5,37 +5,37 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="#888888"
         android:padding="10dp" >
-
-        <TextView
-            android:id="@+id/movieTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/movieNation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10dp" />
 
         <Button
             android:id="@+id/btnWishList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="찜" />
 
         <Button
             android:id="@+id/btnRegistMovie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_weight="1"
             android:text="등록" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/movieTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="2"
+        android:padding="10dp"
+        android:text="영화제목"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -43,8 +43,8 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -63,6 +63,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="10dp" >
+
+                    <TextView
+                        android:id="@+id/movieNation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp" />
 
                     <TextView
                         android:id="@+id/movieDirector"
