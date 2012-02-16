@@ -24,8 +24,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FaceBookActivity extends Activity implements View.OnClickListener
-{
+public class FaceBookActivity extends Activity implements View.OnClickListener {
 	private Facebook mFacebook = new Facebook(C.FACEBOOK_APP_ID);
 	private Button mBtnFeed;
 	private Button faceBook_btnLogout;
@@ -54,22 +53,21 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 	ProgressDialog pd;
 	final int FACEBOOK_PROGRESS_DIALOG = 1002;
 
-	Handler handler = new Handler(){
+	Handler handler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
-			switch( msg.what ) {
-			case 0 : 
+			switch (msg.what) {
+			case 0:
 				pd.dismiss();
-				Toast.makeText(FaceBookActivity.this, "FaceBook 담벼락 등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(FaceBookActivity.this,
+						"FaceBook 담벼락 등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
 				finish();
 				break;
 			}
 		}
 
 	};
-
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -108,7 +106,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 			faceBook_myOpenInfoTxtVw.setText( "		● 개봉일 : " + movie.getOpenInfo() );
 
 			imageDownloader.download( movie.getThumbnail(), faceBook_myThumbnail );
-
 		}
 		
 		mEtContent = (EditText) findViewById(R.id.faceBook_etContent);
@@ -125,23 +122,22 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		}	
 	}
 
-
-	private void login()
-	{
+	private void login() {
 		if (!"".equals(mFacebookAccessToken) && mFacebookAccessToken != null)
 			mFacebook.setAccessToken(mFacebookAccessToken);
 		else
-			mFacebook.authorize2(this, new String[] {"publish_stream, user_photos, email"}, new AuthorizeListener());
+			mFacebook.authorize2(this,
+					new String[] { "publish_stream, user_photos, email" },
+					new AuthorizeListener());
 	}
 
-	// 버튼의 OnClick 이벤트 처리 
-	public void onClick(View v)
-	{
-		switch(v.getId())
-		{
-		case R.id.faceBook_btnFeed:  // Facebook에 글쓰기
-			if(mEtContent.getText().toString().trim().equals("")) {
-				Toast.makeText(getApplicationContext(), "내용을 입력하세요", Toast.LENGTH_SHORT).show();
+	// 버튼의 OnClick 이벤트 처리
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.faceBook_btnFeed: // Facebook에 글쓰기
+			if (mEtContent.getText().toString().trim().equals("")) {
+				Toast.makeText(getApplicationContext(), "내용을 입력하세요",
+						Toast.LENGTH_SHORT).show();
 			} else {
 				showDialog(FACEBOOK_PROGRESS_DIALOG);
 				Thread t = new Thread() {
@@ -151,7 +147,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 						Looper.loop();
 					};
 				};
-				t.start();				
+				t.start();
 			}
 			break;
 		case R.id.faceBook_btnLogout:
@@ -160,47 +156,40 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (resultCode == RESULT_OK)
-		{
-			if (requestCode == C.FACEBOOK_AUTH_CODE)
-			{
+		if (resultCode == RESULT_OK) {
+			if (requestCode == C.FACEBOOK_AUTH_CODE) {
+				mFacebook.authorizeCallback(requestCode, resultCode, data);
+			}
+		} else {
+			if (requestCode == C.FACEBOOK_AUTH_CODE) {
 				mFacebook.authorizeCallback(requestCode, resultCode, data);
 			}
 		}
-		else
-		{
-			if (requestCode == C.FACEBOOK_AUTH_CODE)
-			{
-				mFacebook.authorizeCallback(requestCode, resultCode, data);
-			}      
-		}
 	}
 
-
-
 	// 글, 사진 등록하기
-	private void feed()
-	{
-		try
-		{
+	private void feed() {
+		try {
 			Log.v(C.LOG_TAG, "access token : " + mFacebook.getAccessToken());
 
 			Bundle params = new Bundle();
 
 			String message = "< WhenWhereWith APP으로 부터 자동 등록 > \n\n"
-					+ "● 어디서 : " + faceBook_myWhereTxtVw.getText().toString().trim() + "\n"
+					+ "● 어디서 : "
+					+ faceBook_myWhereTxtVw.getText().toString().trim() + "\n"
 					+ "● 나의 평점 : " + rating + "/10.0 \n"
 					+ faceBook_myGenreTxtVw.getText().toString().trim() + "\n"
-					+ faceBook_myOpenInfoTxtVw.getText().toString().trim() + "\n"
-					+ faceBook_myActorTxtVw.getText().toString().trim() + "\n\n\n"
-					+ "● 후기 : " + mEtContent.getText().toString().trim() + "\n\n";						   
+					+ faceBook_myOpenInfoTxtVw.getText().toString().trim()
+					+ "\n" + faceBook_myActorTxtVw.getText().toString().trim()
+					+ "\n\n\n" + "● 후기 : "
+					+ mEtContent.getText().toString().trim() + "\n\n";
 
-			params.putString("message", message);			
-			params.putString("name", faceBook_myTitleTxtVw.getText().toString().trim());
+			params.putString("message", message);
+			params.putString("name", faceBook_myTitleTxtVw.getText().toString()
+					.trim());
 			params.putString("link", "");
 			params.putString("description", "WWW APP 테스트중");
 			params.putString("picture", movie.getThumbnail());
@@ -208,61 +197,54 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 			mFacebook.request("me/feed", params, "POST");
 			handler.sendEmptyMessage(0);
 
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	private void logout()
-	{
-		try {
-			mFacebook.logout(this);
-			setAppPreferences(FaceBookActivity.this, "ACCESS_TOKEN", "");
-			Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-
+	private void logout() {
+		try {
+			mFacebook.logout(this);
+			setAppPreferences(FaceBookActivity.this, "ACCESS_TOKEN", "");
+			Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",
+					Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// Facebook 인증후 처리를 위한 callback class
-	public class AuthorizeListener implements DialogListener
-	{
-		public void onCancel()
-		{
+	public class AuthorizeListener implements DialogListener {
+		public void onCancel() {
 			// TODO Auto-generated method stub
-			if(C.D)Log.v(C.LOG_TAG,"::: onCancel :::");
+			if (C.D)
+				Log.v(C.LOG_TAG, "::: onCancel :::");
 		}
 
-		public void onComplete(Bundle values)
-		{
+		public void onComplete(Bundle values) {
 			// TODO Auto-generated method stub
-			if (C.D) Log.v(C.LOG_TAG, "::: onComplete :::");
+			if (C.D)
+				Log.v(C.LOG_TAG, "::: onComplete :::");
 
 			mFacebookAccessToken = mFacebook.getAccessToken();
-			setAppPreferences(FaceBookActivity.this, "ACCESS_TOKEN", mFacebookAccessToken);      
+			setAppPreferences(FaceBookActivity.this, "ACCESS_TOKEN",
+					mFacebookAccessToken);
 
 		}
 
-		public void onError(DialogError e)
-		{
+		public void onError(DialogError e) {
 			// TODO Auto-generated method stub
 
 		}
 
-		public void onFacebookError(FacebookError e)
-		{
+		public void onFacebookError(FacebookError e) {
 			// TODO Auto-generated method stub
 
 		}
 	}
 
-	//app 쉐어드 프레퍼런스에 값 저장
-	private void setAppPreferences(Activity context, String key, String value)
-	{
+	// app 쉐어드 프레퍼런스에 값 저장
+	private void setAppPreferences(Activity context, String key, String value) {
 
 		pref = context.getSharedPreferences("FacebookToken", 0);
 		SharedPreferences.Editor prefEditor = pref.edit();
@@ -272,9 +254,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 	}
 
 	// app 쉐어드 프레퍼런스에서 값을 읽어옴
-	private String getAppPreferences(Activity context, String key)
-	{
-
+	private String getAppPreferences(Activity context, String key) {
 
 		pref = context.getSharedPreferences("FacebookToken", 0);
 
@@ -285,7 +265,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
-		switch( id ){
+		switch (id) {
 		case FACEBOOK_PROGRESS_DIALOG:
 			pd = new ProgressDialog(FaceBookActivity.this);
 			pd.setMessage("FaceBook에 등록중입니다...");
@@ -296,7 +276,4 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		return super.onCreateDialog(id);
 	}
 
-
-
 }
-
