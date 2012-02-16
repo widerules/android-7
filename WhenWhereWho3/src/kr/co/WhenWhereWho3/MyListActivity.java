@@ -11,8 +11,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -28,6 +26,8 @@ public class MyListActivity extends Activity {
 	private SQLiteDatabase db;
 
 	ListView listview; // 리스트 뷰
+	Button registBtn;
+	Button deleteBtn;
 
 	Intent intent;
 
@@ -49,6 +49,8 @@ public class MyListActivity extends Activity {
 		
 		movies = new ArrayList<Movie>();
 
+		registBtn = (Button) findViewById(R.id.registBtn);
+		deleteBtn = (Button) findViewById(R.id.deleteBtn);
 
 		cursor = db.rawQuery("SELECT * FROM t_movielist", null);
 
@@ -86,6 +88,29 @@ public class MyListActivity extends Activity {
 
 		adapter.notifyDataSetChanged();
 		listview.invalidate();
+
+		registBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				intent = new Intent(getApplicationContext(),
+						SearchMovieListActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		deleteBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (movies.size() != 0) {
+					intent = new Intent(getApplicationContext(),
+							MyListDeleteActivity.class);
+					startActivity(intent);
+					finish();
+				}
+			}
+		});
 
 	}// onCreate( ) 끝
 
@@ -221,23 +246,4 @@ public class MyListActivity extends Activity {
 
 		return super.onKeyDown(keyCode, event);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add("선택삭제");
-
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (movies.size() != 0) {
-			intent = new Intent(getApplicationContext(),
-					MyListDeleteActivity.class);
-			startActivity(intent);
-			finish();
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 }
