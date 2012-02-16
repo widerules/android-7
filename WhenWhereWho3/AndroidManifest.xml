@@ -30,9 +30,9 @@
         </activity>
         <activity android:name=".MyMovieListActivity" android:label="MyMovieList" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MyListActivity" android:label="MyList" />
-        <activity android:name=".UpdateMovieActivity" android:label="UpdateMovie" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MyListDeleteActivity" android:label="MyListDelete" />
         <activity android:name=".MyMovieListDetailActivity" android:label="MyMovieListDetail" />
+        <activity android:name=".UpdateMyMovieListActivity" android:label="UpdateMyMovieList" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MyWishListActivity" android:label="MyWishList" />
         <activity android:name=".SearchMovieListActivity" android:label="SearchMovieList" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".SearchMovieGridActivity" android:label="SearchMovieGrid" android:windowSoftInputMode="stateHidden"/>

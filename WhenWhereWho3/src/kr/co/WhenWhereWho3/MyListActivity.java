@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 /*
  * 영화list
@@ -28,6 +29,7 @@ public class MyListActivity extends Activity {
 	private SQLiteDatabase db;
 
 	ListView listview; // 리스트 뷰
+	TextView dataCntTxt;
 	Movie movie; // 쓰레드에서 사용할 객체
 	ArrayList<Movie> movies;
 	int deleteMoviePosition;
@@ -42,13 +44,14 @@ public class MyListActivity extends Activity {
 		setContentView(R.layout.mymovielist);
 
 		listview = (ListView) findViewById(R.id.myMovie_listview);
+		dataCntTxt = (TextView)findViewById(R.id.myMovieList_dataCnt);
 		
 		movies = new ArrayList<Movie>();
 		getCursor();
-
+		
 		//listview item OnClick 리스너
 		listview.setOnItemClickListener(new OnItemClickListener() {
-
+			
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
@@ -77,9 +80,14 @@ public class MyListActivity extends Activity {
 	public void getCursor() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
-		cursor = db.rawQuery("SELECT * FROM t_movielist", null);
+		
+		cursor = db.rawQuery("SELECT * FROM t_movielist ORDER BY m_when DESC", null);
+		
 		if (cursor != null) {
 			getMyListInfo(cursor);
+			if(movies.size() != 0) {
+				dataCntTxt.setText("등록된 data 수 : " + movies.size() + "개");
+			}
 			adapter = new MyMovieListAdapter(MyListActivity.this,
 					R.layout.mylist, movies);
 			listview.setAdapter(adapter);
@@ -180,6 +188,9 @@ public class MyListActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						deleteMovieWishList();
 						movies.remove(deleteMoviePosition);
+						if(movies.size() != 0) {
+							dataCntTxt.setText("등록된 data 수 : " + movies.size() + "개");
+						}
 						adapter.notifyDataSetChanged();
 						listview.invalidate();
 					}
