@@ -31,7 +31,7 @@ public class FindCinemaActivity extends MapActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.findcinema); 
         
-        mapView = (MapView)findViewById(R.id.mapView);
+        mapView = (MapView)findViewById(R.id.findCinema_mapView);
         mapView.setBuiltInZoomControls(true);
         
         mapOverlays = mapView.getOverlays(); // MapView 객체에 정의된 오버레이 리스트 객체 참조

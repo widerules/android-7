@@ -55,13 +55,13 @@ public class MyListDeleteActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mymovielistdelete);
 
-		listview = (ListView) findViewById(R.id.listview);
+		listview = (ListView) findViewById(R.id.myMovieListDelete_listview);
 
 		movies = new ArrayList<Movie>();
 		getCursor();
 
 		//전체 선택/삭제 버튼 OnClick
-		selectAllBtn = (Button) findViewById(R.id.selectAllBtn);
+		selectAllBtn = (Button) findViewById(R.id.myMovieListDelete_selectAllBtn);
 		selectAllBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -73,7 +73,7 @@ public class MyListDeleteActivity extends Activity {
 		});
 
 		//삭제 버튼 OnClick
-		deleteBtn = (Button) findViewById(R.id.deleteBtn);
+		deleteBtn = (Button) findViewById(R.id.myMovieListDelete_deleteBtn);
 		deleteBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

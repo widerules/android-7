@@ -12,14 +12,14 @@
         android:padding="10dp" >
 
         <Button
-            android:id="@+id/btnWishList"
+            android:id="@+id/searchMovieDetail_btnWishList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="찜" />
 
         <Button
-            android:id="@+id/btnRegistMovie"
+            android:id="@+id/searchMovieDetail_btnRegistMovie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -32,7 +32,7 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/movieTitle"
+            android:id="@+id/searchMovieDetail_movieTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#5555ff"
@@ -60,7 +60,7 @@
                 android:padding="10dp" >
 
                 <ImageView
-                    android:id="@+id/movieImg"
+                    android:id="@+id/searchMovieDetail_movieImg"
                     android:layout_width="150dp"
                     android:layout_height="200dp" />
 
@@ -71,31 +71,31 @@
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/movieNation"
+                        android:id="@+id/searchMovieDetail_movieNation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="13dp" />
 
                     <TextView
-                        android:id="@+id/movieDirector"
+                        android:id="@+id/searchMovieDetail_movieDirector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="13dp" />
 
                     <TextView
-                        android:id="@+id/movieActors"
+                        android:id="@+id/searchMovieDetail_movieActors"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="13dp" />
 
                     <TextView
-                        android:id="@+id/movieGenre"
+                        android:id="@+id/searchMovieDetail_movieGenre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="13dp" />
 
                     <TextView
-                        android:id="@+id/movieOpenInfo"
+                        android:id="@+id/searchMovieDetail_movieOpenInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="13dp" />
@@ -107,7 +107,7 @@
                         android:textSize="13dp" />
 
                     <TextView
-                        android:id="@+id/movieGrade"
+                        android:id="@+id/searchMovieDetail_movieGrade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -123,7 +123,7 @@
                 android:src="@drawable/moivebar" />
 
             <Gallery
-                android:id="@+id/galleryPhoto"
+                android:id="@+id/searchMovieDetail_galleryPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" />
@@ -150,7 +150,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/movieStory"
+                android:id="@+id/searchMovieDetail_movieStory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"

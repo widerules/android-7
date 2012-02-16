@@ -25,7 +25,7 @@
         android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/systemListVw"
+        android:id="@+id/setUp_systemListVw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     
@@ -40,7 +40,7 @@
         android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/basicListVw"
+        android:id="@+id/setUp_basicListVw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     

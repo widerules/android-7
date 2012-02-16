@@ -28,7 +28,7 @@ import android.widget.Toast;
 public class FaceBookActivity extends Activity implements View.OnClickListener
 {
 	private Facebook mFacebook = new Facebook(C.FACEBOOK_APP_ID);
-	private Button mBtnFeed, mBtnLogout;
+	private Button mBtnFeed;
 	private EditText mEtContent;
 	private String mFacebookAccessToken;
 	private SharedPreferences pref = null;
@@ -77,14 +77,14 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 		/***********************************************************************/
 		//	필요한 위젯들 전부 로딩
-		myTitleTxtVw 		= (TextView)findViewById(R.id.myTitleTxtVw);
-		myWhereTxtVw		= (TextView)findViewById(R.id.myWhereTxtVw);
-		myGenreTxtVw 		= (TextView)findViewById(R.id.myGenreTxtVw);
-		myOpenInfoTxtVw 	= (TextView)findViewById(R.id.myOpenInfoTxtVw);
-		myActorTxtVw		= (TextView)findViewById(R.id.myActorTxtVw);
+		myTitleTxtVw 		= (TextView)findViewById(R.id.faceBook_myTitleTxtVw);
+		myWhereTxtVw		= (TextView)findViewById(R.id.faceBook_myWhereTxtVw);
+		myGenreTxtVw 		= (TextView)findViewById(R.id.faceBook_myGenreTxtVw);
+		myOpenInfoTxtVw 	= (TextView)findViewById(R.id.faceBook_myOpenInfoTxtVw);
+		myActorTxtVw		= (TextView)findViewById(R.id.faceBook_myActorTxtVw);
 
-		myThumbnail 		= (ImageView)findViewById(R.id.myThumbnail);
-		myRatingBar			= (RatingBar)findViewById(R.id.myRatingBar);
+		myThumbnail 		= (ImageView)findViewById(R.id.faceBook_myThumbnail);
+		myRatingBar			= (RatingBar)findViewById(R.id.faceBook_myRatingBar);
 		/***********************************************************************/
 
 		//	전달받은 인텐트를 가져온다.
@@ -108,14 +108,10 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 		}
 		
-		mEtContent = (EditText) findViewById(R.id.etContent);
-
-
-		mBtnFeed = (Button) findViewById(R.id.btnFeed);
-		mBtnLogout = (Button) findViewById(R.id.btnLogout);
+		mEtContent = (EditText) findViewById(R.id.faceBook_etContent);
+		mBtnFeed = (Button) findViewById(R.id.faceBook_btnFeed);
 
 		mBtnFeed.setOnClickListener(this);
-		mBtnLogout.setOnClickListener(this);
 
 		mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
 		if(mFacebookAccessToken != "") {		
@@ -139,7 +135,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 	{
 		switch(v.getId())
 		{
-		case R.id.btnFeed:  // Facebook에 글쓰기
+		case R.id.faceBook_btnFeed:  // Facebook에 글쓰기
 			if(mEtContent.getText().toString().trim().equals("")) {
 				Toast.makeText(getApplicationContext(), "내용을 입력하세요", Toast.LENGTH_SHORT).show();
 			} else {
@@ -153,9 +149,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 				};
 				t.start();				
 			}
-			break;
-		case R.id.btnLogout: // Facebook logout
-			logout();
 			break;
 		}
 	}

@@ -7,7 +7,7 @@
 
 
     <TextView 
-        android:id="@+id/titleVwSetup"
+        android:id="@+id/setUpList_titleVwSetup"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:padding="15dp"
@@ -15,7 +15,7 @@
         android:text="영화 검색 화면 설정"
         />
     <TextView 
-        android:id="@+id/subTitleVwSetup"
+        android:id="@+id/setUpList_subTitleVwSetup"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:paddingLeft="15dp"

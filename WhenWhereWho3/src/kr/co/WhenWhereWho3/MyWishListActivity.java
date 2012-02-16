@@ -43,7 +43,7 @@ public class MyWishListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mywishlist);
 
-		listview = (ListView) findViewById(R.id.listview);
+		listview = (ListView) findViewById(R.id.myWishList_listview);
 
 		movies = new ArrayList<Movie>();
 		getCursor();

@@ -46,8 +46,8 @@ public class MovieGridAdapter extends ArrayAdapter<Movie> {
 		
 		Movie m = movies.get(position);
 		try {
-			ImageView imageVw = (ImageView)v.findViewById(R.id.movieImg);
-			TextView title = (TextView)v.findViewById(R.id.movieTitle);
+			ImageView imageVw = (ImageView)v.findViewById(R.id.searchGrid_movieImg);
+			TextView title = (TextView)v.findViewById(R.id.searchGrid_movieTitle);
 
 			//	썸네일 이미지 처리
 			//	썸네일 주소를 받아옴

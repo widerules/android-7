@@ -44,11 +44,11 @@ public class MyMovieListAdapter extends ArrayAdapter<Movie> {
 		
 		Movie m = movies.get(position);
 		try {
-			ImageView imageVw = (ImageView)v.findViewById(R.id.movieImg);
-			TextView title = (TextView)v.findViewById(R.id.movieTitle);
-			TextView when = (TextView)v.findViewById(R.id.whenTxtVw);
-			TextView with = (TextView)v.findViewById(R.id.withTxtVw);
-			RatingBar ratingBar = (RatingBar)v.findViewById(R.id.ratingBar);
+			ImageView imageVw = (ImageView)v.findViewById(R.id.myMovieList_movieImg);
+			TextView title = (TextView)v.findViewById(R.id.myMovieList_movieTitle);
+			TextView when = (TextView)v.findViewById(R.id.myMovieList_whenTxtVw);
+			TextView with = (TextView)v.findViewById(R.id.myMovieList_withTxtVw);
+			RatingBar ratingBar = (RatingBar)v.findViewById(R.id.myMovieList_ratingBar);
 			
 			//	영화 title 가져오기
 			title.setText(m.getTitle());

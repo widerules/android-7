@@ -64,11 +64,11 @@ public class MyMovieListDeleteAdapter extends ArrayAdapter<Movie> {
 		
 		Movie m = movies.get(position);
 		try {
-			CheckBox checkDelete = (CheckBox) v.findViewById(R.id.checkDelete);
-			TextView title = (TextView) v.findViewById(R.id.titleTxtVw);
-			TextView when = (TextView) v.findViewById(R.id.whenTxtVw);
-			TextView with = (TextView) v.findViewById(R.id.withTxtVw);
-			RatingBar ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
+			CheckBox checkDelete = (CheckBox) v.findViewById(R.id.delete_checkDelete);
+			TextView title = (TextView) v.findViewById(R.id.delete_titleTxtVw);
+			TextView when = (TextView) v.findViewById(R.id.delete_whenTxtVw);
+			TextView with = (TextView) v.findViewById(R.id.delete_withTxtVw);
+			RatingBar ratingBar = (RatingBar) v.findViewById(R.id.delete_ratingBar);
 
 			
 			checkDelete.setClickable(false);

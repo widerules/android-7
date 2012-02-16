@@ -13,15 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="로그아웃" />
-
         <TextView
-            android:id="@+id/myTitleTxtVw"
+            android:id="@+id/faceBook_myTitleTxtVw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -30,7 +23,7 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/btnFeed"
+            android:id="@+id/faceBook_btnFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,7 +43,7 @@
             android:text="추가 할 말" />
 
         <EditText
-            android:id="@+id/etContent"
+            android:id="@+id/faceBook_etContent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
@@ -86,7 +79,7 @@
                 <!-- 영화 포스터 -->
 
                 <ImageView
-                    android:id="@+id/myThumbnail"
+                    android:id="@+id/faceBook_myThumbnail"
                     android:layout_width="150dp"
                     android:layout_height="200dp"
                     android:src="@drawable/ic_launcher" />
@@ -101,7 +94,7 @@
                     <!-- 언제 봤는가 -->
 
                     <TextView
-                        android:id="@+id/myWhenTxtVw"
+                        android:id="@+id/faceBook_myWhenTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="5dp"
@@ -111,7 +104,7 @@
                     <!-- 누구랑 봤는가 -->
 
                     <TextView
-                        android:id="@+id/myWhoTxtVw"
+                        android:id="@+id/faceBook_myWhoTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lines="2"
@@ -122,7 +115,7 @@
                     <!-- 어디서 봤는가 -->
 
                     <TextView
-                        android:id="@+id/myWhereTxtVw"
+                        android:id="@+id/faceBook_myWhereTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="5dp"
@@ -148,7 +141,7 @@
                         <!-- 평점 바 -->
 
                         <RatingBar
-                            android:id="@+id/myRatingBar"
+                            android:id="@+id/faceBook_myRatingBar"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -175,7 +168,7 @@
             <!-- 장르 -->
 
             <TextView
-                android:id="@+id/myGenreTxtVw"
+                android:id="@+id/faceBook_myGenreTxtVw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="		- 장르 : "
@@ -183,7 +176,7 @@
             <!-- 개봉일 -->
 
             <TextView
-                android:id="@+id/myOpenInfoTxtVw"
+                android:id="@+id/faceBook_myOpenInfoTxtVw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="		- 개봉일 : "
@@ -191,7 +184,7 @@
             <!-- 배우 -->
 
             <TextView
-                android:id="@+id/myActorTxtVw"
+                android:id="@+id/faceBook_myActorTxtVw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="		- 배우 : "

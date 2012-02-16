@@ -48,11 +48,11 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
 		
 		Movie m = movies.get(position);
 		try {
-			ImageView imageVw = (ImageView) v.findViewById(R.id.movieImg);
-			TextView title = (TextView) v.findViewById(R.id.movieTitle);
-			TextView nation = (TextView) v.findViewById(R.id.movieNation);
-			TextView genre = (TextView) v.findViewById(R.id.movieGenre);
-			TextView rating = (TextView) v.findViewById(R.id.movieRating);
+			ImageView imageVw = (ImageView) v.findViewById(R.id.searchList_movieImg);
+			TextView title = (TextView) v.findViewById(R.id.searchList_movieTitle);
+			TextView nation = (TextView) v.findViewById(R.id.searchList_movieNation);
+			TextView genre = (TextView) v.findViewById(R.id.searchList_movieGenre);
+			TextView rating = (TextView) v.findViewById(R.id.searchList_movieRating);
 
 			// 썸네일 주소를 받아옴
 			// 썸네일 이미지 처리

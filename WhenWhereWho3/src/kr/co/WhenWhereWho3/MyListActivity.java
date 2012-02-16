@@ -41,7 +41,7 @@ public class MyListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mymovielist);
 
-		listview = (ListView) findViewById(R.id.listview);
+		listview = (ListView) findViewById(R.id.myMovie_listview);
 		
 		movies = new ArrayList<Movie>();
 		getCursor();

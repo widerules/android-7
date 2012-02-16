@@ -38,20 +38,20 @@ public class MyMovieListDetailActivity extends Activity {
         
         /***********************************************************************/
         //	필요한 위젯들 전부 로딩
-        myTitleTxtVw 		= (TextView)findViewById(R.id.movieTitle);
-        myWhenTxtVw 		= (TextView)findViewById(R.id.myWhenTxtVw);
-        myWithTxtVw 			= (TextView)findViewById(R.id.myWithTxtVw);
-        myWhereTxtVw		= (TextView)findViewById(R.id.myWhereTxtVw);
-        myGenreTxtVw 		= (TextView)findViewById(R.id.myGenreTxtVw);
-        myOpenInfoTxtVw 	= (TextView)findViewById(R.id.myOpenInfoTxtVw);
-        myDirectorTxtVw     = (TextView)findViewById(R.id.myDirectorTxtVw);
-        myActorTxtVw		= (TextView)findViewById(R.id.myActorTxtVw);
-        myStoryTxtVw		= (TextView)findViewById(R.id.myStoryTxtVw);
-        myCommentTxtVw 		= (TextView)findViewById(R.id.myCommentTxtVw);
+        myTitleTxtVw 		= (TextView)findViewById(R.id.myMovieListDetail_movieTitle);
+        myWhenTxtVw 		= (TextView)findViewById(R.id.myMovieListDetail_myWhenTxtVw);
+        myWithTxtVw 			= (TextView)findViewById(R.id.myMovieListDetail_myWithTxtVw);
+        myWhereTxtVw		= (TextView)findViewById(R.id.myMovieListDetail_myWhereTxtVw);
+        myGenreTxtVw 		= (TextView)findViewById(R.id.myMovieListDetail_myGenreTxtVw);
+        myOpenInfoTxtVw 	= (TextView)findViewById(R.id.myMovieListDetail_myOpenInfoTxtVw);
+        myDirectorTxtVw     = (TextView)findViewById(R.id.myMovieListDetail_myDirectorTxtVw);
+        myActorTxtVw		= (TextView)findViewById(R.id.myMovieListDetail_myActorTxtVw);
+        myStoryTxtVw		= (TextView)findViewById(R.id.myMovieListDetail_myStoryTxtVw);
+        myCommentTxtVw 		= (TextView)findViewById(R.id.myMovieListDetail_myCommentTxtVw);
         
-        myThumbnail 		= (ImageView)findViewById(R.id.myThumbnail);
-        myUpdateBtn			= (Button)findViewById(R.id.myUpdateBtn);
-        myRatingBar			= (RatingBar)findViewById(R.id.myRatingBar);
+        myThumbnail 		= (ImageView)findViewById(R.id.myMovieListDetail_myThumbnail);
+        myUpdateBtn			= (Button)findViewById(R.id.myMovieListDetail_myUpdateBtn);
+        myRatingBar			= (RatingBar)findViewById(R.id.myMovieListDetail_myRatingBar);
         /***********************************************************************/
         
         
@@ -89,7 +89,7 @@ public class MyMovieListDetailActivity extends Activity {
         	Toast.makeText(getApplicationContext(), movie.getTitle(), Toast.LENGTH_SHORT).show();
         }
         
-        Button facebookBtn = (Button)findViewById(R.id.facebookBtn);
+        Button facebookBtn = (Button)findViewById(R.id.myMovieListDetail_facebookBtn);
 		facebookBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override

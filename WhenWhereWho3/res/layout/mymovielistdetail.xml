@@ -14,7 +14,7 @@
         android:padding="10dp" >
 
         <Button
-            android:id="@+id/facebookBtn"
+            android:id="@+id/myMovieListDetail_facebookBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -22,7 +22,7 @@
         <!-- 수정 버튼 -->
 
         <Button
-            android:id="@+id/myUpdateBtn"
+            android:id="@+id/myMovieListDetail_myUpdateBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,7 +35,7 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/movieTitle"
+            android:id="@+id/myMovieListDetail_movieTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#5555ff"
@@ -71,7 +71,7 @@
                 <!-- 영화 포스터 -->
 
                 <ImageView
-                    android:id="@+id/myThumbnail"
+                    android:id="@+id/myMovieListDetail_myThumbnail"
                     android:layout_width="150dp"
                     android:layout_height="200dp" />
                 <!-- 영화 본 정보 -->
@@ -91,7 +91,7 @@
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/myWhenTxtVw"
+                        android:id="@+id/myMovieListDetail_myWhenTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -105,7 +105,7 @@
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/myWithTxtVw"
+                        android:id="@+id/myMovieListDetail_myWithTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -119,7 +119,7 @@
                         android:textSize="15dp" />
 
                     <TextView
-                        android:id="@+id/myWhereTxtVw"
+                        android:id="@+id/myMovieListDetail_myWhereTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -141,7 +141,7 @@
                         android:orientation="vertical" >
 
                         <RatingBar
-                            android:id="@+id/myRatingBar"
+                            android:id="@+id/myMovieListDetail_myRatingBar"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                 <!-- 감상후기 내용 -->
 
                 <TextView
-                    android:id="@+id/myCommentTxtVw"
+                    android:id="@+id/myMovieListDetail_myCommentTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15dp" />
@@ -193,28 +193,28 @@
                 <!-- 장르 -->
 
                 <TextView
-                    android:id="@+id/myGenreTxtVw"
+                    android:id="@+id/myMovieListDetail_myGenreTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15dp" />
                 <!-- 개봉일 -->
 				
 				<TextView
-                    android:id="@+id/myDirectorTxtVw"
+                    android:id="@+id/myMovieListDetail_myDirectorTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15dp" />
                 <!-- 감독 -->
 
                 <TextView
-                    android:id="@+id/myOpenInfoTxtVw"
+                    android:id="@+id/myMovieListDetail_myOpenInfoTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15dp" />
                 <!-- 배우 -->
 
                 <TextView
-                    android:id="@+id/myActorTxtVw"
+                    android:id="@+id/myMovieListDetail_myActorTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15dp" />
@@ -227,7 +227,7 @@
                     android:textSize="15dp" />
                 
                 <TextView
-                    android:id="@+id/myStoryTxtVw"
+                    android:id="@+id/myMovieListDetail_myStoryTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="		- 줄거리 : "
