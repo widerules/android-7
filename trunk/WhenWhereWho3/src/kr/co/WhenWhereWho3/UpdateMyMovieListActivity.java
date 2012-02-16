@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -80,6 +82,10 @@ public class UpdateMyMovieListActivity extends Activity {
 		whereTxt = (EditText)findViewById(R.id.registMovie_whereTxt);
 		withTxt = (EditText)findViewById(R.id.registMovie_withTxt);
 		commentEditTxt = (EditText)findViewById(R.id.registMovie_commentEditTxt);
+		ratingBar = (RatingBar)findViewById(R.id.registMovie_ratingbar);
+		ratingBarTxt = (TextView)findViewById(R.id.registMovie_ratingBarTxt);
+		whenTxtVw = (TextView)findViewById(R.id.registMovie_whenTxtVw);
+		whenBtn = (Button)findViewById(R.id.registMovie_whenBtn);
 
 		
 		// 상세정보 페이지의 값들을 movie 객체로 넘겨받음
@@ -94,8 +100,6 @@ public class UpdateMyMovieListActivity extends Activity {
 		init();
 		
 		// 날짜설정
-		whenTxtVw = (TextView)findViewById(R.id.registMovie_whenTxtVw);
-		whenBtn = (Button)findViewById(R.id.registMovie_whenBtn);
 		whenBtn.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -110,8 +114,6 @@ public class UpdateMyMovieListActivity extends Activity {
 		updateDisplay();
 
 		//RatingBar 표시
-		ratingBar = (RatingBar)findViewById(R.id.registMovie_ratingbar);
-		ratingBarTxt = (TextView)findViewById(R.id.registMovie_ratingBarTxt);
 		ratingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 
 			public void onRatingChanged(RatingBar ratingBar, float rating,
@@ -138,8 +140,7 @@ public class UpdateMyMovieListActivity extends Activity {
 					return;
 				}
 				updateRecordParam();
-				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
-				startActivity(intent);
+				request();
 			}
 		});
 
@@ -154,10 +155,10 @@ public class UpdateMyMovieListActivity extends Activity {
 	}
 
 	public void init() {
-		whenTxtVw.setText(movie.getWhen());
-		whereTxt.setText(movie.getWhere());
-		withTxt.setText(movie.getWith());
-		commentEditTxt.setText(movie.getComment());
+		whenTxtVw.setText(movie.getWhen().toString());
+		whereTxt.setText(movie.getWhere().toString());
+		withTxt.setText(movie.getWith().toString());
+		commentEditTxt.setText(movie.getComment().toString());
 		
 		float rating = (float) ( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0; 
 		ratingBarTxt.setText((rating*2) + " / 10.0");
@@ -209,7 +210,8 @@ public class UpdateMyMovieListActivity extends Activity {
 		}
 		String[] whereArgs = {movie.getTitle(), actor};
 		
-		recordValues.put("m_title", movie.getTitle());
+		Log.e("Update", movie.getTitle() + " " + actor);
+		//recordValues.put("m_title", movie.getTitle());
 		recordValues.put("m_when", when);
 		recordValues.put("m_where", where);
 		recordValues.put("m_with", with);
@@ -218,14 +220,55 @@ public class UpdateMyMovieListActivity extends Activity {
 		recordValues.put("m_thumbnail", movie.getThumbnail());
 		recordValues.put("m_nation", movie.getNation());
 		recordValues.put("m_director", movie.getDirector());
-		recordValues.put("m_actor", actor);
+		//recordValues.put("m_actor", actor);
 		recordValues.put("m_genre", movie.getGenre());
 		recordValues.put("m_open_info", movie.getOpenInfo());
 		recordValues.put("m_story", movie.getStory());
 		
-		db.update("t_movielist", recordValues, "t_title=? and t_actor=?", whereArgs);
+		int cnt = db.update("t_movielist", recordValues, "m_title = ? AND m_actor = ? ", whereArgs);
+		Log.e("dbcnt", cnt+"");
 		db.close();
 	}
+	
+	
+	//listView item 삭제 Dialog
+		public void request() {
+			String title = "수정";
+			String message = "수정 하시겠습니까?";
+			String titleButtonYes = "예";
+			String titleButtonNo = "아니오";
 
+			AlertDialog dialog = makeRequestDialog(title, message, titleButtonYes,
+					titleButtonNo);
+			dialog.show();
+		}
+		private AlertDialog makeRequestDialog(CharSequence title,
+				CharSequence message, CharSequence titleButtonYes,
+				CharSequence titleButtonNo) {
+
+			AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
+			requestDialog.setTitle(title);
+			requestDialog.setMessage(message);
+			
+			//다이얼로그 버튼 OnClick 리스너
+			requestDialog.setPositiveButton(titleButtonYes,
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Toast.makeText(getApplicationContext(), "수정되었습니다.", Toast.LENGTH_SHORT).show();
+							Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
+							startActivity(intent);
+							finish();
+						}
+					});
+			requestDialog.setNegativeButton(titleButtonNo,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+			return requestDialog.show();
+		}
 }
 

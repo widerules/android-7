@@ -10,25 +10,35 @@
         android:layout_height="wrap_content"
         android:hint="영화제목을 입력하세요" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:text=" 내가 본 영화 목록"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        android:textStyle="bold" />
+        android:orientation="horizontal" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text=" 내가 본 영화 목록"
+            android:textColor="#000000"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/myMovie_listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/myMovieList_dataCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="#000000"
+            android:textSize="15dp" />
     </LinearLayout>
 
+    <ListView
+        android:id="@+id/myMovie_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

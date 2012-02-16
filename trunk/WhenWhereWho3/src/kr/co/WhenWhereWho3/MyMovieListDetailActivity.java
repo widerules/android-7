@@ -65,7 +65,11 @@ public class MyMovieListDetailActivity extends Activity {
         	movie = (Movie)intent.getSerializableExtra("movie");
         	this.movie = movie;
         	
-        	myWhenTxtVw.setText(movie.getWhen());
+        	String getWhen = movie.getWhen();
+			String year = getWhen.substring(0, 4);
+			String month = getWhen.substring(4, 5);
+			String day = getWhen.substring(5, 7); 
+        	myWhenTxtVw.setText(year + "년 " + month + "월 " + day + "일");
         	myWhereTxtVw.setText(movie.getWhere());
         	myWithTxtVw.setText(movie.getWith());
         	myCommentTxtVw.setText(movie.getComment());
@@ -80,8 +84,6 @@ public class MyMovieListDetailActivity extends Activity {
         	myStoryTxtVw.setText(movie.getStory() );
         	
 			imageDownloader.download( movie.getThumbnail(), myThumbnail );
-        	
-        	Toast.makeText(getApplicationContext(), movie.getTitle(), Toast.LENGTH_SHORT).show();
         }
         
         //페이스북 담벼락 글남기기

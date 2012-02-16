@@ -126,7 +126,7 @@ public class RegistMovieActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {	
-				when = (mYear+"") + (mMonth+"") + (mDay+""); 
+				when = (mYear+"") + ((mMonth+1)+"") + (mDay+""); 
 				where = whereTxt.getText().toString();
 				with = withTxt.getText().toString();
 				comment = commentEditTxt.getText().toString();

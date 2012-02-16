@@ -61,7 +61,6 @@ public class SearchMovieListActivity extends Activity {
 				} 
 				//파싱결과 존재시 listview item 추가
 				else {	
-					Log.e("moviesSize", movies.size()+"");
 					dataCntTxt.setText("검색된 data 수 : " + movies.size() + "개");
 					adapter = new MovieListAdapter(SearchMovieListActivity.this, R.layout.searchlist, movies );
 					listview.setAdapter(adapter);

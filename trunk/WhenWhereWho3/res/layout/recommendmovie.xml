@@ -4,56 +4,40 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/menu_top"
+        android:gravity="center"
+        android:text="추천영화"
+        android:textSize="30sp" />
+
     <LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="vertical"
-	    android:layout_marginBottom="30dp"
-        >
-        
-	  	<TextView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_horizontal"
-	        android:gravity="center"
-	        android:padding="10dp"
-	        android:text="추천 영화"
-	        android:textSize="25sp" /> 
-	  
-	    <ImageView 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:src="@drawable/moivebar"
-	        />
-	    <kr.co.WhenWhereWho3.CoverFlow
-	        android:id="@+id/recommendMovie_gallery"
-		    android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-	        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical" >
+
+
+        <kr.co.WhenWhereWho3.CoverFlow
+            android:id="@+id/recommendMovie_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
-    
-   <TextView 
+
+    <TextView
         android:id="@+id/recommendMovie_imgTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-     	android:textSize="20dp"
-     	android:singleLine="true"
-     	android:text="영화 제목"
         android:gravity="center"
-       />
-    
-    <ImageView		
-	    android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:src="@drawable/moivebar"
-	     />
+        android:singleLine="true"
+        android:text="영화 제목"
+        android:textSize="20dp" />
+
     <ScrollView
-	    android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
     </ScrollView>
-    
-    
-    
+
 </LinearLayout>

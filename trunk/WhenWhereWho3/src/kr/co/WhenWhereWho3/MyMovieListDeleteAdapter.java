@@ -78,10 +78,14 @@ public class MyMovieListDeleteAdapter extends ArrayAdapter<Movie> {
 			// 영화 title 가져오기
 			title.setText(m.getTitle());
 			// 영화를 언제 봤는가? 가져오기
-			when.setText(m.getOpenInfo());
+			String getWhen = m.getWhen();
+			String year = getWhen.substring(0, 4);
+			String month = getWhen.substring(4, 5);
+			String day = getWhen.substring(5, 7); 
+			when.setText(year + "년 " + month + "월 " + day + "일");
 			// 영화를 누구랑 봤는가? 가져오기
 			// 일단 임시로 장르 가져옴- 2012.02.12
-			with.setText(m.getGenre());
+			with.setText("with " + m.getWith());
 			// 평점 바 가져오기
 			float rating = (float) ((m.getGrade().equals("")) ? 0.0 : Float
 					.parseFloat(m.getGrade())) / (float) 2.0;
