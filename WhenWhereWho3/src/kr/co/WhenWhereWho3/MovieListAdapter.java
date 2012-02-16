@@ -39,7 +39,7 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		Log.e("MovieListAdapter", "getView호출");
+		Log.d("MovieListAdapter", "getView호출");
 		View v = convertView;
 
 		if (v == null) {
@@ -67,10 +67,10 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
 			// 평점
 			rating.setText(m.getGrade());
 			
-			Log.e("MovieListAdapter",
-					"영화 제목 : " + m.getTitle() + "국가 : " + m.getNation()
-							+ "평점 : " + m.getGrade() + "썸네일 주소 : "
-							+ thumbnailUrl);
+			Log.d("MovieListAdapter", "영화 제목 : " + m.getTitle() 
+										+ "국가 : " + m.getNation()
+										+ "평점 : " + m.getGrade() 
+										+ "썸네일 주소 : " + thumbnailUrl);
 			return v;
 		} catch (Exception e) {
 			e.printStackTrace();

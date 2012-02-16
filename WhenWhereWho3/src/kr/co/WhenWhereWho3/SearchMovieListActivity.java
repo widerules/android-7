@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -21,11 +23,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+ * 영화검색 
+ * (list로 보기)
+ */
 public class SearchMovieListActivity extends Activity {
 
 	//	멤버변수 선언 부분
 	InputStreamReader isr;				//	url로부터 읽어온 정보를 담을 InputStreamReader객체
 	BufferedReader br;					//	속도를 위한 BufferedReader
+	
+	InputMethodManager imm;
 	
 	EditText editTxt;					//	검색값 입력할 에디트 창
 	Button searchBtn;					//	검색 버튼
@@ -84,6 +92,10 @@ public class SearchMovieListActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "검색어를 입력하세요!", Toast.LENGTH_SHORT).show();
 					return;
 				}
+				
+				//검색시 키보드 숨기기
+				imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE); 
+				imm.hideSoftInputFromWindow(editTxt.getWindowToken(), 0); 
 				
 				if( isParsing ) return;		//	버튼 중복 클릭 방지
 				

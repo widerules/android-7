@@ -53,7 +53,7 @@ public class FindCinemaActivity extends MapActivity {
 		super.onResume();
 		
 		myOverlay.enableMyLocation(); // 액티비티가 화면에 보일 때 enableMyLocation() 메소드 호출
-//		}
+		
 	}
 	
 
