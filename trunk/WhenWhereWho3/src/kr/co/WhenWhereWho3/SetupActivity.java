@@ -3,15 +3,8 @@ package kr.co.WhenWhereWho3;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 public class SetupActivity extends Activity {	
 //	String [] name = {"List로 보기", "포스터 여러개 보기"};
