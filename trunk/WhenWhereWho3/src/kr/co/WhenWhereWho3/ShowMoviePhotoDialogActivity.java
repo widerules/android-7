@@ -19,7 +19,7 @@ public class ShowMoviePhotoDialogActivity extends Activity {
 		
 		Intent intent = getIntent();
 		
-		ImageView photo = (ImageView)findViewById(R.id.photo);
+		ImageView photo = (ImageView)findViewById(R.id.showMoviePhoto_photo);
 		imageDownloader.download(intent.getStringExtra("photo"), photo);
 		
 		photo.setOnClickListener(new OnClickListener() {

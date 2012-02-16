@@ -38,8 +38,8 @@ public class SetupListAdapter extends ArrayAdapter<SetupList> {
 				+  setupList.get(position).getContent() );
 		
 		
-		TextView title = (TextView)v.findViewById(R.id.titleVwSetup);
-		TextView subtitle = (TextView)v.findViewById(R.id.subTitleVwSetup);
+		TextView title = (TextView)v.findViewById(R.id.setUpList_titleVwSetup);
+		TextView subtitle = (TextView)v.findViewById(R.id.setUpList_subTitleVwSetup);
 		
 		title.setText(setupList.get(position).getTitle());
 		subtitle.setText(setupList.get(position).getContent());

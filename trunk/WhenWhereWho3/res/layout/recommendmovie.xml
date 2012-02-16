@@ -26,14 +26,14 @@
 	        android:src="@drawable/moivebar"
 	        />
 	    <kr.co.WhenWhereWho3.CoverFlow
-	        android:id="@+id/gallery"
+	        android:id="@+id/recommendMovie_gallery"
 		    android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 	        />
     </LinearLayout>
     
    <TextView 
-        android:id="@+id/imgTxt"
+        android:id="@+id/recommendMovie_imgTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
      	android:textSize="20dp"

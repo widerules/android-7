@@ -10,7 +10,7 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/movieTitle"
+            android:id="@+id/registerMovie_movieTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#5555ff"
@@ -50,14 +50,14 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/whenTxtVw"
+                        android:id="@+id/registerMovie_whenTxtVw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="17sp" />
 
                     <Button
-                        android:id="@+id/whenBtn"
+                        android:id="@+id/registerMovie_whenBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -72,7 +72,7 @@
                     android:textColor="#ffffff" />
 
                 <EditText
-                    android:id="@+id/whereTxt"
+                    android:id="@+id/registerMovie_whereTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="어디서" />
@@ -85,7 +85,7 @@
                     android:textColor="#ffffff" />
 
                 <EditText
-                    android:id="@+id/withTxt"
+                    android:id="@+id/registerMovie_withTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="누구랑" />
@@ -98,7 +98,7 @@
                     android:textColor="#ffffff" />
 
                 <EditText
-                    android:id="@+id/commentEditTxt"
+                    android:id="@+id/registerMovie_commentEditTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
@@ -115,22 +115,22 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_below="@id/withTxt"
+                        android:layout_below="@id/registerMovie_withTxt"
                         android:background="#ff696969"
                         android:text="● My 별점"
                         android:textColor="#ffffff" />
 
                     <TextView
-                        android:id="@+id/ratingBarTxt"
+                        android:id="@+id/registerMovie_ratingBarTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_below="@id/withTxt"
+                        android:layout_below="@id/registerMovie_withTxt"
                         android:gravity="center"
                         android:text="0.0/10.0" />
                 </RelativeLayout>
                  <RatingBar
-                    android:id="@+id/ratingbar"
+                    android:id="@+id/registerMovie_ratingbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -150,14 +150,14 @@
                 android:padding="10dp">
 
                 <Button
-                    android:id="@+id/registBtn"
+                    android:id="@+id/registerMovie_registBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="등록" />
 
                 <Button
-                    android:id="@+id/cancleBtn"
+                    android:id="@+id/registerMovie_cancleBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

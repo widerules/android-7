@@ -83,10 +83,10 @@ public class SearchMovieGridActivity extends Activity {
 
 		parse = new Parse();
 
-		editTxt = (EditText) findViewById(R.id.editSearch);
-		searchBtn = (Button) findViewById(R.id.btnSearch);
-		dataCntTxt = (TextView) findViewById(R.id.dataCnt);
-		gridview = (GridView) findViewById(R.id.gridview);
+		editTxt = (EditText) findViewById(R.id.searchMovieGrid_editSearch);
+		searchBtn = (Button) findViewById(R.id.searchMovieGrid_btnSearch);
+		dataCntTxt = (TextView) findViewById(R.id.searchMovieGrid_dataCnt);
+		gridview = (GridView) findViewById(R.id.searchMovieGrid_gridview);
 
 		// 검색버튼 onclick 리스너
 		searchBtn.setOnClickListener(new OnClickListener() {

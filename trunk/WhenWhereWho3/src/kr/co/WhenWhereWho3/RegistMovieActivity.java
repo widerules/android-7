@@ -76,11 +76,11 @@ public class RegistMovieActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.registmovie);
 
-		movieTitle = (TextView)findViewById(R.id.movieTitle);
-		whenTxtVw = (TextView)findViewById(R.id.whenTxtVw);
-		whereTxt = (EditText)findViewById(R.id.whereTxt);
-		withTxt = (EditText)findViewById(R.id.withTxt);
-		commentEditTxt = (EditText)findViewById(R.id.commentEditTxt);
+		movieTitle = (TextView)findViewById(R.id.registerMovie_movieTitle);
+		whenTxtVw = (TextView)findViewById(R.id.registerMovie_whenTxtVw);
+		whereTxt = (EditText)findViewById(R.id.registerMovie_whereTxt);
+		withTxt = (EditText)findViewById(R.id.registerMovie_withTxt);
+		commentEditTxt = (EditText)findViewById(R.id.registerMovie_commentEditTxt);
 		
 		
 		// 상세정보 페이지의 값들을 movie 객체로 넘겨받음
@@ -93,8 +93,8 @@ public class RegistMovieActivity extends Activity {
 		movieTitle.setText(movie.getTitle());
 
 		// 날짜설정
-		whenTxtVw = (TextView)findViewById(R.id.whenTxtVw);
-		whenBtn = (Button)findViewById(R.id.whenBtn);
+		whenTxtVw = (TextView)findViewById(R.id.registerMovie_whenTxtVw);
+		whenBtn = (Button)findViewById(R.id.registerMovie_whenBtn);
 		whenBtn.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -109,8 +109,8 @@ public class RegistMovieActivity extends Activity {
 		updateDisplay();
 
 		//RatingBar 표시
-		ratingBar = (RatingBar)findViewById(R.id.ratingbar);
-		ratingBarTxt = (TextView)findViewById(R.id.ratingBarTxt);
+		ratingBar = (RatingBar)findViewById(R.id.registerMovie_ratingbar);
+		ratingBarTxt = (TextView)findViewById(R.id.registerMovie_ratingBarTxt);
 		ratingBar.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
 
 			public void onRatingChanged(RatingBar ratingBar, float rating,
@@ -121,7 +121,7 @@ public class RegistMovieActivity extends Activity {
 		
 		
 		//등록버튼 onClick 리스너
-		Button registBtn = (Button)findViewById(R.id.registBtn);
+		Button registBtn = (Button)findViewById(R.id.registerMovie_registBtn);
 		registBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -143,7 +143,7 @@ public class RegistMovieActivity extends Activity {
 		});
 
 		//취소버튼 onClick 리스너
-		Button cancelBtn = (Button)findViewById(R.id.cancleBtn);
+		Button cancelBtn = (Button)findViewById(R.id.registerMovie_cancleBtn);
 		cancelBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

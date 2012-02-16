@@ -121,8 +121,8 @@ public class RecommendMovieActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recommendmovie);
 		
-		gallery = (CoverFlow)findViewById(R.id.gallery);
-		imgTxt = (TextView)findViewById(R.id.imgTxt);
+		gallery = (CoverFlow)findViewById(R.id.recommendMovie_gallery);
+		imgTxt = (TextView)findViewById(R.id.recommendMovie_imgTxt);
 		parse = new Parse();
 		
 		//	쓰레드로 일단 네이버에서 데이터를 읽어옴

@@ -11,14 +11,14 @@
         android:padding="10dp" >
 
         <EditText
-            android:id="@+id/editSearch"
+            android:id="@+id/searchMovieGrid_editSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:hint="영화제목을 입력하세요" />
 
         <Button
-            android:id="@+id/btnSearch"
+            android:id="@+id/searchMovieGrid_btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,7 +43,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/dataCnt"
+            android:id="@+id/searchMovieGrid_dataCnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -53,7 +53,7 @@
     </LinearLayout>
 
     <GridView
-        android:id="@+id/gridview"
+        android:id="@+id/searchMovieGrid_gridview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:numColumns="2" />

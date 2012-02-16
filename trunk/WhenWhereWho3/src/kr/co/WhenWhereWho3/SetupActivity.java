@@ -40,8 +40,8 @@ public class SetupActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setup);
 		
-		systemListVw = (ListView)findViewById(R.id.systemListVw);
-		basicListVw = (ListView)findViewById(R.id.basicListVw);
+		systemListVw = (ListView)findViewById(R.id.setUp_systemListVw);
+		basicListVw = (ListView)findViewById(R.id.setUp_basicListVw);
 		
 		systemList = new ArrayList<SetupList>();
 		basicList = new ArrayList<SetupList>();

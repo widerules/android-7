@@ -57,22 +57,22 @@ public class SearchMovieDetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.moviedetail);	
 	
-		movieTitle = (TextView)findViewById(R.id.movieTitle);
-		movieNation = (TextView)findViewById(R.id.movieNation);
+		movieTitle = (TextView)findViewById(R.id.searchMovieDetail_movieTitle);
+		movieNation = (TextView)findViewById(R.id.searchMovieDetail_movieNation);
 		
-		movieImg = (ImageView)findViewById(R.id.movieImg);
-		movieDirector = (TextView)findViewById(R.id.movieDirector);
-		movieActors = (TextView)findViewById(R.id.movieActors);
-		movieGenre = (TextView)findViewById(R.id.movieGenre);
-		movieOpenInfo = (TextView)findViewById(R.id.movieOpenInfo);
-		movieGrade = (TextView)findViewById(R.id.movieGrade);
+		movieImg = (ImageView)findViewById(R.id.searchMovieDetail_movieImg);
+		movieDirector = (TextView)findViewById(R.id.searchMovieDetail_movieDirector);
+		movieActors = (TextView)findViewById(R.id.searchMovieDetail_movieActors);
+		movieGenre = (TextView)findViewById(R.id.searchMovieDetail_movieGenre);
+		movieOpenInfo = (TextView)findViewById(R.id.searchMovieDetail_movieOpenInfo);
+		movieGrade = (TextView)findViewById(R.id.searchMovieDetail_movieGrade);
 	
-		galleryPhoto = (Gallery)findViewById(R.id.galleryPhoto);
-		movieStory = (TextView)findViewById(R.id.movieStory);
+		galleryPhoto = (Gallery)findViewById(R.id.searchMovieDetail_galleryPhoto);
+		movieStory = (TextView)findViewById(R.id.searchMovieDetail_movieStory);
 		
 		
 		//찜 버튼 onClick 리스너
-		Button btnWishList = (Button)findViewById(R.id.btnWishList);
+		Button btnWishList = (Button)findViewById(R.id.searchMovieDetail_btnWishList);
 		btnWishList.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -80,7 +80,7 @@ public class SearchMovieDetailActivity extends Activity {
 			}
 		});
 		//등록 버튼 onClick 리스너
-		Button btnRegistMovie = (Button)findViewById(R.id.btnRegistMovie);
+		Button btnRegistMovie = (Button)findViewById(R.id.searchMovieDetail_btnRegistMovie);
 		btnRegistMovie.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

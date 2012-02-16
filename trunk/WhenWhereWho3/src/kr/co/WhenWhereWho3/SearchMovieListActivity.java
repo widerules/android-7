@@ -81,10 +81,10 @@ public class SearchMovieListActivity extends Activity {
         
         parse = new Parse();
         
-        editTxt = (EditText)findViewById(R.id.editSearch);
-        searchBtn = (Button)findViewById(R.id.btnSearch);
-        dataCntTxt = (TextView)findViewById(R.id.dataCnt);
-        listview = (ListView)findViewById(R.id.listview);
+        editTxt = (EditText)findViewById(R.id.searchMovieList_editSearch);
+        searchBtn = (Button)findViewById(R.id.searchMovieList_btnSearch);
+        dataCntTxt = (TextView)findViewById(R.id.searchMovieList_dataCnt);
+        listview = (ListView)findViewById(R.id.searchMovieList_listview);
         
         //검색버튼 onclick 리스너
         searchBtn.setOnClickListener(new OnClickListener() {
