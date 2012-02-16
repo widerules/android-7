@@ -88,8 +88,7 @@ public class SetupActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Intent intent = new Intent(getApplicationContext(), WhenWhereWho3Activity.class);
-			startActivity(intent);
+			finish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

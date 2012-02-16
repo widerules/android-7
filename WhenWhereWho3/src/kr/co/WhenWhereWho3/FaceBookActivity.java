@@ -94,7 +94,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 			//	movie객체를 가져와서 데이터를 뿌려준다.
 			Movie movie = (Movie)intent.getSerializableExtra("movie");
 			this.movie = movie;
-			
+
 			faceBook_myTitleTxtVw.setText(movie.getTitle());
 			faceBook_myWhenTxtVw.setText("When : " + movie.getWhen());
 			faceBook_myWithTxtVw.setText("With : " + movie.getWith());
@@ -107,17 +107,19 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 
 			imageDownloader.download( movie.getThumbnail(), faceBook_myThumbnail );
 		}
-		
+
 		mEtContent = (EditText) findViewById(R.id.faceBook_etContent);
 		mBtnFeed = (Button) findViewById(R.id.faceBook_btnFeed);
 		mBtnFeed.setOnClickListener(this);
 		faceBook_btnLogout = (Button)findViewById(R.id.faceBook_btnLogout);
 		faceBook_btnLogout.setOnClickListener(this);
-		
+
 		mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
-		if(mFacebookAccessToken != "") {		
+		if(!mFacebookAccessToken.equals("")) {		
 			mFacebook.setAccessToken(mFacebookAccessToken);
+			mBtnFeed.setVisibility(View.VISIBLE);
 		} else {
+			mBtnFeed.setVisibility(View.GONE);
 			login();			
 		}	
 	}
@@ -148,10 +150,12 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 					};
 				};
 				t.start();
-			}
+			} 
 			break;
 		case R.id.faceBook_btnLogout:
+			mBtnFeed.setVisibility(View.GONE);
 			logout();
+			break;
 		}
 	}
 
@@ -179,7 +183,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 
 			String message = "< WhenWhereWith APP으로 부터 자동 등록 > \n\n"
 					+ "● 어디서 : "
-					+ faceBook_myWhereTxtVw.getText().toString().trim() + "\n"
+					+ movie.getWhere() + "\n"
 					+ "● 나의 평점 : " + rating + "/10.0 \n"
 					+ faceBook_myGenreTxtVw.getText().toString().trim() + "\n"
 					+ faceBook_myOpenInfoTxtVw.getText().toString().trim()
@@ -191,7 +195,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 			params.putString("name", faceBook_myTitleTxtVw.getText().toString()
 					.trim());
 			params.putString("link", "");
-			params.putString("description", "WWW APP 테스트중");
+			params.putString("description", "WhenWwhereWith APP");
 			params.putString("picture", movie.getThumbnail());
 
 			mFacebook.request("me/feed", params, "POST");
