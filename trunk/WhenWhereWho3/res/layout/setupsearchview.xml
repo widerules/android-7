@@ -22,13 +22,13 @@
             android:id="@+id/listRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
-            android:text="> 리스트로 보기"
+            android:text="리스트로 보기"
             />
         <RadioButton
             android:id="@+id/gridRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
-            android:text="> 포스터 여러개로 보기"
+            android:text="포스터 여러개로 보기"
             />
 
     </RadioGroup>
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            android:text="등록" />
+            android:text="설정" />
 
         <Button
             android:id="@+id/setupSearchCancelBtn"

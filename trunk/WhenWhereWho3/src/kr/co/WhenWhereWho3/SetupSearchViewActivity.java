@@ -1,18 +1,24 @@
 package kr.co.WhenWhereWho3;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
-public class SetupSearchViewActivity extends Activity {
+public class SetupSearchViewActivity extends Activity implements OnCheckedChangeListener {
 	RadioButton rb;
 	SharedPreferences pref;
 	Editor editor;
-	int viewType = 0;
+	int checkValue = 0;
+	RadioGroup rg;
+	private String shareId = "viewType";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -20,48 +26,59 @@ public class SetupSearchViewActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setupsearchview);
 
-		pref = getSharedPreferences("viewType", Activity.MODE_PRIVATE);
-		editor = (Editor)pref.edit();
-
-		RadioGroup rg = (RadioGroup)findViewById(R.id.setupSearchVwRadioGrp);
-		if(viewType == 0) {
-		rg.check(R.id.listRadioBtn);
+		pref = getSharedPreferences(shareId, Activity.MODE_PRIVATE);
+		int value = pref.getInt(shareId, 0);
+		rg = (RadioGroup)findViewById(R.id.setupSearchVwRadioGrp);
+		if(value == 0) {
+			rg.check(R.id.listRadioBtn);
 		} else {
 			rg.check(R.id.gridRadioBtn);
 		}
-		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+		rg.setOnCheckedChangeListener(this);
+		
+		Button setupSearchRegistBtn = (Button)findViewById(R.id.setupSearchRegistBtn);
+		setupSearchRegistBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if(checkedId != -1) {
-					rb = (RadioButton)findViewById(checkedId);
-					if(rb.getText() == "리스트로 보기") {
-						editor.putInt("viewType", 0);
-					} else {
-						editor.putInt("viewType", 1);
-					}
-					editor.commit();
-
-				}
+			public void onClick(View v) {
+				Toast.makeText(getApplicationContext(), "변경되었습니다.", Toast.LENGTH_SHORT).show();
+				
+				SharedPreferences pref = getSharedPreferences(shareId, Activity.MODE_PRIVATE);
+		    	Editor editor = (Editor)pref.edit();
+		    	if(checkValue == 0) {
+		    		editor.putInt(shareId, 0);
+		    	} else {
+		    		editor.putInt(shareId, 1);
+		    	}
+		    	editor.commit();
+		    	
+		    	Intent intent = new Intent(getApplicationContext(), SetupActivity.class);
+		    	startActivity(intent);
 			}
 		});
+		Button setupSearchCancelBtn = (Button)findViewById(R.id.setupSearchCancelBtn);
+		setupSearchCancelBtn.setOnClickListener(new OnClickListener() {
 
-//		Button setupSearchRegistBtn = (Button)findViewById(R.id.setupSearchRegistBtn);
-//		setupSearchRegistBtn.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				Toast.makeText(getApplicationContext(), "변경되었습니다.", Toast.LENGTH_SHORT).show();
-//			}
-//		});
-//		Button setupSearchCancelBtn = (Button)findViewById(R.id.setupSearchCancelBtn);
-//		setupSearchCancelBtn.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//
-//			}
-//		});
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SetupActivity.class);
+				startActivity(intent);
+			}
+		});
+	}
+	@Override
+	public void onCheckedChanged(RadioGroup arg0, int arg1) {
+		switch(arg1) {
+		case R.id.listRadioBtn:
+			checkValue = 0;
+			break;
+		case R.id.gridRadioBtn:
+			checkValue = 1;
+			break;
+		}
+	}
+		
+
 	}
 
-}
