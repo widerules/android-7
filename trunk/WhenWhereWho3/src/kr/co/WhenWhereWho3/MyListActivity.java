@@ -1,7 +1,6 @@
 package kr.co.WhenWhereWho3;
 
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,23 +13,21 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/*
+ * 영화list
+ * (내가 본 영화 목록)
+ */
 public class MyListActivity extends Activity {
 
 	private MovieDBHelper dbHelper;
 	private SQLiteDatabase db;
 
 	ListView listview; // 리스트 뷰
-
-	Intent intent;
-
 	Movie movie; // 쓰레드에서 사용할 객체
 	ArrayList<Movie> movies;
 	int deleteMoviePosition;
@@ -44,22 +41,12 @@ public class MyListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mymovielist);
 
-		dbHelper = new MovieDBHelper(this);
-		db = dbHelper.getWritableDatabase();
+		listview = (ListView) findViewById(R.id.listview);
 		
 		movies = new ArrayList<Movie>();
+		getCursor();
 
-
-		cursor = db.rawQuery("SELECT * FROM t_movielist", null);
-
-		if (cursor != null) {
-			listview = (ListView) findViewById(R.id.listview);
-			getMyListInfo(cursor);
-			adapter = new MyMovieListAdapter(MyListActivity.this,
-					R.layout.mylist, movies);
-			listview.setAdapter(adapter);
-		}
-
+		//listview item OnClick 리스너
 		listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -73,8 +60,8 @@ public class MyListActivity extends Activity {
 			}
 		});
 
+		//list item long Click 리스너
 		listview.setOnItemLongClickListener(new OnItemLongClickListener() {
-
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
@@ -83,19 +70,26 @@ public class MyListActivity extends Activity {
 				return false;
 			}
 		});	
-		
-		adapter.notifyDataSetChanged();
-		listview.invalidate();
-
-	}// onCreate( ) 끝
-
-	public void getMyListInfo(Cursor outCursor) {
-
+	}
+	
+	//MyMovieList DB all 얻어옴
+	public void getCursor() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
+		cursor = db.rawQuery("SELECT * FROM t_movielist", null);
+		if (cursor != null) {
+			getMyListInfo(cursor);
+			adapter = new MyMovieListAdapter(MyListActivity.this,
+					R.layout.mylist, movies);
+			listview.setAdapter(adapter);
+		}
+		db.close();
+	}
 
-		int recordCnt = outCursor.getCount();
-		int i = 0;
+	//MyMovieList DB all list 추가
+	public void getMyListInfo(Cursor outCursor) {
+		dbHelper = new MovieDBHelper(this);
+		db = dbHelper.getWritableDatabase();
 
 		int m_titleCol = outCursor.getColumnIndex("m_title");
 		int m_thumbnailCol = outCursor.getColumnIndex("m_thumbnail");
@@ -111,11 +105,11 @@ public class MyListActivity extends Activity {
 		int m_withCol = outCursor.getColumnIndex("m_with");
 		int m_commentCol = outCursor.getColumnIndex("m_comment");
 
-		for (i = 0; i < recordCnt; i++) {
+		int recordCnt = outCursor.getCount();
+		for (int i = 0; i < recordCnt; i++) {
 			outCursor.moveToNext();
 
 			movie = new Movie();
-
 			movie.setTitle(outCursor.getString(m_titleCol));
 			movie.setThumbnail(outCursor.getString(m_thumbnailCol));
 			movie.setNation(outCursor.getString(m_nationCol));
@@ -131,11 +125,11 @@ public class MyListActivity extends Activity {
 			movie.setComment(outCursor.getString(m_commentCol));
 
 			movies.add(movie);
-
 		}
 		db.close();
 	}
 
+	//MyMovieList DB item삭제 
 	public void deleteMovieWishList() {
 		dbHelper = new MovieDBHelper(this);
 		db = dbHelper.getWritableDatabase();
@@ -144,27 +138,21 @@ public class MyListActivity extends Activity {
 
 		String[] actors = deleteMovie.getActor();
 		String actor = "";
-
-		Log.e("db1","yes");
 		for (int i = 0; i < actors.length; i++) {
 			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
-		Log.e("db2",actor);
 
-		Log.e("db2","yes");
 		String[] Args = { deleteMovie.getTitle(), actor };
 		int recordCnt = db.delete("t_movielist", "m_title = ? and m_actor = ?",
 				Args);
-
-		Log.e("db3","yes");
 		if (recordCnt == 1) {
 			Toast.makeText(getApplicationContext(), "삭제되었습니다.",
 					Toast.LENGTH_SHORT).show();
 		}
-
 		db.close();
 	}
 
+	//listView item 삭제 Dialog
 	public void request() {
 		String title = "삭제";
 		String message = "삭제 하시겠습니까?";
@@ -175,7 +163,6 @@ public class MyListActivity extends Activity {
 				titleButtonNo);
 		dialog.show();
 	}
-
 	private AlertDialog makeRequestDialog(CharSequence title,
 			CharSequence message, CharSequence titleButtonYes,
 			CharSequence titleButtonNo) {
@@ -183,13 +170,13 @@ public class MyListActivity extends Activity {
 		AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
 		requestDialog.setTitle(title);
 		requestDialog.setMessage(message);
+		
+		//다이얼로그 버튼 OnClick 리스너
 		requestDialog.setPositiveButton(titleButtonYes,
 				new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						
-						Log.e("삭제","yes");
 						deleteMovieWishList();
 						movies.remove(deleteMoviePosition);
 						adapter.notifyDataSetChanged();
@@ -198,19 +185,16 @@ public class MyListActivity extends Activity {
 				});
 		requestDialog.setNegativeButton(titleButtonNo,
 				new DialogInterface.OnClickListener() {
-
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-
 					}
 				});
-
 		return requestDialog.show();
 	}
 
+	//Back 버튼 OnClick 리스너
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.e("Back", "bac");
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			Log.e("Back", "bac");
 			Intent intent = new Intent(this, WhenWhereWho3Activity.class);
@@ -218,26 +202,25 @@ public class MyListActivity extends Activity {
 					| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			startActivity(intent);
 		}
-
 		return super.onKeyDown(keyCode, event);
 	}
 
+	
+	//옵션메뉴
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add("선택삭제");
-
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (movies.size() != 0) {
-			intent = new Intent(getApplicationContext(),
+			Intent intent = new Intent(getApplicationContext(),
 					MyListDeleteActivity.class);
 			startActivity(intent);
 			finish();
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 }
