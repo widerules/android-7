@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import android.util.Log;
+import android.widget.Toast;
 
 public class Parse {
 	private Movie movie;
@@ -37,17 +38,21 @@ public class Parse {
 				}
 				
 				int startIndex = result.indexOf(
-						"<div class=\"sect_movie\" id = \"tx_ca_movie_tab_open\" >" );
-				int endIndex = result.indexOf(
-						"<div class=\"sect_movie\" id = \"tx_ca_movie_tab_point\" style='display:none'>" );
-				
-				//	찾았으면 그 내용 부분만 잘라서 가져온다.
-				if( startIndex != -1 && endIndex != -1 ) {
-					
-					sub = result.substring(startIndex, endIndex - 1);
-					
-					while( sub.indexOf( "title=\"" ) != -1 ) {
-						int titleStartIndex = sub.indexOf("title=\"") + 7;
+						"\"movieTitle\":"
+						);
+//				int startIndex = result.indexOf(
+//						"<div class=\"sect_movie\" id = \"tx_ca_movie_tab_open\" >" );
+//				int endIndex = result.indexOf(
+//						"<div class=\"sect_movie\" id = \"tx_ca_movie_tab_point\" style='display:none'>" );
+				Log.d("HTML", "시작 index : " + startIndex );
+//				//	찾았으면 그 내용 부분만 잘라서 가져온다.
+//				if( startIndex != -1 && endIndex != -1 ) {
+				if( startIndex != -1 ) {
+					sub = result.substring(startIndex);
+					int i = 0;
+//					while( sub.indexOf( "title=\"" ) != -1 ) {
+					while( i < 10 ) {
+						int titleStartIndex = sub.indexOf("\"movieTitle\":\"") + 14;
 						//	title=" <- 문자 개수가 7개이므로 그 뒤부터 다음 '"' 이 문자가 올 때까지가
 						//	영화의 제목이므로 일단 잘라낸다.
 						sub = sub.substring( titleStartIndex );
@@ -57,11 +62,13 @@ public class Parse {
 						Log.d("영화 타이틀", "titleENdIndex : " + titleEndIndex);
 						//	영화 제목을 따온다.
 						title = sub.substring( 0, titleEndIndex );
+						Log.d("최종 영화 제목", "title : " + title);
 						titleList.add(title);
 						
 						//	다음 영화 제목을 찾기 위해 다시 잘라낸다.
 						//	영화 제목 뒤부터 다시 찾는다.
 						sub = sub.substring(titleEndIndex);
+						i++;
 					}
 					
 					return titleList;
