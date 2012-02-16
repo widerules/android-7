@@ -36,7 +36,7 @@
         <activity android:name=".SearchMovieListActivity" android:label="SearchMovieList" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".SearchMovieGridActivity" android:label="SearchMovieGrid" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".SearchMovieDetailActivity" android:label="SearchMovieDetail" />
-        <activity android:name=".RegistMovieActivity" android:label="RegistMovie" />
+        <activity android:name=".RegistMovieActivity" android:label="RegistMovie" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".RecommendMovieActivity" android:label="RecommendMovie" />
         <activity android:name=".SetupActivity" android:label="SetUp" />        
         <activity android:name=".FindCinemaActivity" android:label="FindCinema" />        
