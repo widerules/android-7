@@ -4,6 +4,13 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     >
-	
-    
+<!--     API키를 등록해야 동작한다 -->
+	<com.google.android.maps.MapView
+	    android:id="@+id/mapView"
+	   	android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:enabled="true"
+	    android:clickable="true"
+	    android:apiKey="0QKHsTn44rKwJ1qm1qXDmxV0wUU0BuR8H3VWHBQ"
+	    />
 </LinearLayout>
