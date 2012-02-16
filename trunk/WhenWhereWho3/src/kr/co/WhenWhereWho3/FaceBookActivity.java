@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +28,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 {
 	private Facebook mFacebook = new Facebook(C.FACEBOOK_APP_ID);
 	private Button mBtnFeed;
+	private Button faceBook_btnLogout;
 	private EditText mEtContent;
 	private String mFacebookAccessToken;
 	private SharedPreferences pref = null;
@@ -39,15 +39,17 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 	private final ImageDownloader imageDownloader = new ImageDownloader();
 
-	TextView myTitleTxtVw;
-	TextView myWhereTxtVw;
-	TextView myGenreTxtVw;
-	TextView myOpenInfoTxtVw;
-	TextView myActorTxtVw;
+	TextView faceBook_myTitleTxtVw;
+	TextView faceBook_myWhenTxtVw;
+	TextView faceBook_myWhereTxtVw;
+	TextView faceBook_myWithTxtVw;
+	TextView faceBook_myGenreTxtVw;
+	TextView faceBook_myOpenInfoTxtVw;
+	TextView faceBook_myActorTxtVw;
 
-	ImageView myThumbnail;
+	ImageView faceBook_myThumbnail;
 	Button myModifyBtn;
-	RatingBar myRatingBar;
+	RatingBar faceBook_myRatingBar;
 
 	ProgressDialog pd;
 	final int FACEBOOK_PROGRESS_DIALOG = 1002;
@@ -76,14 +78,16 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		setContentView(R.layout.facebook);
 
 		//	필요한 위젯들 전부 로딩
-		myTitleTxtVw 		= (TextView)findViewById(R.id.faceBook_myTitleTxtVw);
-		myWhereTxtVw		= (TextView)findViewById(R.id.faceBook_myWhereTxtVw);
-		myGenreTxtVw 		= (TextView)findViewById(R.id.faceBook_myGenreTxtVw);
-		myOpenInfoTxtVw 	= (TextView)findViewById(R.id.faceBook_myOpenInfoTxtVw);
-		myActorTxtVw		= (TextView)findViewById(R.id.faceBook_myActorTxtVw);
+		faceBook_myTitleTxtVw 		= (TextView)findViewById(R.id.faceBook_myTitleTxtVw);
+		faceBook_myWhenTxtVw		= (TextView)findViewById(R.id.faceBook_myWhenTxtVw);
+		faceBook_myWhereTxtVw		= (TextView)findViewById(R.id.faceBook_myWhereTxtVw);
+		faceBook_myWithTxtVw		= (TextView)findViewById(R.id.faceBook_myWhoTxtVw);
+		faceBook_myGenreTxtVw 		= (TextView)findViewById(R.id.faceBook_myGenreTxtVw);
+		faceBook_myOpenInfoTxtVw 	= (TextView)findViewById(R.id.faceBook_myOpenInfoTxtVw);
+		faceBook_myActorTxtVw		= (TextView)findViewById(R.id.faceBook_myActorTxtVw);
 
-		myThumbnail 		= (ImageView)findViewById(R.id.faceBook_myThumbnail);
-		myRatingBar			= (RatingBar)findViewById(R.id.faceBook_myRatingBar);
+		faceBook_myThumbnail 		= (ImageView)findViewById(R.id.faceBook_myThumbnail);
+		faceBook_myRatingBar			= (RatingBar)findViewById(R.id.faceBook_myRatingBar);
 
 		//	전달받은 인텐트를 가져온다.
 		Intent intent = getIntent();       
@@ -92,24 +96,27 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 			//	movie객체를 가져와서 데이터를 뿌려준다.
 			Movie movie = (Movie)intent.getSerializableExtra("movie");
 			this.movie = movie;
-			myTitleTxtVw.setText(movie.getTitle());
-			myWhereTxtVw.setText(movie.getWhere());
-
+			
+			faceBook_myTitleTxtVw.setText(movie.getTitle());
+			faceBook_myWhenTxtVw.setText("When : " + movie.getWhen());
+			faceBook_myWithTxtVw.setText("With : " + movie.getWith());
+			faceBook_myWhereTxtVw.setText("Where : " + movie.getWhere());
 			rating = ( float )( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0;
-			myRatingBar.setRating( rating );
-			myGenreTxtVw.setText( "		- 장르 : " + movie.getGenre( ) );
-			myActorTxtVw.setText( "		- 배우 : " + Arrays.toString( movie.getActor() ) );
-			myOpenInfoTxtVw.setText( "		- 개봉일 : " + movie.getOpenInfo() );
+			faceBook_myRatingBar.setRating( rating );
+			faceBook_myGenreTxtVw.setText( "		● 장르 : " + movie.getGenre( ) );
+			faceBook_myActorTxtVw.setText( "		● 배우 : " + Arrays.toString( movie.getActor() ) );
+			faceBook_myOpenInfoTxtVw.setText( "		● 개봉일 : " + movie.getOpenInfo() );
 
-			imageDownloader.download( movie.getThumbnail(), myThumbnail );
+			imageDownloader.download( movie.getThumbnail(), faceBook_myThumbnail );
 
 		}
 		
 		mEtContent = (EditText) findViewById(R.id.faceBook_etContent);
 		mBtnFeed = (Button) findViewById(R.id.faceBook_btnFeed);
-
 		mBtnFeed.setOnClickListener(this);
-
+		faceBook_btnLogout = (Button)findViewById(R.id.faceBook_btnLogout);
+		faceBook_btnLogout.setOnClickListener(this);
+		
 		mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
 		if(mFacebookAccessToken != "") {		
 			mFacebook.setAccessToken(mFacebookAccessToken);
@@ -147,6 +154,8 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 				t.start();				
 			}
 			break;
+		case R.id.faceBook_btnLogout:
+			logout();
 		}
 	}
 
@@ -183,15 +192,15 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 			Bundle params = new Bundle();
 
 			String message = "< WhenWhereWith APP으로 부터 자동 등록 > \n\n"
-					+ "- 어디서 : " + myWhereTxtVw.getText().toString().trim() + "\n"
-					+ "- 나의 평점 : " + rating + "/10.0 \n"
-					+ myGenreTxtVw.getText().toString().trim() + "\n"
-					+ myOpenInfoTxtVw.getText().toString().trim() + "\n"
-					+ myActorTxtVw.getText().toString().trim() + "\n\n\n"
-					+ "- 후기 : " + mEtContent.getText().toString().trim() + "\n\n";						   
+					+ "● 어디서 : " + faceBook_myWhereTxtVw.getText().toString().trim() + "\n"
+					+ "● 나의 평점 : " + rating + "/10.0 \n"
+					+ faceBook_myGenreTxtVw.getText().toString().trim() + "\n"
+					+ faceBook_myOpenInfoTxtVw.getText().toString().trim() + "\n"
+					+ faceBook_myActorTxtVw.getText().toString().trim() + "\n\n\n"
+					+ "● 후기 : " + mEtContent.getText().toString().trim() + "\n\n";						   
 
 			params.putString("message", message);			
-			params.putString("name", myTitleTxtVw.getText().toString().trim());
+			params.putString("name", faceBook_myTitleTxtVw.getText().toString().trim());
 			params.putString("link", "");
 			params.putString("description", "WWW APP 테스트중");
 			params.putString("picture", movie.getThumbnail());

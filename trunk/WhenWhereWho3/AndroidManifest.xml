@@ -43,6 +43,7 @@
         <activity android:name=".FindCinemaActivity" android:label="FindCinema" />        
         <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".FaceBookActivity" android:label="Facebook" android:windowSoftInputMode="stateHidden"/>        
+        <activity android:name=".SetupSearchViewActivity" android:label="SetupSearchView" />        
         
         <uses-library android:name="com.google.android.maps" />
     </application>

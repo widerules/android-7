@@ -12,6 +12,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
+        
+         <Button
+            android:id="@+id/faceBook_btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="로그아웃" />
 
         <TextView
             android:id="@+id/faceBook_myTitleTxtVw"
@@ -171,7 +178,7 @@
                 android:id="@+id/faceBook_myGenreTxtVw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="		- 장르 : "
+                android:text="		● 장르 : "
                 android:textSize="15dp" />
             <!-- 개봉일 -->
 
@@ -179,7 +186,7 @@
                 android:id="@+id/faceBook_myOpenInfoTxtVw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="		- 개봉일 : "
+                android:text="		● 개봉일 : "
                 android:textSize="15dp" />
             <!-- 배우 -->
 
@@ -187,7 +194,7 @@
                 android:id="@+id/faceBook_myActorTxtVw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="		- 배우 : "
+                android:text="		● 배우 : "
                 android:textSize="15dp" />
         </LinearLayout>
         <!-- 스크롤뷰를 감싼 LinearLaout 끝 -->
