@@ -118,11 +118,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 		if(!mFacebookAccessToken.equals("")) {		
 			mFacebook.setAccessToken(mFacebookAccessToken);
 
-		} else {
-			login();		
-			mBtnFeed.setVisibility(View.VISIBLE);
-
-		}	
+		} 
 	}
 
 	private void login() {
@@ -134,6 +130,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 					new String[] { "publish_stream, user_photos, email" },
 					new AuthorizeListener());
 		}
+		
 	}
 
 	// 버튼의 OnClick 이벤트 처리
@@ -155,7 +152,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 					};
 					t.start();				
 				} else {
-					login();			
+					login();					
 				} 
 			}
 			break;
