@@ -84,7 +84,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		myActorTxtVw		= (TextView)findViewById(R.id.myActorTxtVw);
 
 		myThumbnail 		= (ImageView)findViewById(R.id.myThumbnail);
-		myModifyBtn			= (Button)findViewById(R.id.myModifyBtn);
 		myRatingBar			= (RatingBar)findViewById(R.id.myRatingBar);
 		/***********************************************************************/
 
