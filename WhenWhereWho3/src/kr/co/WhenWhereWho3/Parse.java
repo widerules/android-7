@@ -34,27 +34,19 @@ public class Parse {
 				String sub = "";
 				
 				while ( ( readLine = br.readLine() ) != null ) {
+					Log.d("내용 : ", readLine);
 					result.append( readLine );
 				}
 				
 				int startIndex = result.indexOf(
 						"\"movieTitle\":"
 						);
-//				int startIndex = result.indexOf(
-//						"<div class=\"sect_movie\" id = \"tx_ca_movie_tab_open\" >" );
-//				int endIndex = result.indexOf(
-//						"<div class=\"sect_movie\" id = \"tx_ca_movie_tab_point\" style='display:none'>" );
 				Log.d("HTML", "시작 index : " + startIndex );
-//				//	찾았으면 그 내용 부분만 잘라서 가져온다.
-//				if( startIndex != -1 && endIndex != -1 ) {
 				if( startIndex != -1 ) {
 					sub = result.substring(startIndex);
 					int i = 0;
-//					while( sub.indexOf( "title=\"" ) != -1 ) {
 					while( i < 10 ) {
 						int titleStartIndex = sub.indexOf("\"movieTitle\":\"") + 14;
-						//	title=" <- 문자 개수가 7개이므로 그 뒤부터 다음 '"' 이 문자가 올 때까지가
-						//	영화의 제목이므로 일단 잘라낸다.
 						sub = sub.substring( titleStartIndex );
 						Log.d("영화 타이틀", "title : " + sub);
 						//	처음으로 따옴표 오기 전까지가 영화의 제목이므로 index를 가져온다.
@@ -215,7 +207,29 @@ public class Parse {
 		return null;
 	}
 
-	
+	public ArrayList<InfoMovieTheater> locationParse( BufferedReader br ) {
+		try {
+			//		읽어온 정보를 파싱을 통해 Object로 얻어옴
+			JSONObject object = (JSONObject)JSONValue.parseWithException( br );
+			Log.d("parse", "제이슨 오브젝트 읽힘");
+			
+			//	검색 결과가 없을 경우
+			if( object.get("channel") == null ){
+				Log.d("parse", "검색결과 없음");
+				//	메시지 번호 할당
+				return null;
+			}
+			
+			//	json파일을 읽어온 후 channel로 가져옴
+			JSONObject channel = ( JSONObject )( object.get( "channel" ) );
+			//	channel안의 내용중 item에 해당하는 내용들을 배열로 가져옴
+			JSONArray items = (JSONArray)channel.get("item");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
 }
 
