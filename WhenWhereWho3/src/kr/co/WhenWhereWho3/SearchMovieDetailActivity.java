@@ -1,6 +1,8 @@
 package kr.co.WhenWhereWho3;
 
 import java.util.Arrays;
+
+import kr.co.facebook.android.Facebook;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -29,7 +31,8 @@ import android.widget.Toast;
 public class SearchMovieDetailActivity extends Activity {	
 
 	private final ImageDownloader imageDownloader = new ImageDownloader();
-
+	 private Facebook mFacebook = new Facebook(C.FACEBOOK_APP_ID);
+	 
 	//DB사용 - 찜목록에 등록하기 위해
 	private MovieDBHelper dbHelper;
 	private SQLiteDatabase db;
@@ -121,6 +124,15 @@ public class SearchMovieDetailActivity extends Activity {
 				Intent dialog = new Intent(SearchMovieDetailActivity.this, ShowMoviePhotoDialogActivity.class);
 				dialog.putExtra("photo", photo[position]);
 				startActivity(dialog);
+			}
+		});
+		
+		Button facebookBtn = (Button)findViewById(R.id.facebookBtn);
+		facebookBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
 			}
 		});
 	}
