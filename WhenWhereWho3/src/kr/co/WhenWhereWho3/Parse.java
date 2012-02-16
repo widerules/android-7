@@ -9,7 +9,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import android.util.Log;
-import android.widget.Toast;
 
 public class Parse {
 	private Movie movie;
@@ -90,7 +89,6 @@ public class Parse {
 			//	검색 결과가 없을 경우
 			if( object.get("channel") == null ){
 				Log.d("parse", "검색결과 없음");
-				//	메시지 번호 할당
 				return null;
 			}
 			
@@ -208,26 +206,53 @@ public class Parse {
 	}
 
 	public ArrayList<InfoMovieTheater> locationParse( BufferedReader br ) {
+		ArrayList<InfoMovieTheater> infoMovieTheaters = new ArrayList<InfoMovieTheater>();
 		try {
 			//		읽어온 정보를 파싱을 통해 Object로 얻어옴
 			JSONObject object = (JSONObject)JSONValue.parseWithException( br );
 			Log.d("parse", "제이슨 오브젝트 읽힘");
 			
 			//	검색 결과가 없을 경우
-			if( object.get("channel") == null ){
+			if( object.get("status").toString().equals("ZERO_RESULTS") ){
 				Log.d("parse", "검색결과 없음");
-				//	메시지 번호 할당
 				return null;
 			}
 			
-			//	json파일을 읽어온 후 channel로 가져옴
-			JSONObject channel = ( JSONObject )( object.get( "channel" ) );
-			//	channel안의 내용중 item에 해당하는 내용들을 배열로 가져옴
-			JSONArray items = (JSONArray)channel.get("item");
+			//	json파일을 읽어온 후 result로 가져옴
+			JSONArray results = ( JSONArray )( object.get( "results" ) );
+			
+			for( int i = 0; i < results.size(); i++ ){
+				InfoMovieTheater infoMovieTheater = new InfoMovieTheater();
+				
+				//	i번째 영화관 가져옴
+				JSONObject theater = (JSONObject)results.get(i);
+				Log.d("구글 플레이스", "결과 : " + ( (JSONObject)results.get(i) ).get("name").toString() );
+				
+				/*********************************************************************/
+				//	위도, 경도 가져오기
+				JSONObject geometry = (JSONObject)theater.get( "geometry" );
+				double lat = ( double )Double.parseDouble( ( ( JSONObject )geometry.get( "location" ) ).get( "lat" ).toString( ) );
+				Log.d("구글 플레이스", "위도 : " + lat);
+				infoMovieTheater.setLat(lat);
+				
+				double lng = ( double )Double.parseDouble( ( ( JSONObject )geometry.get( "location" ) ).get( "lng" ).toString( ) );
+				Log.d("구글 플레이스", "경도 : " + lng);
+				infoMovieTheater.setLng(lng);
+				/*********************************************************************/
+				
+				/*********************************************************************/
+				String ref = theater.get( "reference" ).toString();
+				Log.d("구글 플레이스", "Reference : " + ref);
+				infoMovieTheater.setReference(ref);
+				/*********************************************************************/
+				
+				infoMovieTheaters.add(infoMovieTheater);
+			}
+			br.close();
+			return infoMovieTheaters;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 	

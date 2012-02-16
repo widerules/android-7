@@ -1,12 +1,15 @@
 package kr.co.WhenWhereWho3;
 
+import java.io.Serializable;
+
 
 /**
  * @author W3
  * 영화관 위치 및 이름과 reference값을 가진 클래스
  *
  */
-public class InfoMovieTheater {
+@SuppressWarnings("serial")
+public class InfoMovieTheater implements Serializable{
 	private double lat;			//	위도
 	private double lng;			//	경도
 	private String reference;	//	영화관 정보 담고있는 reference키

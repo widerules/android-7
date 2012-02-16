@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 <!--         지점 찾기 맵 -->
-        <activity android:name=".BranchMapActivity" android:screenOrientation="portrait">
+        <activity android:name=".MyMapActivity" android:screenOrientation="portrait">
             <intent-filter >
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -44,8 +44,6 @@
         <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".FaceBookActivity" android:label="Facebook" android:windowSoftInputMode="stateHidden"/>        
         <activity android:name=".SetupSearchViewActivity" android:label="SetupSearchView" />        
-        
-        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>
