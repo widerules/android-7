@@ -53,6 +53,7 @@ public class MyListActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				// TODO Auto-generated method stub
+				Log.d("movieTitle", movies.get(position).getTitle());
 				Intent intent = new Intent(getApplicationContext(),
 						MyMovieListDetailActivity.class);
 				intent.putExtra("movie", movies.get(position));

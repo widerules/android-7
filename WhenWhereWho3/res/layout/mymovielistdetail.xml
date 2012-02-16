@@ -7,39 +7,51 @@
     <!-- 영화 제목과 수정버튼 -->
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:orientation="horizontal" >
+        android:background="#888888"
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
-        <!-- 영화 제목 -->
-
-        <TextView
-            android:id="@+id/myTitleTxtVw"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="영화 제목"
-            android:textSize="20dp" />
+        <Button
+            android:id="@+id/facebookBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="담벼락에 글남기기" />
         <!-- 수정 버튼 -->
 
         <Button
-            android:id="@+id/myModifyBtn"
-            android:layout_width="wrap_content"
+            android:id="@+id/myUpdateBtn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="수정" />
     </LinearLayout>
-    <!-- 영화 제목과 수정버튼 끝 -->
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#5555ff"
+            android:gravity="center"
+            android:lines="2"
+            android:text="영화제목"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- 자세한 내용들 -->
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-50dp" >
+        android:layout_height="match_parent" >
 
         <!-- 스크롤뷰는 뷰를 한개만 가질 수 있으므로 LinearLayout으로 묶어준다. -->
 
@@ -52,90 +64,94 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
 
                 <!-- 영화 포스터 -->
 
                 <ImageView
                     android:id="@+id/myThumbnail"
                     android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_height="200dp" />
                 <!-- 영화 본 정보 -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical" >
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
 
                     <!-- 언제 봤는가 -->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="● When?"
+                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/myWhenTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="When : "
+                        android:gravity="right"
                         android:textSize="15dp" />
                     <!-- 누구랑 봤는가 -->
 
                     <TextView
-                        android:id="@+id/myWhoTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="2"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="With : 장소영, 조민지, 이만재, 이충엽, 조민혜"
+                        android:text="● With"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/myWithTxtVw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
                         android:textSize="15dp" />
                     <!-- 어디서 봤는가 -->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="● Where?"
+                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/myWhereTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="Where : 수원 CGV"
+                        android:gravity="right"
                         android:textSize="15dp" />
+
+                    <!-- 나의 평점은? -->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="● My 별점 ? "
+                        android:textSize="15dp" />
+                    <!-- 평점 바 -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <!-- 나의 평점은? -->
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingBottom="5dp"
-                            android:paddingTop="5dp"
-                            android:text="평점 :  "
-                            android:textSize="15dp" />
-                        <!-- 평점 바 -->
+                        android:orientation="vertical" >
 
                         <RatingBar
                             android:id="@+id/myRatingBar"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="right"
                             android:numStars="5"
                             android:paddingBottom="5dp"
                             android:paddingTop="5dp" />
                     </LinearLayout>
                     <!-- 평점 끝 -->
-                <Button
-                    android:id="@+id/facebookBtn"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="담벼락에 글남기기"
-                    android:textSize="13sp" />
+
                 </LinearLayout>
                 <!-- 나의 영화 정보 끝 -->
 
@@ -144,63 +160,81 @@
             <!-- 실제 영화 정보 시작 -->
             <!-- 영화 정보 글씨 -->
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text=" > 영화 정보"
-                android:textSize="20dp" />
-            <!-- 장르 -->
+                android:orientation="vertical"
+                android:padding="10dp" >
 
-            <TextView
-                android:id="@+id/myGenreTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="		- 장르 : "
-                android:textSize="15dp" />
-            <!-- 개봉일 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="● My Comment ? "
+                    android:textSize="15dp" />
 
-            <TextView
-                android:id="@+id/myOpenInfoTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="		- 개봉일 : "
-                android:textSize="15dp" />
-            <!-- 배우 -->
+                <!-- 감상후기 내용 -->
 
-            <TextView
-                android:id="@+id/myActorTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="		- 배우 : "
-                android:textSize="15dp" />
-            <!-- 줄거리 -->
+                <TextView
+                    android:id="@+id/myCommentTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
 
-            <TextView
-                android:id="@+id/myStoryTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="		- 줄거리 : "
-                android:textSize="15dp" />
-            <!-- 감상후기 제목글씨 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:gravity="left"
+                    android:text="영화 정보"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+                <!-- 장르 -->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text=" > 감상 후기"
-                android:textSize="20dp" />
-            <!-- 감상후기 내용 -->
+                <TextView
+                    android:id="@+id/myGenreTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+                <!-- 개봉일 -->
+				
+				<TextView
+                    android:id="@+id/myDirectorTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+                <!-- 감독 -->
 
-            <TextView
-                android:id="@+id/myCommentTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#FFFFFF"
-                android:text=" 영화 후기 내용입니다."
-                android:textColor="@android:color/black"
-                android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/myOpenInfoTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+                <!-- 배우 -->
+
+                <TextView
+                    android:id="@+id/myActorTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+                <!-- 줄거리 -->
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="●  줄거리 :"
+                    android:textSize="15dp" />
+                
+                <TextView
+                    android:id="@+id/myStoryTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="		- 줄거리 : "
+                    android:textSize="15dp" />
+                <!-- 감상후기 제목글씨 -->
+
+            </LinearLayout>
         </LinearLayout>
         <!-- 스크롤뷰를 감싼 LinearLaout 끝 -->
     </ScrollView>

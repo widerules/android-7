@@ -1,6 +1,5 @@
 package kr.co.WhenWhereWho3;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,18 +15,17 @@ import android.widget.Toast;
 public class MyMovieListDetailActivity extends Activity {	
 	TextView myTitleTxtVw;
 	TextView myWhenTxtVw;
-	TextView myWhoTxtVw;
+	TextView myWithTxtVw;
 	TextView myWhereTxtVw;
 	TextView myGenreTxtVw;
 	TextView myOpenInfoTxtVw;
+	TextView myDirectorTxtVw;
 	TextView myActorTxtVw;
 	TextView myStoryTxtVw;
 	TextView myCommentTxtVw;
 	
-	Movie movie;
-	
 	ImageView myThumbnail;
-	Button myModifyBtn;
+	Button myUpdateBtn;
 	RatingBar myRatingBar;
 	
 	private final ImageDownloader imageDownloader = new ImageDownloader();
@@ -40,20 +38,22 @@ public class MyMovieListDetailActivity extends Activity {
         
         /***********************************************************************/
         //	필요한 위젯들 전부 로딩
-        myTitleTxtVw 		= (TextView)findViewById(R.id.myTitleTxtVw);
+        myTitleTxtVw 		= (TextView)findViewById(R.id.movieTitle);
         myWhenTxtVw 		= (TextView)findViewById(R.id.myWhenTxtVw);
-        myWhoTxtVw 			= (TextView)findViewById(R.id.myWhoTxtVw);
+        myWithTxtVw 			= (TextView)findViewById(R.id.myWithTxtVw);
         myWhereTxtVw		= (TextView)findViewById(R.id.myWhereTxtVw);
         myGenreTxtVw 		= (TextView)findViewById(R.id.myGenreTxtVw);
         myOpenInfoTxtVw 	= (TextView)findViewById(R.id.myOpenInfoTxtVw);
+        myDirectorTxtVw     = (TextView)findViewById(R.id.myDirectorTxtVw);
         myActorTxtVw		= (TextView)findViewById(R.id.myActorTxtVw);
         myStoryTxtVw		= (TextView)findViewById(R.id.myStoryTxtVw);
         myCommentTxtVw 		= (TextView)findViewById(R.id.myCommentTxtVw);
         
         myThumbnail 		= (ImageView)findViewById(R.id.myThumbnail);
-        myModifyBtn			= (Button)findViewById(R.id.myModifyBtn);
+        myUpdateBtn			= (Button)findViewById(R.id.myUpdateBtn);
         myRatingBar			= (RatingBar)findViewById(R.id.myRatingBar);
         /***********************************************************************/
+        
         
         
         //	전달받은 인텐트를 가져온다.
@@ -68,20 +68,20 @@ public class MyMovieListDetailActivity extends Activity {
         if( intent != null ) {
         	//	movie객체를 가져와서 데이터를 뿌려준다.
         	Movie movie = (Movie)intent.getSerializableExtra("movie");
-        	this.movie = movie;
         	
         	myWhenTxtVw.setText(movie.getWhen());
         	myWhereTxtVw.setText(movie.getWhere());
-        	myWhoTxtVw.setText(movie.getWith());
+        	myWithTxtVw.setText(movie.getWith());
         	myCommentTxtVw.setText(movie.getComment());
         	
         	myTitleTxtVw.setText(movie.getTitle());
         	float rating = ( float )( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0;
         	myRatingBar.setRating( rating );
-        	myGenreTxtVw.setText( "		- 장르 : " + movie.getGenre( ) );
-        	myActorTxtVw.setText( "		- 배우 : " + Arrays.toString( movie.getActor() ) );
-        	myOpenInfoTxtVw.setText( "		- 개봉일 : " + movie.getOpenInfo() );
-        	myStoryTxtVw.setText("		- 줄거리 : " + movie.getStory() );
+        	myGenreTxtVw.setText( "● 장르 : " + movie.getGenre( ) );
+        	myDirectorTxtVw.setText( "●  감독 : " + movie.getDirector() );
+        	myActorTxtVw.setText( "●  배우 : " + Arrays.toString( movie.getActor() ) );
+        	myOpenInfoTxtVw.setText( "●  개봉일 : " + movie.getOpenInfo() );
+        	myStoryTxtVw.setText(movie.getStory() );
         	
 			imageDownloader.download( movie.getThumbnail(), myThumbnail );
 
@@ -89,14 +89,12 @@ public class MyMovieListDetailActivity extends Activity {
         	Toast.makeText(getApplicationContext(), movie.getTitle(), Toast.LENGTH_SHORT).show();
         }
         
-        
         Button facebookBtn = (Button)findViewById(R.id.facebookBtn);
 		facebookBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(getApplicationContext(), FaceBookActivity.class);
-				intent.putExtra("movie", movie);
 				startActivity(intent);
 			}
 		});
