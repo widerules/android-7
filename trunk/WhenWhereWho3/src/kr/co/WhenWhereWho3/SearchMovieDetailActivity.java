@@ -127,14 +127,14 @@ public class SearchMovieDetailActivity extends Activity {
 			}
 		});
 		
-		Button facebookBtn = (Button)findViewById(R.id.facebookBtn);
-		facebookBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				
-			}
-		});
+//		Button facebookBtn = (Button)findViewById(R.id.facebookBtn);
+//		facebookBtn.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View arg0) {
+//				
+//			}
+//		});
 	}
 	
 	//찜DB에 Movie정보 중복 Check 후 삽입

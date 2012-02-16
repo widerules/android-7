@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#888888"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/btnWishList"
@@ -66,7 +66,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" 
+                    android:orientation="vertical"
                     android:padding="10dp" >
 
                     <TextView
@@ -98,11 +98,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="13dp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="13dp" 
-                        android:text="● 네티즌평점 : "/>
+                        android:text="● 네티즌평점 : "
+                        android:textSize="13dp" />
+
                     <TextView
                         android:id="@+id/movieGrade"
                         android:layout_width="wrap_content"
@@ -110,6 +112,13 @@
                         android:layout_gravity="right"
                         android:textColor="#ffff00"
                         android:textSize="15dp" />
+
+                    <Button
+                        android:id="@+id/facebookBtn"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:text="담벼락에 글남기기" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -129,10 +138,10 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/moivebar" />
 
-            <LinearLayout 
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="10dp" >
 
                 <TextView
                     android:layout_width="match_parent"
