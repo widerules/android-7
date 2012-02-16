@@ -36,6 +36,8 @@ public class SetupListAdapter extends ArrayAdapter<SetupList> {
 		}
 		Log.d( "°ªµé : ", setupList.get(position).getTitle() + ";" 
 				+  setupList.get(position).getContent() );
+		
+		
 		TextView title = (TextView)v.findViewById(R.id.titleVwSetup);
 		TextView subtitle = (TextView)v.findViewById(R.id.subTitleVwSetup);
 		
