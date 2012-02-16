@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+/*
+ * ¿µÈ­list
+ */
 public class MyMovieListActivity extends TabActivity {
 	
     /** Called when the activity is first created. */
@@ -14,12 +17,13 @@ public class MyMovieListActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mymovielistmain);
         
+        //ÅÇÈ­¸é
         TabHost tabHost = getTabHost();
         TabSpec myList = tabHost.newTabSpec("myList");
         TabSpec wishList = tabHost.newTabSpec("wishList");
 
         myList.setIndicator("³»°¡ º» ¿µÈ­ ¸ñ·Ï").setContent(new Intent(this, MyListActivity.class));
-        wishList.setIndicator("ÂòÇÑ¸ñ·Ï").setContent(new Intent(this, MyWishListActivity.class));
+        wishList.setIndicator("Âò ¸ñ·Ï").setContent(new Intent(this, MyWishListActivity.class));
         
         tabHost.addTab(myList);        
         tabHost.addTab(wishList);
