@@ -68,6 +68,7 @@ public class MyMovieListDetailActivity extends Activity {
         if( intent != null ) {
         	//	movie객체를 가져와서 데이터를 뿌려준다.
         	Movie movie = (Movie)intent.getSerializableExtra("movie");
+        	this.movie = movie;
         	
         	myWhenTxtVw.setText(movie.getWhen());
         	myWhereTxtVw.setText(movie.getWhere());

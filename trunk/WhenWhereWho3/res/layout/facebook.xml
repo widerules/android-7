@@ -3,8 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_marginBottom="-50dp"
-    android:padding="10dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp" >
 
     <!-- 영화 제목 -->
 
@@ -24,8 +24,8 @@
             android:id="@+id/myTitleTxtVw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="3"
+            android:gravity="center"
             android:text="영화 제목"
             android:textSize="20dp" />
 
@@ -37,12 +37,37 @@
             android:text="등록" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="추가 할 말" />
+
+        <EditText
+            android:id="@+id/etContent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:lines="3" />
+    </LinearLayout>
+
     <!-- 자세한 내용들 -->
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="영화 정보" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         >
+        >
 
         <!-- 스크롤뷰는 뷰를 한개만 가질 수 있으므로 LinearLayout으로 묶어준다. -->
 
@@ -174,26 +199,5 @@
         </LinearLayout>
         <!-- 스크롤뷰를 감싼 LinearLaout 끝 -->
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical" >
-        
-        <TextView 
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="추가 할 말"
-            />
-
-        <EditText
-            android:id="@+id/etContent"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:lines="3"
-            android:gravity="top" />
-    </LinearLayout>
 
 </LinearLayout>
