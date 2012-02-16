@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -91,10 +90,7 @@ public class SearchMovieListActivity extends Activity {
 				Thread parseThread = new Thread( ) {
 					public void run() {
 						Looper.prepare();
-						
-						Log.e("¼­Ä¡", "µé¿È");
 						loadJson();
-						Log.e("¼­Ä¡", "µé¿È");
 						Looper.loop();
 					}
 				};
@@ -110,9 +106,9 @@ public class SearchMovieListActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				// TODO Auto-generated method stub
-//				Intent intent = new Intent(getApplicationContext(), SearchMovieDetailActivity.class);
-//				intent.putExtra("movie", movies.get(position));
-//				startActivity(intent);
+				Intent intent = new Intent(getApplicationContext(), SearchMovieDetailActivity.class);
+				intent.putExtra("movie", movies.get(position));
+				startActivity(intent);
 			}
 		});
         
