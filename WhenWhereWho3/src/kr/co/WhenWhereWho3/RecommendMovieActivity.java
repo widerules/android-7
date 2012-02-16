@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -62,6 +63,11 @@ public class RecommendMovieActivity extends Activity {
 				Thread parseThread = new Thread(){
 					public void run() {
 						Message msg = new Message();
+						if( titleList == null ) {
+							progressDialog.dismiss();
+							handler.sendEmptyMessage(1);
+							return;
+						}
 						for( String t : titleList ) {
 							try {
 								//	검색어에 대해서 유니코드 처리
