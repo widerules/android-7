@@ -41,7 +41,7 @@ public class RegistMovieActivity extends Activity {
 	TextView movieTitle, whenTxtVw, ratingBarTxt;
 	EditText whereTxt, withTxt, commentEditTxt;
 
-	private int mYear, mMonth, mDay, mHour,mMinute;
+	private int mYear, mMonth, mDay;
 	
 	String when, where, with, comment;
 	float grade;
@@ -106,8 +106,6 @@ public class RegistMovieActivity extends Activity {
 		mYear = c.get(Calendar.YEAR);
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DATE);
-		mHour = c.get(Calendar.HOUR);
-		mMinute = c.get(Calendar.MINUTE);
 		updateDisplay();
 
 		//RatingBar Ç¥½Ã
@@ -128,6 +126,7 @@ public class RegistMovieActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {	
+				when = (mYear+"") + (mMonth+"") + (mDay+""); 
 				where = whereTxt.getText().toString();
 				with = withTxt.getText().toString();
 				comment = commentEditTxt.getText().toString();
@@ -173,9 +172,7 @@ public class RegistMovieActivity extends Activity {
 	}
 	private void updateDisplay() {
 		whenTxtVw.setText(new StringBuilder().append(mYear).append("-")
-				.append(pad(mMonth+1)).append("-").append(pad(mDay)).append(" ")
-				.append(pad(mHour)).append(":").append(pad(mMinute))
-				);
+				.append(pad(mMonth+1)).append("-").append(pad(mDay)).append(" "));
 	}
 	private static String pad(int value) {
 		if(value >= 10) {

@@ -53,10 +53,10 @@ public class MyMovieListAdapter extends ArrayAdapter<Movie> {
 			//	영화 title 가져오기
 			title.setText(m.getTitle());
 			//	영화를 언제 봤는가? 가져오기
-			when.setText(m.getOpenInfo());
+			when.setText("When " + m.getWhen());
 			//	영화를 누구랑 봤는가? 가져오기
 			//	일단 임시로 장르 가져옴- 2012.02.12
-			with.setText(m.getGenre());
+			with.setText("With " + m.getWith());
 			//	평점 바 가져오기
 			float rating = (float) ( ( m.getGrade().equals("") ) ? 0.0 : Float.parseFloat( m.getGrade() ) )  / ( float )2.0; 
 			ratingBar.setRating( rating );
