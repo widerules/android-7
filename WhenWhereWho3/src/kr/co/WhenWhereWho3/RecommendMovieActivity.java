@@ -175,7 +175,7 @@ public class RecommendMovieActivity extends Activity {
 		try {
 			//	뒤에 유니코드는 "영화"라는 글자임
 			String preUrl = URLEncoder.encode( nation + genre + "영화", "UTF-8" ); 
-			url = new URL( "http://search.naver.com/search.naver?ie=utf8&sm=tab_txc&where=nexearch&query=" + preUrl );
+			url = new URL( "http://m.search.naver.com/search.naver?ie=utf8&sm=tab_txc&where=nexearch&query=" + preUrl );
 			InputStreamReader isr = new InputStreamReader( url.openConnection().getInputStream(), "UTF-8" );
 			BufferedReader br = new BufferedReader( isr );
 			
