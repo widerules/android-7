@@ -18,43 +18,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+        <RadioButton
+            android:id="@+id/listRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="> 리스트로 보기"
+            />
+        <RadioButton
+            android:id="@+id/gridRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="> 포스터 여러개로 보기"
+            />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="125dp"
-                android:text="> 리스트로 보기"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/gridRadioBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="60dp"
-                android:text="> 포스터 여러개로 보기"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/listRadioBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
     </RadioGroup>
 
     <LinearLayout

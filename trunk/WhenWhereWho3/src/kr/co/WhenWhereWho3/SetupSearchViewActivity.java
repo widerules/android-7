@@ -12,6 +12,7 @@ public class SetupSearchViewActivity extends Activity {
 	RadioButton rb;
 	SharedPreferences pref;
 	Editor editor;
+	int viewType = 0;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -23,7 +24,11 @@ public class SetupSearchViewActivity extends Activity {
 		editor = (Editor)pref.edit();
 
 		RadioGroup rg = (RadioGroup)findViewById(R.id.setupSearchVwRadioGrp);
+		if(viewType == 0) {
 		rg.check(R.id.listRadioBtn);
+		} else {
+			rg.check(R.id.gridRadioBtn);
+		}
 		rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
