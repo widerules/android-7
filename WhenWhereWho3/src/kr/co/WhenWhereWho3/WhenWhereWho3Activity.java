@@ -1,9 +1,13 @@
 package kr.co.WhenWhereWho3;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 /*
@@ -60,5 +64,52 @@ public class WhenWhereWho3Activity extends Activity {
 
 		}
 		startActivity(intent);
+	}
+	
+	//listView item 삭제 Dialog
+	public void request() {
+		String title = "종료";
+		String message = "종료 하시겠습니까?";
+		String titleButtonYes = "예";
+		String titleButtonNo = "아니오";
+
+		AlertDialog dialog = makeRequestDialog(title, message, titleButtonYes,
+				titleButtonNo);
+		dialog.show();
+	}
+	private AlertDialog makeRequestDialog(CharSequence title,
+			CharSequence message, CharSequence titleButtonYes,
+			CharSequence titleButtonNo) {
+
+		AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
+		requestDialog.setTitle(title);
+		requestDialog.setMessage(message);
+		
+		//다이얼로그 버튼 OnClick 리스너
+		requestDialog.setPositiveButton(titleButtonYes,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				});
+		requestDialog.setNegativeButton(titleButtonNo,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		return requestDialog.show();
+	}
+
+	//Back 버튼 OnClick 리스너
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Log.e("Back", "bac");
+			request();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

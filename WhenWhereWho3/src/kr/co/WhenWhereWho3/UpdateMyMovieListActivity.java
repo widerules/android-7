@@ -3,7 +3,6 @@ package kr.co.WhenWhereWho3;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Calendar;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -26,9 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /*
- * 영화 등록
+ * 등록영화 내용 수정
  */
-public class RegistMovieActivity extends Activity {	
+public class UpdateMyMovieListActivity extends Activity {	
 
 	InputStreamReader isr;				//	url로부터 읽어온 정보를 담을 InputStreamReader객체
 	BufferedReader br;		
@@ -81,7 +80,7 @@ public class RegistMovieActivity extends Activity {
 		whereTxt = (EditText)findViewById(R.id.registMovie_whereTxt);
 		withTxt = (EditText)findViewById(R.id.registMovie_withTxt);
 		commentEditTxt = (EditText)findViewById(R.id.registMovie_commentEditTxt);
-		
+
 		
 		// 상세정보 페이지의 값들을 movie 객체로 넘겨받음
 		Intent intent = getIntent();
@@ -92,6 +91,8 @@ public class RegistMovieActivity extends Activity {
 		}
 		movieTitle.setText(movie.getTitle());
 
+		init();
+		
 		// 날짜설정
 		whenTxtVw = (TextView)findViewById(R.id.registMovie_whenTxtVw);
 		whenBtn = (Button)findViewById(R.id.registMovie_whenBtn);
@@ -136,7 +137,7 @@ public class RegistMovieActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "데이터를 먼저 입력하세요.", Toast.LENGTH_LONG).show();
 					return;
 				}
-				insertRecordParam();	
+				updateRecordParam();
 				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
 				startActivity(intent);
 			}
@@ -152,6 +153,17 @@ public class RegistMovieActivity extends Activity {
 		});
 	}
 
+	public void init() {
+		whenTxtVw.setText(movie.getWhen());
+		whereTxt.setText(movie.getWhere());
+		withTxt.setText(movie.getWith());
+		commentEditTxt.setText(movie.getComment());
+		
+		float rating = (float) ( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0; 
+		ratingBarTxt.setText((rating*2) + " / 10.0");
+		ratingBar.setRating( rating );
+	}
+	
 	//DatePickerDialog등록
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -184,7 +196,7 @@ public class RegistMovieActivity extends Activity {
 	}
 
 	//MyMovieList DB에 삽입
-	private void insertRecordParam() {
+	private void updateRecordParam() {
 		DBHelper = new MovieDBHelper(this);
 		db = DBHelper.getWritableDatabase();
 
@@ -195,6 +207,7 @@ public class RegistMovieActivity extends Activity {
 		for(int i=0; i<actors.length; i++) {
 			actor += ((i < actor.length()) ? "," : "") + actors[i];
 		}
+		String[] whereArgs = {movie.getTitle(), actor};
 		
 		recordValues.put("m_title", movie.getTitle());
 		recordValues.put("m_when", when);
@@ -210,7 +223,7 @@ public class RegistMovieActivity extends Activity {
 		recordValues.put("m_open_info", movie.getOpenInfo());
 		recordValues.put("m_story", movie.getStory());
 		
-		db.insert("t_movielist", null, recordValues);
+		db.update("t_movielist", recordValues, "t_title=? and t_actor=?", whereArgs);
 		db.close();
 	}
 

@@ -75,7 +75,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.facebook);
 
-		/***********************************************************************/
 		//	필요한 위젯들 전부 로딩
 		myTitleTxtVw 		= (TextView)findViewById(R.id.faceBook_myTitleTxtVw);
 		myWhereTxtVw		= (TextView)findViewById(R.id.faceBook_myWhereTxtVw);
@@ -85,11 +84,9 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 		myThumbnail 		= (ImageView)findViewById(R.id.faceBook_myThumbnail);
 		myRatingBar			= (RatingBar)findViewById(R.id.faceBook_myRatingBar);
-		/***********************************************************************/
 
 		//	전달받은 인텐트를 가져온다.
 		Intent intent = getIntent();       
-
 		//	인텐트가 존재하면
 		if( intent != null ) {
 			//	movie객체를 가져와서 데이터를 뿌려준다.
