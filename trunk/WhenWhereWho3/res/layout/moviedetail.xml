@@ -7,9 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="#888888"
-        android:padding="10dp" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnWishList"
@@ -26,16 +25,23 @@
             android:text="등록" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/movieTitle"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:lines="2"
-        android:padding="10dp"
-        android:text="영화제목"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#5555ff"
+            android:gravity="center"
+            android:lines="2"
+            android:text="영화제목"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -55,44 +61,55 @@
                 <ImageView
                     android:id="@+id/movieImg"
                     android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    android:padding="10dp" />
+                    android:layout_height="200dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="vertical" 
                     android:padding="10dp" >
 
                     <TextView
                         android:id="@+id/movieNation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:id="@+id/movieDirector"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:id="@+id/movieActors"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:id="@+id/movieGenre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:id="@+id/movieOpenInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13dp" 
+                        android:text="● 네티즌평점 : "/>
+                    <TextView
+                        android:id="@+id/movieGrade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:textColor="#ffff00"
+                        android:textSize="15dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -112,12 +129,28 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/moivebar" />
 
+            <LinearLayout 
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:gravity="left"
+                    android:text="줄거리"
+                    android:textColor="#000000"
+                    android:textSize="13dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/movieStory"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="12dp" />
+                android:padding="15dp"
+                android:textSize="14dp" />
         </LinearLayout>
     </ScrollView>
 

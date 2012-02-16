@@ -3,41 +3,59 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal" 
-	    android:padding="10dp">
-	<EditText
-	    android:id="@+id/editSearch"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_weight="3"
-	   	android:hint="영화이름을 입력하세요"
-	    />
-	<Button 
-	    android:id="@+id/btnSearch"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:text="검색"
-	    android:layout_weight="1"
-	    android:onClick="searchMovie"/>
-	</LinearLayout>
-	
-    <TextView 
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" 검색된 영화 목록"
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:textColor="#000000"
-        android:background="#ffffff"/>
-	<GridView
-	    android:id="@+id/gridview"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:numColumns="2" >
-	        
-	</GridView>
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="영화제목을 입력하세요" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="searchMovie"
+            android:text="검색" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text=" 영화 목록"
+            android:textColor="#000000"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dataCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2" />
+
 </LinearLayout>

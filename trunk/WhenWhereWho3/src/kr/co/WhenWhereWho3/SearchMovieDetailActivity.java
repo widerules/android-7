@@ -43,6 +43,7 @@ public class SearchMovieDetailActivity extends Activity {
 	TextView movieActors;
 	TextView movieGenre;
 	TextView movieOpenInfo;
+	TextView movieGrade;
 	Gallery galleryPhoto;
 	TextView movieStory;
 	String [] photo;
@@ -61,6 +62,7 @@ public class SearchMovieDetailActivity extends Activity {
 		movieActors = (TextView)findViewById(R.id.movieActors);
 		movieGenre = (TextView)findViewById(R.id.movieGenre);
 		movieOpenInfo = (TextView)findViewById(R.id.movieOpenInfo);
+		movieGrade = (TextView)findViewById(R.id.movieGrade);
 	
 		galleryPhoto = (Gallery)findViewById(R.id.galleryPhoto);
 		movieStory = (TextView)findViewById(R.id.movieStory);
@@ -97,12 +99,13 @@ public class SearchMovieDetailActivity extends Activity {
 			movie = (Movie)getintent.getSerializableExtra("movie");
 			
 			movieTitle.setText(movie.getTitle());
-			movieNation.setText("국가 : " + movie.getNation() + ")");
-			movieDirector.setText("감독 : " + movie.getDirector());
-			movieActors.setText("배우 : " + Arrays.toString(movie.getActor()));
-			movieGenre.setText("장르 : " + movie.getGenre());
-			movieOpenInfo.setText("개봉일 : " + movie.getOpenInfo());
-			movieStory.setText("줄거리 : " + movie.getStory());
+			movieNation.setText("● 국가 : " + movie.getNation());
+			movieDirector.setText("● 감독 : " + movie.getDirector());
+			movieActors.setText("● 배우 : \n" + Arrays.toString(movie.getActor()));
+			movieGenre.setText("● 장르 : " + movie.getGenre());
+			movieOpenInfo.setText("● 개봉일 : " + movie.getOpenInfo());
+			movieGrade.setText(movie.getGrade() + "/10.0");
+			movieStory.setText(movie.getStory());
 			
 			imageDownloader.download(movie.getThumbnail(), movieImg);
 			photo = movie.getPhoto();
@@ -160,6 +163,7 @@ public class SearchMovieDetailActivity extends Activity {
 			recordValues.put("m_story", movie.getStory());
 			
 			db.insert("t_wishlist", null, recordValues) ;
+			Toast.makeText(getApplicationContext(), "찜목록에 등록되었습니다.", Toast.LENGTH_SHORT).show();
 		} else {
 			Toast.makeText(getApplicationContext(), "찜목록에 이미 등록되어 있습니다", Toast.LENGTH_SHORT).show();
 		}
