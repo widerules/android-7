@@ -2,10 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_vertical"
     android:orientation="vertical" >
-
-
     <TextView 
         android:id="@+id/setUpList_titleVwSetup"
         android:layout_width="fill_parent"
@@ -22,6 +19,4 @@
         android:textSize="15sp"
         android:text="영화 검색 화면 설정"
         />
-
-    
 </LinearLayout>
