@@ -170,7 +170,6 @@ public class MyListDeleteActivity extends Activity {
 			Log.e("movie按眉 昏力 何盒", "眉农等 index : " + isCheckedConfrim.get(i));
 			movies.remove(isCheckedConfrim.get(i));
 		}
-
 	}
 
 	public void request() {
@@ -203,7 +202,6 @@ public class MyListDeleteActivity extends Activity {
 						Intent intent = new Intent(getApplicationContext(),
 								MyMovieListActivity.class);
 						startActivity(intent);
-
 					}
 				});
 		requestDialog.setNegativeButton(titleButtonNo,
