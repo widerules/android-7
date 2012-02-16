@@ -48,7 +48,7 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
 		
 		Movie m = movies.get(position);
 		try {
-			//ImageView imageVw = (ImageView) v.findViewById(R.id.movieImg);
+			ImageView imageVw = (ImageView) v.findViewById(R.id.movieImg);
 			TextView title = (TextView) v.findViewById(R.id.movieTitle);
 			TextView nation = (TextView) v.findViewById(R.id.movieNation);
 			TextView genre = (TextView) v.findViewById(R.id.movieGenre);
@@ -57,19 +57,15 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
 			// 썸네일 주소를 받아옴
 			// 썸네일 이미지 처리
 			String thumbnailUrl = m.getThumbnail();
-			//imageDownloader.download(thumbnailUrl, imageVw);
+			imageDownloader.download(thumbnailUrl, imageVw);
 			// 영화 title 가져오기
 			title.setText(m.getTitle());
-			Log.e("MovieListAdapter", "getView호출5");
 			// 영화 제작 국가 가져오기
 			nation.setText(m.getNation());
-			Log.e("MovieListAdapter", "getView호출6");
 			// 영화 장르 가져오기
 			genre.setText(m.getGenre());
-			Log.e("MovieListAdapter", "getView호출7");
 			// 평점
 			rating.setText(m.getGrade());
-			Log.e("MovieListAdapter", "getView호출8");
 			
 			Log.e("MovieListAdapter",
 					"영화 제목 : " + m.getTitle() + "국가 : " + m.getNation()
