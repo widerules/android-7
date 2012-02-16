@@ -7,9 +7,14 @@ import kr.co.facebook.android.Facebook;
 import kr.co.facebook.android.Facebook.DialogListener;
 import kr.co.facebook.android.FacebookError;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +32,9 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 	private String mFacebookAccessToken;
 	private SharedPreferences pref = null;
 	private String returnValue = null;
-	
+
 	Movie movie;
+	float rating;
 
 	private final ImageDownloader imageDownloader = new ImageDownloader();
 
@@ -41,6 +47,26 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 	ImageView myThumbnail;
 	Button myModifyBtn;
 	RatingBar myRatingBar;
+
+	ProgressDialog pd;
+	final int FACEBOOK_PROGRESS_DIALOG = 1002;
+
+	Handler handler = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch( msg.what ) {
+			case 0 : 
+				pd.dismiss();
+				Toast.makeText(FaceBookActivity.this, "FaceBook 담벼락 등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+				finish();
+				break;
+			}
+		}
+
+	};
+
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -68,11 +94,11 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		if( intent != null ) {
 			//	movie객체를 가져와서 데이터를 뿌려준다.
 			Movie movie = (Movie)intent.getSerializableExtra("movie");
-
+			this.movie = movie;
 			myTitleTxtVw.setText(movie.getTitle());
 			myWhereTxtVw.setText(movie.getWhere());
 
-			float rating = ( float )( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0;
+			rating = ( float )( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0;
 			myRatingBar.setRating( rating );
 			myGenreTxtVw.setText( "		- 장르 : " + movie.getGenre( ) );
 			myActorTxtVw.setText( "		- 배우 : " + Arrays.toString( movie.getActor() ) );
@@ -80,23 +106,25 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 			imageDownloader.download( movie.getThumbnail(), myThumbnail );
 
-			mEtContent = (EditText) findViewById(R.id.etContent);
-
-
-			mBtnFeed = (Button) findViewById(R.id.btnFeed);
-			mBtnLogout = (Button) findViewById(R.id.btnLogout);
-
-			mBtnFeed.setOnClickListener(this);
-			mBtnLogout.setOnClickListener(this);
-
-			mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
-			if(mFacebookAccessToken != "") {		
-				mFacebook.setAccessToken(mFacebookAccessToken);
-			} else {
-				login();			
-			}	
 		}
+		
+		mEtContent = (EditText) findViewById(R.id.etContent);
+
+
+		mBtnFeed = (Button) findViewById(R.id.btnFeed);
+		mBtnLogout = (Button) findViewById(R.id.btnLogout);
+
+		mBtnFeed.setOnClickListener(this);
+		mBtnLogout.setOnClickListener(this);
+
+		mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
+		if(mFacebookAccessToken != "") {		
+			mFacebook.setAccessToken(mFacebookAccessToken);
+		} else {
+			login();			
+		}	
 	}
+
 
 	private void login()
 	{
@@ -112,7 +140,19 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		switch(v.getId())
 		{
 		case R.id.btnFeed:  // Facebook에 글쓰기
-			feed();
+			if(mEtContent.getText().equals("")) {
+				Toast.makeText(getApplicationContext(), "내용을 입력하세요", Toast.LENGTH_SHORT).show();
+			} else {
+				showDialog(FACEBOOK_PROGRESS_DIALOG);
+				Thread t = new Thread() {
+					public void run() {
+						Looper.prepare();
+						feed();
+						Looper.loop();
+					};
+				};
+				t.start();				
+			}
 			break;
 		case R.id.btnLogout: // Facebook logout
 			logout();
@@ -151,14 +191,23 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 			Log.v(C.LOG_TAG, "access token : " + mFacebook.getAccessToken());
 
 			Bundle params = new Bundle();
-			params.putString("message", mEtContent.getText().toString());
-			params.putString("name", "사용자명");
+
+			String message = "WhenWhereWith APP으로 부터 자동 등록 \n\n"
+					+ "- 어디서 : " + myWhereTxtVw.getText().toString().trim() + "\n"
+					+ "- 나의 평점 : " + rating + "/10.0 \n"
+					+ myGenreTxtVw.getText().toString().trim() + "\n"
+					+ myOpenInfoTxtVw.getText().toString().trim() + "\n"
+					+ myActorTxtVw.getText().toString().trim() + "\n\n\n"
+					+ "- 후기 : " + mEtContent.getText().toString().trim() + "\n\n";						   
+
+			params.putString("message", message);			
+			params.putString("name", myTitleTxtVw.getText().toString().trim());
 			params.putString("link", "");
-			params.putString("description", "WWW APP TEST를통해 포스트됨.");
-			params.putString("picture", "");
+			params.putString("description", "WWW APP 테스트중");
+			params.putString("picture", movie.getThumbnail());
 
 			mFacebook.request("me/feed", params, "POST");
-			Toast.makeText(FaceBookActivity.this, "feed 성공", Toast.LENGTH_SHORT).show();
+			handler.sendEmptyMessage(0);
 
 		}
 		catch (Exception e)
@@ -234,6 +283,20 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 
 		return returnValue;
 	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch( id ){
+		case FACEBOOK_PROGRESS_DIALOG:
+			pd = new ProgressDialog(FaceBookActivity.this);
+			pd.setMessage("FaceBook에 등록중입니다...");
+			pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pd.setCancelable(false);
+			return pd;
+		}
+		return super.onCreateDialog(id);
+	}
+
 
 
 }
