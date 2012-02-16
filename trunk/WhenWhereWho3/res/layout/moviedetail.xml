@@ -113,12 +113,6 @@
                         android:textColor="#ffff00"
                         android:textSize="15dp" />
 
-                    <Button
-                        android:id="@+id/facebookBtn"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="13sp"
-                        android:text="담벼락에 글남기기" />
                 </LinearLayout>
             </LinearLayout>
 

@@ -4,6 +4,8 @@ import java.util.Arrays;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -82,6 +84,18 @@ public class MyMovieListDetailActivity extends Activity {
         	
         	Toast.makeText(getApplicationContext(), movie.getTitle(), Toast.LENGTH_SHORT).show();
         }
+        
+        Button facebookBtn = (Button)findViewById(R.id.facebookBtn);
+		facebookBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(getApplicationContext(), FaceBookActivity.class);
+				startActivity(intent);
+			}
+		});
+        
+        
         //	존재하지 않는다면...? - 2012.02.13 예외처리
         
     }//	onCreate( ) 끝
