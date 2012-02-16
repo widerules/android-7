@@ -41,7 +41,7 @@
         <activity android:name=".SetupActivity" android:label="SetUp" />        
         <activity android:name=".FindCinemaActivity" android:label="FindCinema" />        
         <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".FaceBookActivity" android:label="Facebook" />        
+        <activity android:name=".FaceBookActivity" android:label="Facebook" android:windowSoftInputMode="stateHidden"/>        
         
         <uses-library android:name="com.google.android.maps" />
     </application>
