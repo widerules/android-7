@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -140,7 +141,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
 		switch(v.getId())
 		{
 		case R.id.btnFeed:  // Facebook에 글쓰기
-			if(mEtContent.getText().equals("")) {
+			if(mEtContent.getText().toString().trim().equals("")) {
 				Toast.makeText(getApplicationContext(), "내용을 입력하세요", Toast.LENGTH_SHORT).show();
 			} else {
 				showDialog(FACEBOOK_PROGRESS_DIALOG);
