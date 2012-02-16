@@ -33,13 +33,7 @@ public class MyMovieListDetailActivity extends Activity {
 	Button facebookBtn;
 	RatingBar myRatingBar;
 	
-<<<<<<< .mine
 	Movie movie;
-	
-	private final ImageDownloader imageDownloader = new ImageDownloader();
-=======
-	Movie movie;
->>>>>>> .r89
 	
     /** Called when the activity is first created. */
     @Override
