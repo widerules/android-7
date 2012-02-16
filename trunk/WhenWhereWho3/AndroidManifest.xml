@@ -30,6 +30,7 @@
         </activity>
         <activity android:name=".MyMovieListActivity" android:label="MyMovieList" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MyListActivity" android:label="MyList" />
+        <activity android:name=".UpdateMovieActivity" android:label="UpdateMovie" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MyListDeleteActivity" android:label="MyListDelete" />
         <activity android:name=".MyMovieListDetailActivity" android:label="MyMovieListDetail" />
         <activity android:name=".MyWishListActivity" android:label="MyWishList" />

@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyMovieListDetailActivity extends Activity {	
+
+	private final ImageDownloader imageDownloader = new ImageDownloader();
+	
 	TextView myTitleTxtVw;
 	TextView myWhenTxtVw;
 	TextView myWithTxtVw;
@@ -26,9 +29,10 @@ public class MyMovieListDetailActivity extends Activity {
 	
 	ImageView myThumbnail;
 	Button myUpdateBtn;
+	Button facebookBtn;
 	RatingBar myRatingBar;
 	
-	private final ImageDownloader imageDownloader = new ImageDownloader();
+	Movie movie;
 	
     /** Called when the activity is first created. */
     @Override
@@ -36,7 +40,6 @@ public class MyMovieListDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mymovielistdetail);
         
-        /***********************************************************************/
         //	필요한 위젯들 전부 로딩
         myTitleTxtVw 		= (TextView)findViewById(R.id.myMovieListDetail_movieTitle);
         myWhenTxtVw 		= (TextView)findViewById(R.id.myMovieListDetail_myWhenTxtVw);
@@ -52,22 +55,13 @@ public class MyMovieListDetailActivity extends Activity {
         myThumbnail 		= (ImageView)findViewById(R.id.myMovieListDetail_myThumbnail);
         myUpdateBtn			= (Button)findViewById(R.id.myMovieListDetail_myUpdateBtn);
         myRatingBar			= (RatingBar)findViewById(R.id.myMovieListDetail_myRatingBar);
-        /***********************************************************************/
-        
-        
         
         //	전달받은 인텐트를 가져온다.
         Intent intent = getIntent();
-
-        
-        
-        
-        
-        
         //	인텐트가 존재하면
         if( intent != null ) {
         	//	movie객체를 가져와서 데이터를 뿌려준다.
-        	Movie movie = (Movie)intent.getSerializableExtra("movie");
+        	movie = (Movie)intent.getSerializableExtra("movie");
         	
         	myWhenTxtVw.setText(movie.getWhen());
         	myWhereTxtVw.setText(movie.getWhere());
@@ -84,25 +78,34 @@ public class MyMovieListDetailActivity extends Activity {
         	myStoryTxtVw.setText(movie.getStory() );
         	
 			imageDownloader.download( movie.getThumbnail(), myThumbnail );
-
         	
         	Toast.makeText(getApplicationContext(), movie.getTitle(), Toast.LENGTH_SHORT).show();
         }
         
-        Button facebookBtn = (Button)findViewById(R.id.myMovieListDetail_facebookBtn);
+        //페이스북 담벼락 글남기기
+        facebookBtn = (Button)findViewById(R.id.myMovieListDetail_facebookBtn);
 		facebookBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(getApplicationContext(), FaceBookActivity.class);
+				intent.putExtra("movie", movie);
+				startActivity(intent);
+			}
+		});
+		
+		//데이터 수정
+		myUpdateBtn = (Button)findViewById(R.id.myMovieListDetail_myUpdateBtn);
+		myUpdateBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), UpdateMyMovieListActivity.class);
+				intent.putExtra("movie", movie);
 				startActivity(intent);
 			}
 		});
         
-        
-        //	존재하지 않는다면...? - 2012.02.13 예외처리
-        
-    }//	onCreate( ) 끝
-
+    }
 }
 
