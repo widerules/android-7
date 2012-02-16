@@ -117,7 +117,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 		mFacebookAccessToken = getAppPreferences(this, "ACCESS_TOKEN");
 		if(!mFacebookAccessToken.equals("")) {		
 			mFacebook.setAccessToken(mFacebookAccessToken);
-
 		} 
 	}
 
@@ -130,7 +129,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 					new String[] { "publish_stream, user_photos, email" },
 					new AuthorizeListener());
 		}
-		
 	}
 
 	// 버튼의 OnClick 이벤트 처리
