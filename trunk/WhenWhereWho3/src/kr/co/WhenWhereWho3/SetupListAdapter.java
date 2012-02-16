@@ -29,11 +29,7 @@ public class SetupListAdapter extends ArrayAdapter<SetupList> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View v = convertView;
-		
-		if( v == null ) {
-			li.inflate(R.layout.setuplist, null);
-		}
+		View v = li.inflate(R.layout.setuplist, null);
 		Log.d( "°ªµé : ", setupList.get(position).getTitle() + ";" 
 				+  setupList.get(position).getContent() );
 		
