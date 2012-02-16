@@ -120,7 +120,8 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 			mBtnFeed.setVisibility(View.VISIBLE);
 		} else {
 			mBtnFeed.setVisibility(View.GONE);
-			login();			
+			login();		
+			mBtnFeed.setVisibility(View.VISIBLE);
 		}	
 	}
 
