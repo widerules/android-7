@@ -122,6 +122,12 @@
 					        android:numStars="5" />
 				    </LinearLayout>
 <!-- 				    평점 끝  -->
+<Button 
+    android:id="@+id/facebookBtn"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="담벼락에 글남기기"
+    />
 				</LinearLayout>
 <!-- 				나의 영화 정보 끝 -->
 			</LinearLayout>
