@@ -55,7 +55,7 @@ public class WhenWhereWho3Activity extends Activity {
 			break;
 		//가까운영화관찾기
 		case R.id.btnCinema:
-			intent = new Intent(this, FindCinemaActivity.class);
+			intent = new Intent(this, BranchMapActivity.class);
 			break;
 
 		}
