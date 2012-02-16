@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class SetupActivity extends Activity {	
 	String [] name = {"List로 보기", "포스터 여러개 보기"};
@@ -24,11 +23,10 @@ public class SetupActivity extends Activity {
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, name);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinVw.setAdapter(adapter);
-        
+
         SharedPreferences pref = getSharedPreferences("viewType", Activity.MODE_PRIVATE);
         int value = pref.getInt("viewType", 0);        
         spinVw.setSelection(value);
-        
         spinVw.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -46,7 +44,6 @@ public class SetupActivity extends Activity {
 					editor.putInt("viewType", 1);
 					break;
 				}
-		    			    	
 		    	editor.commit();
 			}
 
