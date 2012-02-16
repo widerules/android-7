@@ -1,5 +1,9 @@
 package kr.co.WhenWhereWho3;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import kr.co.facebook.android.DialogError;
 import kr.co.facebook.android.Facebook;
 import kr.co.facebook.android.Facebook.DialogListener;
@@ -7,16 +11,18 @@ import kr.co.facebook.android.FacebookError;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class FaceBookActivity extends Activity implements View.OnClickListener
 {
   private Facebook mFacebook = new Facebook(C.FACEBOOK_APP_ID);
-  private Button mBtnLogin, mBtnFeed, mBtnLogout;
+  private Button mBtnFeed, mBtnLogout;
   private EditText mEtContent;
   private String mFacebookAccessToken;
 
@@ -34,7 +40,6 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
     mBtnFeed = (Button) findViewById(R.id.btnFeed);
     mBtnLogout = (Button) findViewById(R.id.btnLogout);
     
-    mBtnLogin.setOnClickListener(this);
     mBtnFeed.setOnClickListener(this);
     mBtnLogout.setOnClickListener(this);
     
@@ -91,7 +96,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
   
   
 
-// 글 등록하기
+// 글, 사진 등록하기
   private void feed()
   {
     try
@@ -106,6 +111,8 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
       params.putString("picture", "");
 
       mFacebook.request("me/feed", params, "POST");
+      Toast.makeText(FaceBookActivity.this, "feed 성공", Toast.LENGTH_SHORT).show();
+      
     }
     catch (Exception e)
     {
@@ -117,6 +124,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener
   {
     try {
 		mFacebook.logout(this);
+		Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
 	} catch (Exception e) {
 		e.printStackTrace();
 	}

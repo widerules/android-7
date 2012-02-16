@@ -82,8 +82,8 @@ public class MyListActivity extends Activity {
 				request();
 				return false;
 			}
-		});
-
+		});	
+		
 		adapter.notifyDataSetChanged();
 		listview.invalidate();
 
