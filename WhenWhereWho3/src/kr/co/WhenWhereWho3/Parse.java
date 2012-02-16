@@ -87,8 +87,7 @@ public class Parse {
 		}
 		return null;
 	}
-	
-	
+
 	public ArrayList<Movie> jsonParse( BufferedReader br ){
 		movies.clear();
 		try {
@@ -215,4 +214,10 @@ public class Parse {
 		}
 		return null;
 	}
+
+	
+	
 }
+
+
+
