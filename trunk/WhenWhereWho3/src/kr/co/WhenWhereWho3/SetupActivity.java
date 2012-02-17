@@ -79,6 +79,7 @@ public class SetupActivity extends Activity {
 					long arg3) {
 				Intent intent = new Intent(getApplicationContext(), SetupSearchViewActivity.class);
 				startActivity(intent);
+				finish();
 			}
 
 		});

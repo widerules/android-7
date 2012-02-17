@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ public class MyListActivity extends Activity {
 	private MovieDBHelper dbHelper;
 	private SQLiteDatabase db;
 
+	EditText editSearch;
 	ListView listview; // 리스트 뷰
 	TextView dataCntTxt;
 	Movie movie; // 쓰레드에서 사용할 객체
@@ -43,11 +47,39 @@ public class MyListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mymovielist);
 
+		editSearch = (EditText) findViewById(R.id.myMovie_editSearch);
+//		TextWatcher watcher = new TextWatcher() {
+//			
+//			@Override
+//			public void onTextChanged(CharSequence s, int start, int before, int count) {
+//				// TODO Auto-generated method stub
+//				if(editSearch.getText().toString()!=null) {
+//					
+//				}
+//			}
+//			
+//			@Override
+//			public void beforeTextChanged(CharSequence s, int start, int count,
+//					int after) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void afterTextChanged(Editable s) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		};
+//		editSearch.addTextChangedListener(watcher);
+//		
 		listview = (ListView) findViewById(R.id.myMovie_listview);
 		dataCntTxt = (TextView)findViewById(R.id.myMovieList_dataCnt);
 		
 		movies = new ArrayList<Movie>();
 		getCursor();
+		
+		
 		
 		//listview item OnClick 리스너
 		listview.setOnItemClickListener(new OnItemClickListener() {
@@ -75,6 +107,8 @@ public class MyListActivity extends Activity {
 			}
 		});	
 	}
+	
+	
 	
 	//MyMovieList DB all 얻어옴
 	public void getCursor() {

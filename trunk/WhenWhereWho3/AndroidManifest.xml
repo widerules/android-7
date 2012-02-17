@@ -28,6 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <activity android:name=".LoadingWhenWhereWho3Activity" 
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".MyMovieListActivity" android:label="MyMovieList" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MyListActivity" android:label="MyList" />
         <activity android:name=".MyListDeleteActivity" android:label="MyListDelete" />

@@ -6,7 +6,7 @@
 
     <!-- 영화 제목과 수정버튼 -->
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,8 +16,7 @@
             android:id="@+id/myMovieListDetail_facebookBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/facebook"
+            android:layout_weight="1"
             android:text="페이스북" />
         <!-- 수정 버튼 -->
 
@@ -25,9 +24,9 @@
             android:id="@+id/myMovieListDetail_myUpdateBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_weight="1"
             android:text="수정" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
