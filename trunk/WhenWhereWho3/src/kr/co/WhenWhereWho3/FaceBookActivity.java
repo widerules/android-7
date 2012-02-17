@@ -51,7 +51,8 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 	RatingBar faceBook_myRatingBar;
 
 	ProgressDialog pd;
-	final int FACEBOOK_PROGRESS_DIALOG = 1002;
+	final int FEED_PROGRESS_DIALOG = 1002;
+	final int LOGOUT_PROGRESS_DIALOG = 1003;
 
 	Handler handler = new Handler() {
 
@@ -64,6 +65,11 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 						"FaceBook 담벼락 등록에 성공하였습니다.", Toast.LENGTH_SHORT).show();
 				finish();
 				break;
+			case 1:
+				pd.dismiss();
+				Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",
+						Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		}
 
@@ -140,7 +146,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 						Toast.LENGTH_SHORT).show();
 			} else {
 				if(!mFacebookAccessToken.equals("")) {		
-					showDialog(FACEBOOK_PROGRESS_DIALOG);
+					showDialog(FEED_PROGRESS_DIALOG);
 					Thread t = new Thread() {
 						public void run() {
 							Looper.prepare();
@@ -155,7 +161,15 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 			}
 			break;
 		case R.id.faceBook_btnLogout:
-			logout();
+			showDialog(LOGOUT_PROGRESS_DIALOG);
+			Thread t = new Thread() {
+				public void run() {
+					Looper.prepare();
+					logout();
+					Looper.loop();
+				};
+			};
+			t.start();				
 			break;
 		}
 	}
@@ -211,9 +225,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 		try {
 			mFacebook.logout(this);
 			setAppPreferences(FaceBookActivity.this, "ACCESS_TOKEN", "");
-			Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.",
-					Toast.LENGTH_SHORT).show();
-			finish();
+			handler.sendEmptyMessage(1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -272,9 +284,15 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
-		case FACEBOOK_PROGRESS_DIALOG:
+		case FEED_PROGRESS_DIALOG:
 			pd = new ProgressDialog(FaceBookActivity.this);
 			pd.setMessage("FaceBook에 등록중입니다...");
+			pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pd.setCancelable(false);
+			return pd;
+		case LOGOUT_PROGRESS_DIALOG:
+			pd = new ProgressDialog(FaceBookActivity.this);
+			pd.setMessage("로그아웃 중입니다...");
 			pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			pd.setCancelable(false);
 			return pd;
