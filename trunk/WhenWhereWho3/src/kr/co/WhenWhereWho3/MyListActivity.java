@@ -31,11 +31,14 @@ public class MyListActivity extends Activity {
 	private MovieDBHelper dbHelper;
 	private SQLiteDatabase db;
 
-	EditText editSearch;
+	String searchKeyword;
+	
 	ListView listview; // 리스트 뷰
 	TextView dataCntTxt;
 	Movie movie; // 쓰레드에서 사용할 객체
 	ArrayList<Movie> movies;
+	ArrayList<Movie> searchMovies;
+	
 	int deleteMoviePosition;
 	MyMovieListAdapter adapter; // MovieAdapter
 
@@ -47,32 +50,7 @@ public class MyListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mymovielist);
 
-		editSearch = (EditText) findViewById(R.id.myMovie_editSearch);
-//		TextWatcher watcher = new TextWatcher() {
-//			
-//			@Override
-//			public void onTextChanged(CharSequence s, int start, int before, int count) {
-//				// TODO Auto-generated method stub
-//				if(editSearch.getText().toString()!=null) {
-//					
-//				}
-//			}
-//			
-//			@Override
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void afterTextChanged(Editable s) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		};
-//		editSearch.addTextChangedListener(watcher);
-//		
+		
 		listview = (ListView) findViewById(R.id.myMovie_listview);
 		dataCntTxt = (TextView)findViewById(R.id.myMovieList_dataCnt);
 		
@@ -108,7 +86,22 @@ public class MyListActivity extends Activity {
 		});	
 	}
 	
-	
+	public void display(Movie movie) {
+		boolean isAdd = false;
+
+		if (searchKeyword != null) {
+			boolean iniName = SoundSearcher.matchString(movie.getTitle(), searchKeyword);
+			if (iniName == true) {
+				isAdd = true;
+			}
+		} else {
+			isAdd = true;
+		}
+
+		if (isAdd) {
+			searchMovies.add(movie);
+		}
+	}
 	
 	//MyMovieList DB all 얻어옴
 	public void getCursor() {
@@ -120,7 +113,7 @@ public class MyListActivity extends Activity {
 		if (cursor != null) {
 			getMyListInfo(cursor);
 			if(movies.size() != 0) {
-				dataCntTxt.setText("등록된 data 수 : " + movies.size() + "개");
+				dataCntTxt.setText("등록된 영화 : " + movies.size() + "개");
 			}
 			adapter = new MyMovieListAdapter(MyListActivity.this,
 					R.layout.mylist, movies);

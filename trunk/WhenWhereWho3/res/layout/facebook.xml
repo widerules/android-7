@@ -5,28 +5,19 @@
     android:orientation="vertical"
     android:padding="10dp" >
 
-    <!-- 영화 제목 -->
-
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        
-         <Button
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <Button
             android:id="@+id/faceBook_btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="로그아웃" />
-
-        <TextView
-            android:id="@+id/faceBook_myTitleTxtVw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="영화 제목"
-            android:textSize="20dp" />
+        <!-- 수정 버튼 -->
 
         <Button
             android:id="@+id/faceBook_btnFeed"
@@ -39,36 +30,69 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical" >
+        android:padding="5dp" >
 
         <TextView
-            android:layout_width="fill_parent"
+            android:id="@+id/faceBook_movieTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="추가 할 말" />
+            android:background="#5555ff"
+            android:gravity="center"
+            android:lines="2"
+            android:text="영화제목"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!-- 영화 제목 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="left"
+            android:text="추가할 말"
+            android:textColor="#000000"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/faceBook_etContent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="간단한 코멘트를 남겨주세요"
             android:gravity="top"
+            android:hint="간단한 코멘트를 남겨주세요"
             android:lines="3" />
     </LinearLayout>
 
     <!-- 자세한 내용들 -->
 
-    <TextView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="영화 정보" />
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:gravity="left"
+            android:text="영화 정보"
+            android:textColor="#000000"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
+        android:layout_height="match_parent" >
 
         <!-- 스크롤뷰는 뷰를 한개만 가질 수 있으므로 LinearLayout으로 묶어준다. -->
 
@@ -81,84 +105,96 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
 
                 <!-- 영화 포스터 -->
 
                 <ImageView
                     android:id="@+id/faceBook_myThumbnail"
                     android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/ic_launcher" />
+                    android:layout_height="200dp" />
                 <!-- 영화 본 정보 -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical" >
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
 
                     <!-- 언제 봤는가 -->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="● When?"
+                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/faceBook_myWhenTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="When : "
+                        android:gravity="right"
                         android:textSize="15dp" />
-                    <!-- 누구랑 봤는가 -->
+
+                    <!-- 어디서 봤는가 -->
 
                     <TextView
-                        android:id="@+id/faceBook_myWhoTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="2"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="With : 장소영, 조민지, 이만재, 이충엽, 조민혜"
+                        android:text="● Where?"
                         android:textSize="15dp" />
-                    <!-- 어디서 봤는가 -->
 
                     <TextView
                         android:id="@+id/faceBook_myWhereTxtVw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="Where : 수원 CGV"
+                        android:gravity="right"
                         android:textSize="15dp" />
+
+                    <!-- 누구랑 봤는가 -->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="● With?"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/faceBook_myWhoTxtVw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textSize="15dp" />
+
+                    <!-- 나의 평점은? -->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="● My 별점 ? "
+                        android:textSize="15dp" />
+                    <!-- 평점 바 -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal" >
-
-                        <!-- 나의 평점은? -->
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingBottom="5dp"
-                            android:paddingTop="5dp"
-                            android:text="평점 :  "
-                            android:textSize="15dp" />
-                        <!-- 평점 바 -->
+                        android:orientation="vertical" >
 
                         <RatingBar
                             android:id="@+id/faceBook_myRatingBar"
                             style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="right"
                             android:numStars="5"
                             android:paddingBottom="5dp"
                             android:paddingTop="5dp" />
                     </LinearLayout>
                     <!-- 평점 끝 -->
+
                 </LinearLayout>
                 <!-- 나의 영화 정보 끝 -->
 
@@ -167,36 +203,43 @@
             <!-- 실제 영화 정보 시작 -->
             <!-- 영화 정보 글씨 -->
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text=" > 영화 정보"
-                android:textSize="20dp" />
-            <!-- 장르 -->
+                android:orientation="vertical"
+                android:padding="10dp" >
 
-            <TextView
-                android:id="@+id/faceBook_myGenreTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="		● 장르 : "
-                android:textSize="15dp" />
-            <!-- 개봉일 -->
+                <TextView
+                    android:id="@+id/faceBook_myGenreTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+                <!-- 개봉일 -->
 
-            <TextView
-                android:id="@+id/faceBook_myOpenInfoTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="		● 개봉일 : "
-                android:textSize="15dp" />
-            <!-- 배우 -->
+                <TextView
+                    android:id="@+id/faceBook_myDirectorTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+                <!-- 감독 -->
 
-            <TextView
-                android:id="@+id/faceBook_myActorTxtVw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="		● 배우 : "
-                android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/faceBook_myActorTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/faceBook_myOpenInfoTxtVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp" />
+                <!-- 배우 -->
+
+
+                <!-- 감상후기 제목글씨 -->
+
+            </LinearLayout>
         </LinearLayout>
         <!-- 스크롤뷰를 감싼 LinearLaout 끝 -->
     </ScrollView>
