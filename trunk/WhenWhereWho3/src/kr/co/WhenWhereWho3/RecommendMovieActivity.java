@@ -112,7 +112,7 @@ public class RecommendMovieActivity extends Activity {
 					
 					gallery.setSpacing(-45);
 				}
-				Toast.makeText(getApplicationContext(), "파싱이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplicationContext(), "파싱이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 				break;
 			}
 		}

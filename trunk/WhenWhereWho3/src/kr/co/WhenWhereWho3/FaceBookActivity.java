@@ -185,7 +185,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 			String message = "< WhenWhereWith APP으로 부터 자동 등록 > \n\n"
 					+ "● 어디서 : "
 					+ movie.getWhere() + "\n"
-					+ "● 나의 평점 : " + rating + "/10.0 \n"
+					+ "● 나의 평점 : " + movie.getGrade() + "/10.0 \n"
 					+ faceBook_myGenreTxtVw.getText().toString().trim() + "\n"
 					+ faceBook_myOpenInfoTxtVw.getText().toString().trim()
 					+ "\n" + faceBook_myActorTxtVw.getText().toString().trim()

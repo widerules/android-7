@@ -42,7 +42,6 @@ public class SetupSearchViewActivity extends Activity implements OnCheckedChange
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "변경되었습니다.", Toast.LENGTH_SHORT).show();
 				
 				SharedPreferences pref = getSharedPreferences(shareId, Activity.MODE_PRIVATE);
 		    	Editor editor = (Editor)pref.edit();
@@ -53,8 +52,8 @@ public class SetupSearchViewActivity extends Activity implements OnCheckedChange
 		    	}
 		    	editor.commit();
 		    	
-		    	Intent intent = new Intent(getApplicationContext(), SetupActivity.class);
-		    	startActivity(intent);
+		    	Toast.makeText(getApplicationContext(), "변경되었습니다.", Toast.LENGTH_SHORT).show();
+		    	finish();
 			}
 		});
 		Button setupSearchCancelBtn = (Button)findViewById(R.id.setupSearchCancelBtn);
@@ -62,8 +61,7 @@ public class SetupSearchViewActivity extends Activity implements OnCheckedChange
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), SetupActivity.class);
-				startActivity(intent);
+				finish();
 			}
 		});
 	}
