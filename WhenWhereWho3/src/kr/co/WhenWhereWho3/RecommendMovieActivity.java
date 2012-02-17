@@ -133,7 +133,7 @@ public class RecommendMovieActivity extends Activity {
 			public void run() {
 				Looper.prepare();
 				showDialog(PROGRESS_DIALOG);
-				loadTitle("액션", "영국");
+				loadTitle("", "");
 				Looper.loop();
 			}
 		};

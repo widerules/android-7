@@ -50,26 +50,7 @@ public class RegistMovieActivity extends Activity {
 	MovieDBHelper DBHelper;
 	SQLiteDatabase db;
 	
-	Handler handler = new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			switch( msg.what ) {
-			case 0:
-				if(pd != null) {
-					pd.dismiss();
-				}
-				Toast.makeText(getApplicationContext(), "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-				
-				Intent intent = new Intent(getApplicationContext(), MyMovieListActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-				startActivity(intent);
-				
-				break;
-			}
-
-		};
-
-	};
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -212,6 +193,8 @@ public class RegistMovieActivity extends Activity {
 		
 		db.insert("t_movielist", null, recordValues);
 		db.close();
+		
+		Toast.makeText(getApplicationContext(), "등록이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 	}
 
 }
