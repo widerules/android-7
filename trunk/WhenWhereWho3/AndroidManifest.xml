@@ -47,7 +47,8 @@
         <activity android:name=".FindCinemaActivity" android:label="FindCinema" />        
         <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".FaceBookActivity" android:label="Facebook" android:windowSoftInputMode="stateHidden"/>        
-        <activity android:name=".SetupSearchViewActivity" android:label="SetupSearchView" />        
+        <activity android:name=".SetupSearchViewActivity" android:label="SetupSearchView" /> 
+        <activity android:name=".VersionInfoShowActivity" android:label="VersionInfoShowView" />        
     </application>
 
 </manifest>
