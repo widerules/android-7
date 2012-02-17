@@ -21,17 +21,17 @@
                 android:id="@+id/btnList"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/m_list"
                 android:onClick="execute"
-                android:padding="20dp"
-                android:text="영화list" />
+                android:padding="20dp" />
 
             <Button
                 android:id="@+id/btnSearch"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/m_search"
                 android:onClick="execute"
-                android:padding="20dp"
-                android:text="영화검색" />
+                android:padding="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -43,26 +43,33 @@
                 android:id="@+id/btnRecommend"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/m_recommend"
                 android:onClick="execute"
-                android:padding="20dp"
-                android:text="추천영화" />
+                android:padding="20dp" />
 
             <Button
                 android:id="@+id/btnSetting"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/m_setting"
                 android:onClick="execute"
-                android:padding="20dp"
-                android:text="설정" />
+                android:padding="20dp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnCinema"
-            android:layout_width="280dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="execute"
-            android:padding="20dp"
-            android:text="가까운 영화관 찾기" />
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnCinema"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/m_cinema"
+                android:onClick="execute"
+                android:padding="10dp"
+                android:text="가까운 영화관 찾기" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
