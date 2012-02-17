@@ -45,7 +45,7 @@
         <activity android:name=".RecommendMovieActivity" android:label="RecommendMovie" />
         <activity android:name=".SetupActivity" android:label="SetUp" />        
         <activity android:name=".FindCinemaActivity" android:label="FindCinema" />        
-        <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".ShowMoviePhotoDialogActivity" android:theme="@android:style/Theme.Dialog" android:label="스틸 컷" />
         <activity android:name=".FaceBookActivity" android:label="Facebook" android:windowSoftInputMode="stateHidden"/>        
         <activity android:name=".SetupSearchViewActivity" android:label="SetupSearchView" /> 
         <activity android:name=".VersionInfoShowActivity" android:label="VersionInfoShowView" />        
