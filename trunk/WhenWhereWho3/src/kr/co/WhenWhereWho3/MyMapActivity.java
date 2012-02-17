@@ -48,187 +48,196 @@ public class MyMapActivity extends MapActivity {
 	Drawable drawable2;
 	MyItemizedOverlay itemizedOverlay;
 	MyItemizedOverlay itemizedOverlay2;
-	
+
 	InputStreamReader isr;
 	BufferedReader br;
-	
+
 	ArrayList<InfoMovieTheater> imtList;
 	MovieTheater mt;
-	
+
 	MyLocationOverlay myOverlay;
-	
+
 	MapController mc;
-	
+
 	Parse parse;
+
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-		
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.mymap);
-        
-        mapView = (MapView) findViewById(R.id.mapview);
+	public void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.mymap);
+
+		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
-		
+
 		mapOverlays = mapView.getOverlays();
-		
+
 		myOverlay = new MyLocationOverlay(this, mapView);
 		mapOverlays.add(myOverlay);
-		
-		//	내 위치 설정
+
+		// 내 위치 설정
 		drawable = getResources().getDrawable(R.drawable.marker);
 		itemizedOverlay = new MyItemizedOverlay(drawable, mapView);
-		
-		//	영화관 위치 설정
+
+		// 영화관 위치 설정
 		drawable2 = getResources().getDrawable(R.drawable.marker2);
 		itemizedOverlay2 = new MyItemizedOverlay(drawable2, mapView);
-		
+
 		parse = new Parse();
-		
+
 		mc = mapView.getController();
 		mc.setZoom(15);
-		
-		
+
 		startLocationService();
-    }
-	
+	}
+
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
-	 
-	
+
 	private void startLocationService() {
 
-	    	// get manager instance
-	    	LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		// get manager instance
+		LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+		// set listener
+		GPSListener gpsListener = new GPSListener();
+		long minTime = 10000;
+		float minDistance = 0;
 
-			// set listener
-	    	GPSListener gpsListener = new GPSListener();
-			long minTime = 10000;
-			float minDistance = 0;
+		// manager.requestLocationUpdates(
+		// LocationManager.GPS_PROVIDER,
+		// minTime,
+		// minDistance,
+		// gpsListener);
 
-//			manager.requestLocationUpdates(
-//						LocationManager.GPS_PROVIDER,
-//						minTime,
-//						minDistance,
-//						gpsListener);
+		// in case of network provider
+		manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+				minTime, minDistance, gpsListener);
 
-			// in case of network provider
-			manager.requestLocationUpdates(
-					LocationManager.NETWORK_PROVIDER,
-					minTime,
-					minDistance,
-					gpsListener);
+		// get last known location first
+		try {
+			Location lastLocation = manager
+					.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			if (lastLocation != null) {
+				Double latitude = lastLocation.getLatitude();
+				Double longitude = lastLocation.getLongitude();
 
-			// get last known location first
-			try {
-				Location lastLocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-				if (lastLocation != null) {
-					Double latitude = lastLocation.getLatitude();
-					Double longitude = lastLocation.getLongitude();
-
-//					Toast.makeText(getApplicationContext(), "Last Known Location : " + "Latitude : "+ latitude + "\nLongitude:"+ longitude, Toast.LENGTH_LONG).show();
-				}
-			} catch(Exception ex) {
-				ex.printStackTrace();
+				// Toast.makeText(getApplicationContext(),
+				// "Last Known Location : " + "Latitude : "+ latitude +
+				// "\nLongitude:"+ longitude, Toast.LENGTH_LONG).show();
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
-//			Toast.makeText(getApplicationContext(), "Location Service started.\nyou can test using DDMS.", Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getApplicationContext(),
+		// "Location Service started.\nyou can test using DDMS.",
+		// Toast.LENGTH_SHORT).show();
 
-	    }
-	
-		public void markOverlay( InfoMovieTheater imt ) {
+	}
+
+	public void markOverlay(InfoMovieTheater imt) {
+		try {
+			String key = "AIzaSyC3gak9iNgS-OG19Z_OIrTKUjRORWxYMpU"; // 키
+			String preUrl = "https://maps.googleapis.com/maps/api/place/details/json?reference="
+					+ imt.getReference() + "&sensor=true&key=" + key;
+			Log.d("상세정보 주소", preUrl);
+			URL url = new URL(preUrl);
+			isr = new InputStreamReader(url.openConnection().getInputStream(),
+					"UTF-8");
+			br = new BufferedReader(isr);
+
+			mt = new MovieTheater();
+			mt = parse.infoParse(br);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		GeoPoint point = new GeoPoint((int) (imt.getLat() * 1E6),
+				(int) (imt.getLng() * 1E6));
+		OverlayItem overlayItem = new OverlayItem(point, mt.getName(), "주소 : "
+				+ mt.getAddr() + "\n전화번호 : " + mt.getTel());
+		itemizedOverlay2.addOverlay(overlayItem);
+		mapOverlays.add(itemizedOverlay2);
+	}
+
+	private class GPSListener implements LocationListener {
+
+		public void onLocationChanged(Location location) {
+			// capture location data sent by current provider
+			Double latitude = location.getLatitude();
+			Double longitude = location.getLongitude();
+
+			mapOverlays.clear();
+
+			GeoPoint point = new GeoPoint((int) (latitude * 1E6),
+					(int) (longitude * 1E6));
+			OverlayItem overlayItem = new OverlayItem(point, "내 위치",
+					"현재 자신의 위치입니다.");
+			itemizedOverlay.addOverlay(overlayItem);
+			mapOverlays.add(itemizedOverlay);
+			mc.animateTo(point);
+			mc.setCenter(point);
+
+			Log.d("Google Maps", "위도 : " + latitude + "경도 : " + longitude
+					+ "범위 : " + 10000);
+			String key = "AIzaSyC3gak9iNgS-OG19Z_OIrTKUjRORWxYMpU"; // 키
+			String preUrl = "https://maps.googleapis.com/maps/api/place/search/json?location="
+					+ latitude
+					+ ","
+					+ longitude
+					+ "&radius="
+					+ 10000
+					+ "&types=movie_theater&sensor=false&key=" + key;
+
+			Log.d("현재 위치", "위도 : " + latitude + " 경도 : " + longitude);
+			Log.d("맵 로딩 주소", preUrl);
+
 			try {
-				String key = "AIzaSyC3gak9iNgS-OG19Z_OIrTKUjRORWxYMpU";	//	키
-				String preUrl = "https://maps.googleapis.com/maps/api/place/details/json?reference="
-								+ imt.getReference() + "&sensor=true&key=" + key;
-				Log.d("상세정보 주소", preUrl);
 				URL url = new URL(preUrl);
-				isr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8");
+				isr = new InputStreamReader(url.openConnection()
+						.getInputStream(), "UTF-8");
 				br = new BufferedReader(isr);
-				
-				mt = new MovieTheater();
-				mt = parse.infoParse(br);
+				imtList = new ArrayList<InfoMovieTheater>();
+				imtList = parse.locationParse(br);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
-			GeoPoint point = new GeoPoint((int)(imt.getLat()*1E6),(int)(imt.getLng()*1E6));
-			OverlayItem overlayItem = new OverlayItem(point, mt.getName(), 
-					"주소 : " + mt.getAddr()
-					+ "\n전화번호 : " + mt.getTel() 
-					);
-			itemizedOverlay2.addOverlay(overlayItem);
-			mapOverlays.add(itemizedOverlay2);
-		}
-
-
-		private class GPSListener implements LocationListener {
-
-		    public void onLocationChanged(Location location) {
-				//capture location data sent by current provider
-				Double latitude = location.getLatitude();
-				Double longitude = location.getLongitude();
-
-				mapOverlays.clear();
-				
-				GeoPoint point = new GeoPoint((int)(latitude*1E6),(int)(longitude*1E6));
-				OverlayItem overlayItem = new OverlayItem(point, "내 위치", 
-						"현재 자신의 위치입니다.");
-				itemizedOverlay.addOverlay(overlayItem);
-				mapOverlays.add(itemizedOverlay);
-				mc.animateTo(point);
-				mc.setCenter(point);
-
-				Log.d( "Google Maps", "위도 : " + latitude + "경도 : " + longitude + "범위 : " + 10000);
-				String key = "AIzaSyC3gak9iNgS-OG19Z_OIrTKUjRORWxYMpU";	//	키
-				String preUrl = "https://maps.googleapis.com/maps/api/place/search/json?location="
-								+ latitude + "," + longitude + "&radius=" + 10000 + "&types=movie_theater&sensor=false&key=" + key;
-				
-				Log.d("현재 위치", "위도 : " + latitude + " 경도 : " + longitude);
-				Log.d("맵 로딩 주소", preUrl);
-				
-				try {
-					URL url = new URL(preUrl);
-					isr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8");
-					br = new BufferedReader(isr);
-					imtList = new ArrayList<InfoMovieTheater>();
-					imtList = parse.locationParse(br);
-				} catch (Exception e) {
-					e.printStackTrace();
+			if (imtList != null) {
+				for (InfoMovieTheater imt : imtList) {
+					markOverlay(imt);
 				}
-				if( imtList != null ) {
-					for( InfoMovieTheater imt : imtList ) {
-						markOverlay(imt);
-					}
-				} else {
-					Toast.makeText(getApplicationContext(), "반경 10Km 이내에 영화관이 없습니다.", Toast.LENGTH_SHORT).show();
-				}
-				
-//				//	현재 위치 토스트 메시지 띄워주기
-//				String msg = "Latitude : "+ latitude + "\nLongitude:"+ longitude;
-//				Log.i("GPSListener", msg);
-//				Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplicationContext(),
+						"반경 10Km 이내에 영화관이 없습니다.", Toast.LENGTH_SHORT).show();
 			}
 
-		    public void onProviderDisabled(String provider) {
-		    }
-
-		    public void onProviderEnabled(String provider) {
-		    }
-
-		    public void onStatusChanged(String provider, int status, Bundle extras) {
-		    }
-
+			// // 현재 위치 토스트 메시지 띄워주기
+			// String msg = "Latitude : "+ latitude + "\nLongitude:"+ longitude;
+			// Log.i("GPSListener", msg);
+			// Toast.makeText(getApplicationContext(), msg,
+			// Toast.LENGTH_SHORT).show();
 		}
-		@Override
-		public boolean onKeyDown(int keyCode, KeyEvent event) {
-			if (keyCode == KeyEvent.KEYCODE_BACK) {
-				finish();
-			}
-			return super.onKeyDown(keyCode, event);
+
+		public void onProviderDisabled(String provider) {
 		}
+
+		public void onProviderEnabled(String provider) {
+		}
+
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
+
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 }

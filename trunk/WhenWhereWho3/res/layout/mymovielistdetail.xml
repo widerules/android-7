@@ -4,9 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <!-- 영화 제목과 수정버튼 -->
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,17 +14,25 @@
             android:id="@+id/myMovieListDetail_facebookBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="페이스북" />
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/facebookbtn"
+            android:textColor="#ffffff"
+            android:textSize="12dp"
+            android:textStyle="bold" />
         <!-- 수정 버튼 -->
 
         <Button
             android:id="@+id/myMovieListDetail_myUpdateBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="수정" />
-    </LinearLayout>
+            android:paddingTop="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/onebit_49"
+            android:text="수정"
+            android:textColor="#ffffff"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -95,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:textSize="15dp" />
-                    
+
                     <!-- 어디서 봤는가 -->
 
                     <TextView
@@ -110,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:textSize="15dp" />
-                    
+
                     <!-- 누구랑 봤는가 -->
 
                     <TextView
@@ -180,8 +186,8 @@
                     android:id="@+id/myMovieListDetail_myCommentTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp" 
-                    android:paddingBottom="10dp"/>
+                    android:paddingBottom="10dp"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -200,8 +206,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="15dp" />
                 <!-- 개봉일 -->
-				
-				<TextView
+
+                <TextView
                     android:id="@+id/myMovieListDetail_myDirectorTxtVw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -227,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:text="●  줄거리 :"
                     android:textSize="15dp" />
-                
+
                 <TextView
                     android:id="@+id/myMovieListDetail_myStoryTxtVw"
                     android:layout_width="match_parent"
