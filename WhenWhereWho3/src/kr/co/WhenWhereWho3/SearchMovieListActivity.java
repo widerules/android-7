@@ -61,14 +61,14 @@ public class SearchMovieListActivity extends Activity {
 				} 
 				//파싱결과 존재시 listview item 추가
 				else {	
-					dataCntTxt.setText("검색된 data 수 : " + movies.size() + "개");
+					dataCntTxt.setText("검색된 영화 수 : " + movies.size() + "개");
 					adapter = new MovieListAdapter(SearchMovieListActivity.this, R.layout.searchlist, movies );
 					listview.setAdapter(adapter);
 				}
 				break;
 			}
 			isLoaded = false;
-			Toast.makeText(getApplicationContext(), "파싱이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), "파싱이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 		}
 	};
 	
