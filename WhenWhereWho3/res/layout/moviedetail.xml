@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+   <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -14,7 +14,11 @@
             android:id="@+id/searchMovieDetail_btnWishList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/onebit_44"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
             android:text="찜" />
         <!-- 수정 버튼 -->
 
@@ -22,9 +26,14 @@
             android:id="@+id/searchMovieDetail_btnRegistMovie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentRight="true"
+            android:paddingTop="10dp"
+            android:background="@drawable/onebit_13"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
             android:text="등록" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

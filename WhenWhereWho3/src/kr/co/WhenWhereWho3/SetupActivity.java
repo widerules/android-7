@@ -83,6 +83,24 @@ public class SetupActivity extends Activity {
 			}
 
 		});
+		
+		basicListVw.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				Intent intent = null;
+				switch(position) {
+				case 0:
+					intent = new Intent(getApplicationContext(), VersionInfoShowActivity.class);
+					break;
+				case 1:
+					intent = new Intent(getApplicationContext(), VersionInfoShowActivity.class);
+					break;
+				}
+				startActivity(intent);
+			}
+		});
 
 
 	}
