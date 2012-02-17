@@ -45,6 +45,7 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 	TextView faceBook_myGenreTxtVw;
 	TextView faceBook_myOpenInfoTxtVw;
 	TextView faceBook_myActorTxtVw;
+	TextView faceBook_myDirectorTxtVw;
 
 	ImageView faceBook_myThumbnail;
 	Button myModifyBtn;
@@ -82,13 +83,14 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 		setContentView(R.layout.facebook);
 
 		//	필요한 위젯들 전부 로딩
-		faceBook_myTitleTxtVw 		= (TextView)findViewById(R.id.faceBook_myTitleTxtVw);
+		faceBook_myTitleTxtVw 		= (TextView)findViewById(R.id.faceBook_movieTitle);
 		faceBook_myWhenTxtVw		= (TextView)findViewById(R.id.faceBook_myWhenTxtVw);
 		faceBook_myWhereTxtVw		= (TextView)findViewById(R.id.faceBook_myWhereTxtVw);
 		faceBook_myWithTxtVw		= (TextView)findViewById(R.id.faceBook_myWhoTxtVw);
 		faceBook_myGenreTxtVw 		= (TextView)findViewById(R.id.faceBook_myGenreTxtVw);
 		faceBook_myOpenInfoTxtVw 	= (TextView)findViewById(R.id.faceBook_myOpenInfoTxtVw);
 		faceBook_myActorTxtVw		= (TextView)findViewById(R.id.faceBook_myActorTxtVw);
+		faceBook_myDirectorTxtVw		= (TextView)findViewById(R.id.faceBook_myDirectorTxtVw);
 
 		faceBook_myThumbnail 		= (ImageView)findViewById(R.id.faceBook_myThumbnail);
 		faceBook_myRatingBar			= (RatingBar)findViewById(R.id.faceBook_myRatingBar);
@@ -102,12 +104,17 @@ public class FaceBookActivity extends Activity implements View.OnClickListener {
 			this.movie = movie;
 
 			faceBook_myTitleTxtVw.setText(movie.getTitle());
-			faceBook_myWhenTxtVw.setText("When : " + movie.getWhen());
-			faceBook_myWithTxtVw.setText("With : " + movie.getWith());
-			faceBook_myWhereTxtVw.setText("Where : " + movie.getWhere());
+			String getWhen = movie.getWhen();
+			String year = getWhen.substring(0, 4);
+			String month = getWhen.substring(4, 5);
+			String day = getWhen.substring(5, 7); 
+			faceBook_myWhenTxtVw.setText(year + "년 " + month + "월 " + day + "일");
+			faceBook_myWithTxtVw.setText(movie.getWith());
+			faceBook_myWhereTxtVw.setText(movie.getWhere());
 			rating = ( float )( ( movie.getGrade().equals("") ) ? 0.0 : Float.parseFloat( movie.getGrade() ) )  / ( float )2.0;
 			faceBook_myRatingBar.setRating( rating );
 			faceBook_myGenreTxtVw.setText( "		● 장르 : " + movie.getGenre( ) );
+			faceBook_myActorTxtVw.setText( "		● 감독 : " + movie.getDirector() );
 			faceBook_myActorTxtVw.setText( "		● 배우 : " + Arrays.toString( movie.getActor() ) );
 			faceBook_myOpenInfoTxtVw.setText( "		● 개봉일 : " + movie.getOpenInfo() );
 
