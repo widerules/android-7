@@ -92,7 +92,7 @@ public class SetupActivity extends Activity {
 				Intent intent = null;
 				switch(position) {
 				case 0:
-					intent = new Intent(getApplicationContext(), VersionInfoShowActivity.class);
+					intent = new Intent(getApplicationContext(), SetupHelpActivity.class);
 					break;
 				case 1:
 					intent = new Intent(getApplicationContext(), VersionInfoShowActivity.class);

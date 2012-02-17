@@ -49,6 +49,7 @@
         <activity android:name=".FaceBookActivity" android:label="Facebook" android:windowSoftInputMode="stateHidden"/>        
         <activity android:name=".SetupSearchViewActivity" android:label="SetupSearchView" /> 
         <activity android:name=".VersionInfoShowActivity" android:label="VersionInfoShowView" />        
+        <activity android:name=".SetupHelpActivity" android:label="Setup" />        
     </application>
 
 </manifest>
