@@ -29,6 +29,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -52,6 +53,7 @@ public class MyMapActivity extends MapActivity {
 	BufferedReader br;
 	
 	ArrayList<InfoMovieTheater> imtList;
+	MovieTheater mt;
 	
 	MyLocationOverlay myOverlay;
 	
@@ -71,6 +73,14 @@ public class MyMapActivity extends MapActivity {
 		
 		myOverlay = new MyLocationOverlay(this, mapView);
 		mapOverlays.add(myOverlay);
+		
+		//	내 위치 설정
+		drawable = getResources().getDrawable(R.drawable.marker);
+		itemizedOverlay = new MyItemizedOverlay(drawable, mapView);
+		
+		//	영화관 위치 설정
+		drawable2 = getResources().getDrawable(R.drawable.marker2);
+		itemizedOverlay2 = new MyItemizedOverlay(drawable2, mapView);
 		
 		parse = new Parse();
 		
@@ -129,12 +139,29 @@ public class MyMapActivity extends MapActivity {
 	    }
 	
 		public void markOverlay( InfoMovieTheater imt ) {
+			try {
+				String key = "AIzaSyC3gak9iNgS-OG19Z_OIrTKUjRORWxYMpU";	//	키
+				String preUrl = "https://maps.googleapis.com/maps/api/place/details/json?reference="
+								+ imt.getReference() + "&sensor=true&key=" + key;
+				Log.d("상세정보 주소", preUrl);
+				URL url = new URL(preUrl);
+				isr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8");
+				br = new BufferedReader(isr);
+				
+				mt = new MovieTheater();
+				mt = parse.infoParse(br);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			
 			GeoPoint point = new GeoPoint((int)(imt.getLat()*1E6),(int)(imt.getLng()*1E6));
-			OverlayItem overlayItem = new OverlayItem(point, imt.getReference(), 
-					"(M gives Bond his mission in Daimler car)");
-			itemizedOverlay.addOverlay(overlayItem);
-			mapOverlays.add(itemizedOverlay);
+			OverlayItem overlayItem = new OverlayItem(point, mt.getName(), 
+					"주소 : " + mt.getAddr()
+					+ "\n전화번호 : " + mt.getTel() 
+					);
+			itemizedOverlay2.addOverlay(overlayItem);
+			mapOverlays.add(itemizedOverlay2);
 		}
 
 
@@ -145,12 +172,15 @@ public class MyMapActivity extends MapActivity {
 				Double latitude = location.getLatitude();
 				Double longitude = location.getLongitude();
 
+				mapOverlays.clear();
+				
 				GeoPoint point = new GeoPoint((int)(latitude*1E6),(int)(longitude*1E6));
+				OverlayItem overlayItem = new OverlayItem(point, "내 위치", 
+						"현재 자신의 위치입니다.");
+				itemizedOverlay.addOverlay(overlayItem);
+				mapOverlays.add(itemizedOverlay);
 				mc.animateTo(point);
 				mc.setCenter(point);
-				drawable = getResources().getDrawable(R.drawable.marker2);
-				itemizedOverlay = new MyItemizedOverlay(drawable, mapView);
-				mapOverlays.add(itemizedOverlay);
 
 				Log.d( "Google Maps", "위도 : " + latitude + "경도 : " + longitude + "범위 : " + 10000);
 				String key = "AIzaSyC3gak9iNgS-OG19Z_OIrTKUjRORWxYMpU";	//	키
@@ -193,6 +223,12 @@ public class MyMapActivity extends MapActivity {
 		    }
 
 		}
-	
+		@Override
+		public boolean onKeyDown(int keyCode, KeyEvent event) {
+			if (keyCode == KeyEvent.KEYCODE_BACK) {
+				finish();
+			}
+			return super.onKeyDown(keyCode, event);
+		}
 
 }
