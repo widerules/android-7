@@ -6,6 +6,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,13 +50,16 @@ public class SearchMovieListActivity extends Activity {
 	Parse parse;
 	ArrayList<Movie> movies;
 	
+	ProgressDialog pd;
+	final int FACEBOOK_PROGRESS_DIALOG = 1010;
+	
 	Handler handler = new Handler(){	// 핸들러 객체
 		@Override
 		public void handleMessage(Message msg) {
 			switch( msg.what ) {
 			case 0:
 				movies = parse.jsonParse( (BufferedReader)msg.obj );
-				
+				pd.dismiss();
 				//파싱결과가 없을 Toast 메시지 
 				if( movies == null ) {
 					Toast.makeText(getApplicationContext(), "검색 결과가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
@@ -76,7 +81,7 @@ public class SearchMovieListActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.searchmovielist);
+        setContentView(R.layout.searchmovielist);        
         
         parse = new Parse();
         
@@ -100,6 +105,7 @@ public class SearchMovieListActivity extends Activity {
 				
 				if( isParsing ) return;		//	버튼 중복 클릭 방지
 				
+				showDialog(FACEBOOK_PROGRESS_DIALOG);
 				Thread parseThread = new Thread( ) {
 					public void run() {
 						Looper.prepare();
@@ -150,4 +156,19 @@ public class SearchMovieListActivity extends Activity {
 			e.printStackTrace();
 		}
     }
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case FACEBOOK_PROGRESS_DIALOG:
+			pd = new ProgressDialog(SearchMovieListActivity.this);
+			pd.setMessage("검색 중입니다...");
+			pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pd.setCancelable(false);
+			return pd;
+		}
+		return super.onCreateDialog(id);
+	}
+    
+    
 }
