@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +17,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
@@ -157,16 +159,20 @@ public class RecommendMovieActivity extends Activity {
 			
 		});
 		
-//		//	갤러리의 사진을 클릭할 경우 이벤트
-//		gallery.setOnItemClickListener(new OnItemClickListener() {
-//			public void onItemClick(AdapterView parent, View v, int position, long id) {
+		//	갤러리의 사진을 클릭할 경우 이벤트
+		gallery.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView parent, View v, int position, long id) {
 //				imgTxt = (TextView)findViewById(R.id.imgTxt);
 //				imgTxt.setText(name[position]);
 //
 //				oriImgVw = (ImageView)findViewById(R.id.oriImgVw);
 //				oriImgVw.setImageResource(images[position]);
-//			}
-//		});
+				
+				Intent intent = new Intent(getApplicationContext(), SearchMovieDetailActivity.class);
+				intent.putExtra("movie", movieList.get(position));
+				startActivity(intent);
+			}
+		});
 	}
 	
 	private void loadTitle( String genre, String nation ) {

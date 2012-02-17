@@ -8,7 +8,7 @@
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:text="검색"
+        android:text="영화검색"
         android:textSize="30dp" 
         android:background="@drawable/menu_top"/>
     <LinearLayout

@@ -24,6 +24,8 @@ public class WhenWhereWho3Activity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main); 
+		
+		startActivity(new Intent(this, LoadingWhenWhereWho3Activity.class));
 	}
 	
 	//버튼 onclick 실행
