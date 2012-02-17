@@ -67,9 +67,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/m_cinema"
                 android:onClick="execute"
-                android:padding="10dp"
-                android:text="가까운 영화관 찾기" />
+                android:padding="10dp" />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
