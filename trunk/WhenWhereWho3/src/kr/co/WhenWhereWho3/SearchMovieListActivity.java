@@ -169,6 +169,4 @@ public class SearchMovieListActivity extends Activity {
 		}
 		return super.onCreateDialog(id);
 	}
-    
-    
 }
